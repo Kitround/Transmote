@@ -4,7 +4,7 @@ A native macOS client for [Transmission](https://transmissionbt.com).
 
 ## Download
 
-Grab the latest `.dmg` from the [Releases](https://github.com/Kitround/Transmote/releases) page.
+Grab the latest `.zip` from the [Releases](https://github.com/Kitround/Transmote/releases) page.
 
 **Requires macOS 14 Sonoma or later.**
 
