@@ -1,59 +1,34 @@
 # Transmote
 
-Client macOS natif pour [Transmission](https://transmissionbt.com) via l'API JSON-RPC.
+A native macOS client for [Transmission](https://transmissionbt.com) via its JSON-RPC API.
 
 ---
 
-## Prérequis
+## Requirements
 
-- macOS 14 Sonoma ou plus récent
+- macOS 14 Sonoma or later
 - Xcode 15+
-- Transmission installé sur votre serveur (local ou distant) avec l'API RPC activée
+- Transmission running on a local or remote server with RPC enabled
 
 ---
 
 ## Installation
 
-### 1. Cloner et ouvrir dans Xcode
+Clone the repository and open the project in Xcode:
 
 ```bash
-git clone https://github.com/vous/transmote
-cd transmote
+git clone https://github.com/Kitround/Transmote.git
+cd Transmote
+open Transmote.xcodeproj
 ```
 
-Créez un nouveau projet Xcode :
-1. **File → New → Project → macOS → App**
-2. Nom : `Transmote`, Interface : SwiftUI, Language : Swift
-3. Supprimez `ContentView.swift` généré
-4. Ajoutez tous les fichiers du projet dans les groupes correspondants
-
-### 2. Configurer le projet Xcode
-
-Dans les **Build Settings** :
-- `MACOSX_DEPLOYMENT_TARGET` = `14.0`
-- `SWIFT_STRICT_CONCURRENCY` = `complete`
-
-Dans **Signing & Capabilities** :
-- Ajoutez `com.apple.security.network.client` (Outgoing connections)
-- Si vous voulez les notifications : `com.apple.security.network.server`
-
-### 3. Info.plist
-
-Ajoutez les clés suivantes :
-```xml
-<key>NSAppTransportSecurity</key>
-<dict>
-    <key>NSAllowsArbitraryLoads</key>
-    <true/>
-</dict>
-```
-(Pour permettre HTTP non-sécurisé vers votre serveur local)
+Build and run with **⌘R**.
 
 ---
 
-## Configuration de Transmission
+## Transmission Setup
 
-Dans les préférences de Transmission (ou `settings.json`) :
+In Transmission's preferences (or `settings.json`):
 
 ```json
 {
@@ -64,49 +39,70 @@ Dans les préférences de Transmission (ou `settings.json`) :
 }
 ```
 
-Pour activer l'authentification :
+To enable authentication:
 ```json
 {
   "rpc-authentication-required": true,
   "rpc-username": "admin",
-  "rpc-password": "motdepasse"
+  "rpc-password": "yourpassword"
 }
 ```
 
 ---
 
-## Architecture du projet
+## Features
+
+| Feature | Status |
+|---|---|
+| Torrent list with sorting and filtering | ✅ |
+| Start / Pause / Remove torrents | ✅ |
+| Add .torrent file (drag & drop, file picker) | ✅ |
+| Add magnet link | ✅ |
+| Detail panel: info, files, peers, trackers | ✅ |
+| Per-file priority control | ✅ |
+| Multiple server management | ✅ |
+| Menu bar with live speeds | ✅ |
+| Download completion notifications | ✅ |
+| Turtle mode (alternative speed limits) | ✅ |
+| Bandwidth, peers & queue preferences | ✅ |
+| Customizable and persistent toolbar | ✅ |
+| French localization | ✅ |
+
+---
+
+## Project Structure
 
 ```
 Transmote/
 ├── App/
-│   ├── TransmoteApp.swift          # @main, scènes SwiftUI
-│   └── AppDelegate.swift           # Status bar, notifications
+│   ├── TransmoteApp.swift          # @main, SwiftUI scenes
+│   └── AppDelegate.swift           # Menu bar, notifications
 │
 ├── Networking/
-│   ├── RPCClient.swift             # Client JSON-RPC (actor)
-│   └── RPCMethods.swift            # Toutes les méthodes Transmission
+│   ├── RPCClient.swift             # JSON-RPC client (actor)
+│   └── RPCMethods.swift            # All Transmission RPC methods
 │
 ├── Models/
-│   ├── Torrent.swift               # Modèle principal + enums
+│   ├── Torrent.swift               # Torrent model + enums
 │   └── Server.swift                # ServerConfig, SessionArguments, Stats
 │
 ├── Store/
-│   └── TorrentStore.swift          # @Observable — état central
+│   └── TorrentStore.swift          # @Observable — central app state
 │
 ├── Views/
 │   ├── ContentView.swift           # NavigationSplitView + toolbar
+│   ├── AppToolbar.swift            # NSToolbar with full customization
 │   ├── Sidebar/
-│   │   └── SidebarView.swift       # Filtres + gestion serveurs
+│   │   └── SidebarView.swift       # Filters + server management
 │   ├── TorrentList/
 │   │   └── TorrentListView.swift   # Table + context menu
 │   ├── TorrentDetail/
-│   │   └── TorrentDetailView.swift # Infos, fichiers, pairs, trackers
+│   │   └── TorrentDetailView.swift # Info, files, peers, trackers
 │   ├── Sheets/
-│   │   ├── AddTorrentViews.swift   # Ajout magnet / fichier
-│   │   └── ServerEditView.swift    # Édition serveur
+│   │   ├── AddTorrentViews.swift   # Add magnet / file
+│   │   └── ServerEditView.swift    # Server editor
 │   └── Settings/
-│       └── SettingsView.swift      # Préférences Transmission
+│       └── SettingsView.swift      # Transmission preferences
 │
 └── Helpers/
     └── Formatters.swift            # ByteFormatter, ETAFormatter, etc.
@@ -114,64 +110,43 @@ Transmote/
 
 ---
 
-## Fonctionnalités
+## Transmission RPC Methods Used
 
-| Fonctionnalité | Implémenté |
+| Method | Purpose |
 |---|---|
-| Liste des torrents avec tri/filtre | ✅ |
-| Démarrer / Mettre en pause / Supprimer | ✅ |
-| Ajouter fichier .torrent (drag & drop, picker) | ✅ |
-| Ajouter lien magnet | ✅ |
-| Détail : infos, fichiers, pairs, trackers | ✅ |
-| Priorité par fichier | ✅ |
-| Gestion multi-serveurs | ✅ |
-| Barre de menu avec vitesses | ✅ |
-| Notifications à la fin d'un téléchargement | ✅ |
-| Mode tortue (alt speed) | ✅ |
-| Préférences bande passante / pairs / file | ✅ |
-| Polling configurable | ✅ |
+| `torrent-get` | Fetch torrent list and details |
+| `torrent-start` / `torrent-stop` | Resume / pause |
+| `torrent-remove` | Remove torrent |
+| `torrent-add` | Add magnet link or .torrent file |
+| `torrent-set` | File priority, speed limits |
+| `torrent-verify` | Verify local data |
+| `torrent-reannounce` | Reannounce to trackers |
+| `session-get` / `session-set` | Server preferences |
+| `session-stats` | Global statistics |
+| `free-space` | Available disk space |
 
 ---
 
-## API Transmission utilisée
+## Dependencies
 
-| Méthode | Usage |
-|---|---|
-| `torrent-get` | Récupérer la liste et les détails |
-| `torrent-start` / `torrent-stop` | Démarrer / Arrêter |
-| `torrent-remove` | Supprimer |
-| `torrent-add` | Ajouter magnet ou fichier |
-| `torrent-set` | Priorité, limites de vitesse |
-| `torrent-verify` | Vérification des données |
-| `torrent-reannounce` | Réannoncer |
-| `session-get` / `session-set` | Préférences du serveur |
-| `session-stats` | Statistiques globales |
-| `free-space` | Espace disque disponible |
+**None.** The project uses only Apple frameworks:
+- SwiftUI + AppKit
+- URLSession
+- UserNotifications
+- UniformTypeIdentifiers
 
 ---
 
-## Dépendances
+## Contributing
 
-**Aucune dépendance externe.** Le projet utilise uniquement :
-- SwiftUI
-- AppKit
-- URLSession (réseau)
-- UserNotifications (notifications système)
-- UniformTypeIdentifiers (gestion des types de fichiers)
-
----
-
-## Contribuer
-
-Les contributions sont les bienvenues ! En particulier :
-- Localisation (français, anglais, etc.)
-- Thème sombre / clair automatique
-- Widget macOS pour les vitesses
-- Support des séquences d'annonce des trackers
-- Intégration Spotlight
+Contributions are welcome! Ideas for improvement:
+- Additional localizations
+- macOS widget for live speeds
+- Spotlight integration
+- Tracker announce URL sequence support
 
 ---
 
-## Licence
+## License
 
-MIT — voir LICENSE
+MIT — see LICENSE
