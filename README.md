@@ -8,6 +8,8 @@ Grab the latest `.zip` from the [Releases](https://github.com/Kitround/Transmote
 
 **Requires macOS 14 Sonoma or later.**
 
+> **Note:** Transmote is not code-signed. After opening the `.zip` and moving the app to your Applications folder, macOS may block it. To allow it: **System Settings → Privacy & Security → scroll down → Open Anyway**.
+
 ## Features
 
 - Manage multiple Transmission servers
