@@ -1,0 +1,566 @@
+/* Torrent status: transfer has been stopped */
+"Stopped" = "Arrêté";
+
+/* Torrent status: queued for hash verification */
+"Waiting for Verification" = "En attente de vérification";
+
+/* Torrent status: hash verification in progress */
+"Verifying" = "Vérification";
+
+/* Torrent status: queued for download */
+"Waiting for Download" = "En attente de téléchargement";
+
+/* Torrent status: actively downloading */
+"Downloading" = "Téléchargement";
+
+/* Torrent status: queued for seeding */
+"Waiting to Seed" = "En attente de partage";
+
+/* Torrent status: actively seeding */
+"Seeding" = "Partage";
+
+/* File priority level */
+"Low" = "Basse";
+
+/* File priority level */
+"Normal" = "Normale";
+
+/* File priority level */
+"High" = "Haute";
+
+/* File priority level: file is excluded from download */
+"Skip" = "Ignorer";
+
+/* Connection state: not connected to any server */
+"Disconnected" = "Déconnecté";
+
+/* Connection state: attempting to connect */
+"Connecting…" = "Connexion…";
+
+/* Connection state: error message with substituted description — keep %@ */
+"Error: %@" = "Erreur : %@";
+
+/* Sidebar filter: show all torrents */
+"All" = "Tous";
+
+/* Sidebar filter: show only paused torrents */
+"Paused" = "En pause";
+
+/* Sidebar filter: show only torrents with errors */
+"Error" = "Erreur";
+
+/* Sidebar filter: show torrents being verified */
+"Checking" = "Vérification";
+
+/* Drag-and-drop overlay label */
+"Drop to add" = "Déposer pour ajouter";
+
+/* Toolbar button: add a .torrent file */
+"Add File" = "Ajouter un fichier";
+
+/* Toolbar button tooltip */
+"Add a .torrent file" = "Ajouter un fichier .torrent";
+
+/* Toolbar button: add a magnet link */
+"Add Magnet" = "Ajouter magnet";
+
+/* Toolbar button tooltip */
+"Add a magnet link" = "Ajouter un lien magnet";
+
+/* Toolbar button label when turtle mode is active */
+"Turtle mode active" = "Mode tortue actif";
+
+/* Toolbar button label when turtle mode is inactive */
+"Turtle mode" = "Mode tortue";
+
+/* Toolbar button tooltip */
+"Toggle alternative speed limit" = "Basculer la limite de vitesse alternative";
+
+/* Toolbar button label: inspector panel */
+"Detail Panel" = "Panneau de détail";
+
+/* Toolbar button tooltip when panel is visible */
+"Hide detail panel" = "Masquer le panneau de détail";
+
+/* Toolbar button tooltip when panel is hidden */
+"Show detail panel" = "Afficher le panneau de détail";
+
+/* Toolbar button: resume all torrents */
+"Start All" = "Démarrer tout";
+
+/* Toolbar button tooltip */
+"Start all torrents" = "Démarrer tous les torrents";
+
+/* Toolbar button: pause all torrents */
+"Pause All" = "Pause tout";
+
+/* Toolbar button tooltip */
+"Pause all torrents" = "Mettre en pause tous les torrents";
+
+/* Sidebar section header */
+"Filters" = "Filtres";
+
+/* Sidebar section header */
+"Folders" = "Dossiers";
+
+/* Sidebar section header */
+"Servers" = "Serveurs";
+
+/* Server row context menu item */
+"Connect to server" = "Se connecter";
+
+/* Server row context menu item */
+"Edit…" = "Modifier…";
+
+/* Server row context menu item */
+"Delete" = "Supprimer";
+
+/* Button below server list to add a new server */
+"Add a server" = "Ajouter un serveur";
+
+/* Sidebar footer: session stats section header */
+"Session" = "Session";
+
+/* Sidebar footer: total data downloaded */
+"Downloaded" = "Téléchargé";
+
+/* Sidebar footer: total data uploaded */
+"Sent" = "Envoyé";
+
+/* Button to connect to a server */
+"Connect" = "Connecter";
+
+/* Button to retry a failed connection */
+"Retry" = "Réessayer";
+
+/* Torrent list search field placeholder */
+"Search…" = "Rechercher…";
+
+/* Toolbar toggle label: switch to detailed row view */
+"Detailed view" = "Vue détaillée";
+
+/* Toolbar toggle label: switch to compact row view */
+"Compact view" = "Vue compacte";
+
+/* Toolbar toggle tooltip */
+"Switch to detailed view" = "Passer en vue détaillée";
+
+/* Toolbar toggle tooltip */
+"Switch to compact view" = "Passer en vue compacte";
+
+/* Torrent list column header */
+"Name" = "Nom";
+
+/* Torrent list column header */
+"Size" = "Taille";
+
+/* Torrent list column header */
+"Progress" = "Progression";
+
+/* Torrent list column header: download speed */
+"Download" = "Téléchargement";
+
+/* Torrent list column header: upload speed */
+"Upload" = "Partage";
+
+/* Torrent list column header */
+"Ratio" = "Ratio";
+
+/* Torrent list column header: estimated time of arrival */
+"ETA" = "ETA";
+
+/* Torrent list column header: date torrent was added */
+"Added" = "Ajouté";
+
+/* Torrent context menu item */
+"Move to…" = "Déplacer vers…";
+
+/* Torrent context menu / button: resume torrent */
+"Start" = "Démarrer";
+
+/* Torrent context menu / button: pause torrent */
+"Pause" = "Mettre en pause";
+
+/* Torrent context menu item */
+"Verify Local Data" = "Vérifier les données locales";
+
+/* Torrent context menu item */
+"Reannounce to Trackers" = "Réannoncer aux trackers";
+
+/* Torrent context menu item */
+"Reveal in Finder" = "Révéler dans le Finder";
+
+/* Torrent context menu item */
+"Copy Hash" = "Copier le hash";
+
+/* Torrent context menu / button: remove torrent */
+"Remove" = "Supprimer";
+
+/* Torrent context menu / button: remove torrent and delete files */
+"Remove and Delete Data" = "Supprimer et effacer les données";
+
+/* Empty state title when no torrents are present */
+"No Torrents" = "Aucun torrent";
+
+/* Empty state body when no torrents are present */
+"Add a .torrent file or magnet link\nto start downloading." = "Ajoutez un fichier .torrent ou un lien magnet\npour commencer à télécharger.";
+
+/* Empty state title when not connected to a server */
+"Not Connected" = "Non connecté";
+
+/* Empty state body when not connected to a server */
+"Select a server in the sidebar\nor check your connection." = "Sélectionnez un serveur dans la barre latérale\nou vérifiez votre connexion.";
+
+/* Empty state title when a connection error occurred */
+"Connection Error" = "Erreur de connexion";
+
+/* Progress cell prefix for verification state — keep %@ */
+"check. %@" = "vérif. %@";
+
+/* Detail panel tab label */
+"Info" = "Infos";
+
+/* Detail panel tab label */
+"Files" = "Fichiers";
+
+/* Detail panel tab label */
+"Peers" = "Pairs";
+
+/* Detail panel tab label */
+"Trackers" = "Trackers";
+
+/* Detail panel empty state title */
+"No Selection" = "Aucune sélection";
+
+/* Detail panel empty state body */
+"Select a torrent to view its details." = "Sélectionnez un torrent pour voir ses détails.";
+
+/* Detail panel button tooltip */
+"Remove torrent" = "Supprimer";
+
+/* Delete confirmation dialog title — keep %@ for torrent name */
+"Remove \"%@\"?" = "Supprimer \"%@\" ?";
+
+/* Delete confirmation dialog button: remove metadata only */
+"Remove Torrent" = "Supprimer le torrent";
+
+/* Cancel button */
+"Cancel" = "Annuler";
+
+/* Detail info section header: transfer statistics */
+"Transfer" = "Transfert";
+
+/* Detail info row label: current download speed */
+"↓ Download" = "↓ Téléchargement";
+
+/* Detail info row label: current upload speed */
+"↑ Upload" = "↑ Partage";
+
+/* Detail info row label: total bytes downloaded */
+"Downloaded" = "Téléchargé";
+
+/* Detail info row label: total bytes uploaded */
+"Sent" = "Envoyé";
+
+/* Detail info section header: file information */
+"File" = "Fichier";
+
+/* Detail info row label */
+"Remaining" = "Restant";
+
+/* Detail info row label: download directory */
+"Folder" = "Dossier";
+
+/* Detail info row label */
+"Connected Peers" = "Pairs connectés";
+
+/* Detail info row label */
+"Downloading from" = "En téléchargement de";
+
+/* Detail info row label */
+"Uploading to" = "En partage vers";
+
+/* Detail info section header */
+"Dates" = "Dates";
+
+/* Detail info row label */
+"Completed" = "Terminé";
+
+/* Detail info section header */
+"Information" = "Informations";
+
+/* Detail info row label: torrent hash */
+"Hash" = "Hash";
+
+/* Detail info row label */
+"Comment" = "Commentaire";
+
+/* Detail info row label */
+"Private" = "Privé";
+
+/* Detail info row label */
+"Status" = "Statut";
+
+/* Detail info row label: error message */
+"Error" = "Erreur";
+
+/* Boolean value */
+"Yes" = "Oui";
+
+/* Boolean value */
+"No" = "Non";
+
+/* Tooltip on copyable hash field */
+"Click to copy" = "Cliquer pour copier";
+
+/* Files tab empty state */
+"No file information available" = "Aucune information sur les fichiers disponible";
+
+/* Peers tab empty state */
+"No peers connected" = "Aucun pair connecté";
+
+/* Peer row: unknown BitTorrent client name */
+"Unknown client" = "Client inconnu";
+
+/* Tracker row: number of seeders — keep %lld */
+"%lld seeds" = "%lld en partage";
+
+/* Tracker row: number of leechers — keep %lld */
+"%lld leechers" = "%lld en téléchargement";
+
+/* Trackers tab empty state */
+"No trackers available" = "Aucun tracker disponible";
+
+/* Tracker row: prefix before countdown to next announce */
+"Next: " = "Prochain : ";
+
+/* Settings tab label */
+"General" = "Général";
+
+/* Settings tab label */
+"Bandwidth" = "Bande passante";
+
+/* Settings tab label */
+"Peers" = "Pairs";
+
+/* Settings tab label */
+"Queue" = "File d'attente";
+
+/* Settings section header: language picker */
+"Language" = "Langue";
+
+/* Language picker option: follow system locale */
+"System Default" = "Par défaut (système)";
+
+/* Alert title after changing language */
+"Restart Required" = "Redémarrage requis";
+
+/* Alert body after changing language */
+"Please restart Transmote to apply the language change." = "Veuillez redémarrer Transmote pour appliquer le changement de langue.";
+
+/* Alert button: relaunch app immediately */
+"Restart Now" = "Redémarrer maintenant";
+
+/* Alert button: dismiss and restart later */
+"Later" = "Plus tard";
+
+/* Settings section header */
+"Downloads" = "Téléchargements";
+
+/* Settings field label: destination folder for downloads */
+"Download folder" = "Dossier de téléchargement";
+
+/* Button to open a folder picker panel */
+"Choose…" = "Choisir…";
+
+/* Settings section header */
+"Refresh Interval" = "Actualisation";
+
+/* Refresh interval picker option */
+"Every 1 s" = "Toutes les 1 s";
+
+/* Refresh interval picker option */
+"Every 2 s" = "Toutes les 2 s";
+
+/* Refresh interval picker option */
+"Every 3 s" = "Toutes les 3 s";
+
+/* Refresh interval picker option */
+"Every 5 s" = "Toutes les 5 s";
+
+/* Refresh interval picker option */
+"Every 10 s" = "Toutes les 10 s";
+
+/* Refresh interval picker option */
+"Every 15 s" = "Toutes les 15 s";
+
+/* Refresh interval picker option */
+"Every 30 s" = "Toutes les 30 s";
+
+/* Settings section header: server information */
+"About the Server" = "À propos du serveur";
+
+/* Settings row label */
+"Transmission Version" = "Version Transmission";
+
+/* Settings row label */
+"RPC Version" = "Version RPC";
+
+/* Settings section header */
+"Global Speed" = "Vitesse globale";
+
+/* Settings toggle */
+"Limit Download" = "Limiter le téléchargement";
+
+/* Speed field label */
+"↓ Limit" = "↓ Limite";
+
+/* Settings toggle */
+"Limit Upload" = "Limiter le partage";
+
+/* Speed field label */
+"↑ Limit" = "↑ Limite";
+
+/* Settings section header */
+"Turtle Mode (alternative speed)" = "Mode tortue (vitesse alternative)";
+
+/* Settings toggle */
+"Enable Turtle Mode" = "Activer le mode tortue";
+
+/* Settings apply button */
+"Apply" = "Appliquer";
+
+/* Speed unit suffix */
+"MB/s" = "Mo/s";
+
+/* Settings section header: peer count limits */
+"Limits" = "Limites";
+
+/* Settings field label */
+"Max global peers" = "Pairs globaux max.";
+
+/* Settings field label */
+"Peers per torrent" = "Pairs par torrent";
+
+/* Settings section header */
+"Network" = "Réseau";
+
+/* Settings field label */
+"Incoming port" = "Port entrant";
+
+/* Settings toggle */
+"Random port on startup" = "Port aléatoire au démarrage";
+
+/* Settings toggle */
+"UPnP / NAT-PMP" = "UPnP / NAT-PMP";
+
+/* Settings picker label */
+"Encryption" = "Chiffrement";
+
+/* Encryption option */
+"Required" = "Requis";
+
+/* Encryption option */
+"Preferred" = "Préféré";
+
+/* Encryption option */
+"Tolerated" = "Toléré";
+
+/* Settings section header */
+"Download Queue" = "File de téléchargement";
+
+/* Settings toggle */
+"Limit simultaneous downloads" = "Limiter les téléchargements simultanés";
+
+/* Stepper label for max simultaneous downloads — keep %lld */
+"%lld max downloads" = "%lld téléchargements max.";
+
+/* Settings section header */
+"Seed Queue" = "File de partage";
+
+/* Settings toggle */
+"Limit simultaneous seeds" = "Limiter les partages simultanés";
+
+/* Stepper label for max simultaneous seeds — keep %lld */
+"%lld max seeds" = "%lld partages max.";
+
+/* Settings section header */
+"Auto-stop seed" = "Arrêt automatique du partage";
+
+/* Settings toggle */
+"Stop when ratio reaches" = "Arrêter quand le ratio atteint";
+
+/* Ratio field label */
+"Ratio" = "Ratio";
+
+/* Settings toggle */
+"Stop if idle since" = "Arrêter si inactif depuis";
+
+/* Stepper label for idle minutes — keep %lld */
+"%lld minutes" = "%lld minutes";
+
+/* Server edit sheet title: adding a new server */
+"New Server" = "Nouveau serveur";
+
+/* Server edit sheet title: editing an existing server */
+"Edit Server" = "Modifier le serveur";
+
+/* Server edit field label */
+"Host" = "Hôte";
+
+/* Server edit field label */
+"RPC Path" = "Chemin RPC";
+
+/* Server edit section header */
+"Authentication" = "Authentification";
+
+/* Server edit field label */
+"Username" = "Utilisateur";
+
+/* Server edit field label */
+"Password" = "Mot de passe";
+
+/* Server edit button: test connection */
+"Test Connection" = "Tester la connexion";
+
+/* Server edit button: connection test in progress */
+"Testing…" = "Test…";
+
+/* Sheet button: confirm adding a new server */
+"Add" = "Ajouter";
+
+/* Sheet button: save changes to existing server */
+"Save" = "Enregistrer";
+
+/* Connection test success message */
+"Connection successful!" = "Connexion réussie !";
+
+/* Add torrent sheet title */
+"Add Magnet Link" = "Ajouter un lien magnet";
+
+/* Add magnet field placeholder */
+"Magnet link or .torrent URL" = "Lien magnet ou URL .torrent";
+
+/* Add torrent sheet body text */
+"Open a .torrent file from Finder\nor drop it directly into the window." = "Ouvrez un fichier .torrent depuis le Finder\nou déposez-le directement dans la fenêtre.";
+
+/* Add torrent sheet button */
+"Choose a file…" = "Choisir un fichier…";
+
+/* Status bar menu item */
+"Open Transmote" = "Ouvrir Transmote";
+
+/* Status bar menu item */
+"Quit" = "Quitter";
+
+/* User notification title when a torrent finishes downloading */
+"Download Complete" = "Téléchargement terminé";
+
+/* Torrent menu command */
+"Start Selection" = "Démarrer la sélection";
+
+/* Torrent menu command */
+"Pause Selection" = "Mettre en pause la sélection";
+
+/* Torrent menu command */
+"Refresh" = "Rafraîchir";

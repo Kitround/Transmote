@@ -1,0 +1,2217 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "" : {
+
+    },
+    "—" : {
+      "shouldTranslate" : false
+    },
+    ".torrent files" : {
+      "comment" : "Settings row label: torrent file association",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fichiers .torrent"
+          }
+        }
+      }
+    },
+    "·" : {
+      "shouldTranslate" : false
+    },
+    "/" : {
+      "shouldTranslate" : false
+    },
+    "%lld" : {
+
+    },
+    "%lld leechers" : {
+      "comment" : "Tracker row: number of leechers — keep %lld",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld en téléchargement"
+          }
+        }
+      }
+    },
+    "%lld max downloads" : {
+      "comment" : "Stepper label for max simultaneous downloads — keep %lld",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld téléchargements max."
+          }
+        }
+      }
+    },
+    "%lld max seeds" : {
+      "comment" : "Stepper label for max simultaneous seeds — keep %lld",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld partages max."
+          }
+        }
+      }
+    },
+    "%lld minutes" : {
+      "shouldTranslate" : false
+    },
+    "%lld seeds" : {
+      "comment" : "Tracker row: number of seeders — keep %lld",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld en partage"
+          }
+        }
+      }
+    },
+    "↑ Upload" : {
+      "comment" : "Detail info row label: current upload speed",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "↑ Partage"
+          }
+        }
+      }
+    },
+    "↓ Download" : {
+      "comment" : "Detail info row label: current download speed",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "↓ Téléchargement"
+          }
+        }
+      }
+    },
+    "✓ Transmote est maintenant l'app par défaut pour les fichiers .torrent." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Transmote est maintenant l'app par défaut pour les fichiers .torrent."
+          }
+        }
+      }
+    },
+    "✓ Transmote est maintenant l'app par défaut pour les liens magnet." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "✓ Transmote est maintenant l'app par défaut pour les liens magnet."
+          }
+        }
+      }
+    },
+    "🌐" : {
+      "shouldTranslate" : false
+    },
+    "About the Server" : {
+      "comment" : "Settings section header: server information",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À propos du serveur"
+          }
+        }
+      }
+    },
+    "Add" : {
+      "comment" : "Sheet button: confirm adding a new server",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter"
+          }
+        }
+      }
+    },
+    "Add a .torrent file" : {
+      "comment" : "Toolbar button tooltip",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter un fichier .torrent"
+          }
+        }
+      }
+    },
+    "Add a .torrent file or magnet link\nto start downloading." : {
+      "comment" : "Empty state body when no torrents are present",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajoutez un fichier .torrent ou un lien magnet\npour commencer à télécharger."
+          }
+        }
+      }
+    },
+    "Add a magnet link" : {
+      "comment" : "Toolbar button tooltip",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter un lien magnet"
+          }
+        }
+      }
+    },
+    "Add a server" : {
+      "comment" : "Button below server list to add a new server",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter un serveur"
+          }
+        }
+      }
+    },
+    "Add File" : {
+      "comment" : "Toolbar button: add a .torrent file",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter un fichier"
+          }
+        }
+      }
+    },
+    "Add Magnet" : {
+      "comment" : "Toolbar button: add a magnet link",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter magnet"
+          }
+        }
+      }
+    },
+    "Add Magnet Link" : {
+      "comment" : "Add torrent sheet title",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter un lien magnet"
+          }
+        }
+      }
+    },
+    "Added" : {
+      "comment" : "Torrent list column header and detail info row: date torrent was added",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouté"
+          }
+        }
+      }
+    },
+    "All" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout"
+          }
+        }
+      }
+    },
+    "Apply" : {
+      "comment" : "Settings apply button",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appliquer"
+          }
+        }
+      }
+    },
+    "Authentication" : {
+      "comment" : "Server edit section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authentification"
+          }
+        }
+      }
+    },
+    "Authentication failed" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authentification échouée"
+          }
+        }
+      }
+    },
+    "Auto-stop seed" : {
+      "comment" : "Settings section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêt automatique du partage"
+          }
+        }
+      }
+    },
+    "Bandwidth" : {
+      "comment" : "Settings tab label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bande passante"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "comment" : "Cancel button",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuler"
+          }
+        }
+      }
+    },
+    "check. %@" : {
+      "comment" : "Progress cell prefix for verification state — keep %@",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vérif. %@"
+          }
+        }
+      }
+    },
+    "Checking" : {
+      "comment" : "Sidebar filter: show torrents being verified",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vérification"
+          }
+        }
+      }
+    },
+    "Choose a file…" : {
+      "comment" : "Add torrent sheet button",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisir un fichier…"
+          }
+        }
+      }
+    },
+    "Choose…" : {
+      "comment" : "Button to open a folder picker panel",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisir…"
+          }
+        }
+      }
+    },
+    "Clic droit sur un fichier .torrent → Ouvrir avec → Toujours ouvrir avec → Transmote." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clic droit sur un fichier .torrent → Ouvrir avec → Toujours ouvrir avec → Transmote."
+          }
+        }
+      }
+    },
+    "Click to copy" : {
+      "comment" : "Tooltip on copyable hash field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cliquer pour copier"
+          }
+        }
+      }
+    },
+    "Comment" : {
+      "comment" : "Detail info row label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Commentaire"
+          }
+        }
+      }
+    },
+    "Compact view" : {
+      "comment" : "Toolbar toggle label: switch to compact row view",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vue compacte"
+          }
+        }
+      }
+    },
+    "Completed" : {
+      "comment" : "Detail info row label: completion date",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminé"
+          }
+        }
+      }
+    },
+    "Connect" : {
+      "comment" : "Button to connect to a server",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connecter"
+          }
+        }
+      }
+    },
+    "Connect to server" : {
+      "comment" : "Server row context menu item",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se connecter"
+          }
+        }
+      }
+    },
+    "Connected Peers" : {
+      "comment" : "Detail info row label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pairs connectés"
+          }
+        }
+      }
+    },
+    "Connecting…" : {
+      "comment" : "Connection state: attempting to connect",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connexion…"
+          }
+        }
+      }
+    },
+    "Connection Error" : {
+      "comment" : "Empty state title when a connection error occurred",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur de connexion"
+          }
+        }
+      }
+    },
+    "Connection successful!" : {
+      "comment" : "Connection test success message",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connexion réussie !"
+          }
+        }
+      }
+    },
+    "Copy Hash" : {
+      "comment" : "Torrent context menu item",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copier le hash"
+          }
+        }
+      }
+    },
+    "Dates" : {
+      "comment" : "Detail info section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dates"
+          }
+        }
+      }
+    },
+    "Decoding error: %@" : {
+      "comment" : "RPCError: JSON decoding failed — keep %@",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur de décodage : %@"
+          }
+        }
+      }
+    },
+    "Default App" : {
+      "comment" : "Settings section header: default app associations",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App par défaut"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "comment" : "Server row context menu item",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer"
+          }
+        }
+      }
+    },
+    "Detail Panel" : {
+      "comment" : "Toolbar button label: inspector panel",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Panneau de détail"
+          }
+        }
+      }
+    },
+    "Detailed view" : {
+      "comment" : "Toolbar toggle label: switch to detailed row view",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vue détaillée"
+          }
+        }
+      }
+    },
+    "Disconnected" : {
+      "comment" : "Connection state: not connected to any server",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déconnecté"
+          }
+        }
+      }
+    },
+    "Download" : {
+      "comment" : "Torrent list column header: download speed",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Téléchargement"
+          }
+        }
+      }
+    },
+    "Download Complete" : {
+      "comment" : "User notification title when a torrent finishes downloading",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Téléchargement terminé"
+          }
+        }
+      }
+    },
+    "Download folder" : {
+      "comment" : "Settings field label: destination folder for downloads",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dossier de téléchargement"
+          }
+        }
+      }
+    },
+    "Download Queue" : {
+      "comment" : "Settings section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File de téléchargement"
+          }
+        }
+      }
+    },
+    "Downloaded" : {
+      "comment" : "Sidebar footer and detail info row: total data downloaded",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Téléchargé"
+          }
+        }
+      }
+    },
+    "Downloading" : {
+      "comment" : "Torrent status: actively downloading",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Téléchargement"
+          }
+        }
+      }
+    },
+    "Downloading from" : {
+      "comment" : "Detail info row label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En téléchargement de"
+          }
+        }
+      }
+    },
+    "Downloads" : {
+      "comment" : "Settings section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Téléchargements"
+          }
+        }
+      }
+    },
+    "Drop to add" : {
+      "comment" : "Drag-and-drop overlay label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déposer pour ajouter"
+          }
+        }
+      }
+    },
+    "Edit Server" : {
+      "comment" : "Server edit sheet title: editing an existing server",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifier le serveur"
+          }
+        }
+      }
+    },
+    "Edit…" : {
+      "comment" : "Server row context menu item",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifier…"
+          }
+        }
+      }
+    },
+    "Enable Turtle Mode" : {
+      "comment" : "Settings toggle",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer le mode tortue"
+          }
+        }
+      }
+    },
+    "Encryption" : {
+      "comment" : "Settings picker label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiffrement"
+          }
+        }
+      }
+    },
+    "English" : {
+      "shouldTranslate" : false
+    },
+    "Error" : {
+      "comment" : "Sidebar filter and detail info row label: error state",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur"
+          }
+        }
+      }
+    },
+    "Error: %@" : {
+      "comment" : "Connection state: error message — keep %@",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur : %@"
+          }
+        }
+      }
+    },
+    "ETA" : {
+      "comment" : "An abbreviation for \"Estimated Time of Arrival\".",
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durée"
+          }
+        }
+      }
+    },
+    "ETA %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ETA %@"
+          }
+        }
+      }
+    },
+    "Every 1 s" : {
+      "comment" : "Refresh interval picker option",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toutes les 1 s"
+          }
+        }
+      }
+    },
+    "Every 2 s" : {
+      "comment" : "Refresh interval picker option",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toutes les 2 s"
+          }
+        }
+      }
+    },
+    "Every 3 s" : {
+      "comment" : "Refresh interval picker option",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toutes les 3 s"
+          }
+        }
+      }
+    },
+    "Every 5 s" : {
+      "comment" : "Refresh interval picker option",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toutes les 5 s"
+          }
+        }
+      }
+    },
+    "Every 10 s" : {
+      "comment" : "Refresh interval picker option",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toutes les 10 s"
+          }
+        }
+      }
+    },
+    "Every 15 s" : {
+      "comment" : "Refresh interval picker option",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toutes les 15 s"
+          }
+        }
+      }
+    },
+    "Every 30 s" : {
+      "comment" : "Refresh interval picker option",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toutes les 30 s"
+          }
+        }
+      }
+    },
+    "File" : {
+      "comment" : "Detail info section header: file information",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fichier"
+          }
+        }
+      }
+    },
+    "Files" : {
+      "comment" : "Detail panel tab label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fichiers"
+          }
+        }
+      }
+    },
+    "Filters" : {
+      "comment" : "Sidebar section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtres"
+          }
+        }
+      }
+    },
+    "Folder" : {
+      "comment" : "Detail info row label: download directory",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dossier"
+          }
+        }
+      }
+    },
+    "Folders" : {
+      "comment" : "Sidebar section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dossiers"
+          }
+        }
+      }
+    },
+    "Français" : {
+      "shouldTranslate" : false
+    },
+    "General" : {
+      "comment" : "Settings tab label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Général"
+          }
+        }
+      }
+    },
+    "Global Speed" : {
+      "comment" : "Settings section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vitesse globale"
+          }
+        }
+      }
+    },
+    "Hash" : {
+      "shouldTranslate" : false
+    },
+    "Hide Detail" : {
+      "comment" : "Toolbar button label: hide inspector panel"
+    },
+    "Hide detail panel" : {
+      "comment" : "Toolbar button tooltip when panel is visible",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masquer le panneau de détail"
+          }
+        }
+      }
+    },
+    "High" : {
+      "comment" : "File priority level",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haute"
+          }
+        }
+      }
+    },
+    "Host" : {
+      "comment" : "Server edit field label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hôte"
+          }
+        }
+      }
+    },
+    "HTTPS" : {
+      "shouldTranslate" : false
+    },
+    "Incoming port" : {
+      "comment" : "Settings field label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Port entrant"
+          }
+        }
+      }
+    },
+    "Info" : {
+      "comment" : "Detail panel tab label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Infos"
+          }
+        }
+      }
+    },
+    "Information" : {
+      "comment" : "Detail info section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informations"
+          }
+        }
+      }
+    },
+    "Invalid server URL" : {
+      "comment" : "RPCError: the server URL is malformed",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL du serveur invalide"
+          }
+        }
+      }
+    },
+    "Language" : {
+      "comment" : "Settings section header: language picker",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langue"
+          }
+        }
+      }
+    },
+    "Later" : {
+      "comment" : "Alert button: dismiss and restart later",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plus tard"
+          }
+        }
+      }
+    },
+    "Limit Download" : {
+      "comment" : "Settings toggle",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limiter le téléchargement"
+          }
+        }
+      }
+    },
+    "Limit simultaneous downloads" : {
+      "comment" : "Settings toggle",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limiter les téléchargements simultanés"
+          }
+        }
+      }
+    },
+    "Limit simultaneous seeds" : {
+      "comment" : "Settings toggle",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limiter les partages simultanés"
+          }
+        }
+      }
+    },
+    "Limit Upload" : {
+      "comment" : "Settings toggle",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limiter le partage"
+          }
+        }
+      }
+    },
+    "Limits" : {
+      "comment" : "Settings section header: peer count limits",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limites"
+          }
+        }
+      }
+    },
+    "Low" : {
+      "comment" : "File priority level",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basse"
+          }
+        }
+      }
+    },
+    "Magnet link or .torrent URL" : {
+      "comment" : "Add magnet field placeholder",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lien magnet ou URL .torrent"
+          }
+        }
+      }
+    },
+    "Magnet links" : {
+      "comment" : "Settings row label: magnet link association",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liens magnets"
+          }
+        }
+      }
+    },
+    "magnet:?xt=urn:btih:…" : {
+      "shouldTranslate" : false
+    },
+    "Max global peers" : {
+      "comment" : "Settings field label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pairs globaux max."
+          }
+        }
+      }
+    },
+    "MB/s" : {
+      "comment" : "Speed unit suffix",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mo/s"
+          }
+        }
+      }
+    },
+    "Move to…" : {
+      "comment" : "Torrent context menu item",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déplacer vers…"
+          }
+        }
+      }
+    },
+    "Name" : {
+      "comment" : "Torrent list column header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nom"
+          }
+        }
+      }
+    },
+    "Network" : {
+      "comment" : "Settings section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réseau"
+          }
+        }
+      }
+    },
+    "Network error: %@" : {
+      "comment" : "RPCError: network request failed — keep %@",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur réseau : %@"
+          }
+        }
+      }
+    },
+    "New Server" : {
+      "comment" : "Server edit sheet title: adding a new server",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouveau serveur"
+          }
+        }
+      }
+    },
+    "Next: " : {
+      "comment" : "Tracker row: prefix before countdown to next announce",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prochain : "
+          }
+        }
+      }
+    },
+    "No" : {
+      "comment" : "Boolean value",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non"
+          }
+        }
+      }
+    },
+    "No file information available" : {
+      "comment" : "Files tab empty state",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune information sur les fichiers disponible"
+          }
+        }
+      }
+    },
+    "No peers connected" : {
+      "comment" : "Peers tab empty state",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun pair connecté"
+          }
+        }
+      }
+    },
+    "No Selection" : {
+      "comment" : "Detail panel empty state title",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune sélection"
+          }
+        }
+      }
+    },
+    "No Torrents" : {
+      "comment" : "Empty state title when no torrents are present",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun torrent"
+          }
+        }
+      }
+    },
+    "No trackers available" : {
+      "comment" : "Trackers tab empty state",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun tracker disponible"
+          }
+        }
+      }
+    },
+    "Normal" : {
+      "comment" : "File priority level",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normale"
+          }
+        }
+      }
+    },
+    "Not Connected" : {
+      "comment" : "Empty state title when not connected to a server",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non connecté"
+          }
+        }
+      }
+    },
+    "Not connected to a server" : {
+      "comment" : "RPCError: no active server connection",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non connecté à un serveur"
+          }
+        }
+      }
+    },
+    "Open a .torrent file from Finder\nor drop it directly into the window." : {
+      "comment" : "Add torrent sheet body text",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrez un fichier .torrent depuis le Finder\nou déposez-le directement dans la fenêtre."
+          }
+        }
+      }
+    },
+    "Open Transmote" : {
+      "comment" : "Status bar menu item",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir Transmote"
+          }
+        }
+      }
+    },
+    "Password" : {
+      "comment" : "Server edit field label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mot de passe"
+          }
+        }
+      }
+    },
+    "Pause" : {
+      "comment" : "Torrent context menu / button: pause torrent",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mettre en pause"
+          }
+        }
+      }
+    },
+    "Pause All" : {
+      "comment" : "Toolbar button: pause all torrents",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause tout"
+          }
+        }
+      }
+    },
+    "Pause all torrents" : {
+      "comment" : "Toolbar button tooltip",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mettre en pause tous les torrents"
+          }
+        }
+      }
+    },
+    "Pause Selection" : {
+      "comment" : "Torrent menu command",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mettre en pause la sélection"
+          }
+        }
+      }
+    },
+    "Paused" : {
+      "comment" : "Sidebar filter: show only paused torrents",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En pause"
+          }
+        }
+      }
+    },
+    "Peers" : {
+      "comment" : "Settings tab label, sidebar, and detail panel tab",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pairs"
+          }
+        }
+      }
+    },
+    "Peers per torrent" : {
+      "comment" : "Settings field label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pairs par torrent"
+          }
+        }
+      }
+    },
+    "Please restart Transmote to apply the language change." : {
+      "comment" : "Alert body after changing language",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veuillez redémarrer Transmote pour appliquer le changement de langue."
+          }
+        }
+      }
+    },
+    "Port" : {
+      "shouldTranslate" : false
+    },
+    "Pour les liens magnet : ouvrez un lien magnet dans Safari, choisissez Transmote dans la liste." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour les liens magnet : ouvrez un lien magnet dans Safari, choisissez Transmote dans la liste."
+          }
+        }
+      }
+    },
+    "Preferred" : {
+      "comment" : "Encryption option",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Préféré"
+          }
+        }
+      }
+    },
+    "Private" : {
+      "comment" : "Detail info row label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privé"
+          }
+        }
+      }
+    },
+    "Progress" : {
+      "comment" : "Torrent list column header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progression"
+          }
+        }
+      }
+    },
+    "Queue" : {
+      "comment" : "Settings tab label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File d'attente"
+          }
+        }
+      }
+    },
+    "Quit" : {
+      "comment" : "Status bar menu item",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitter"
+          }
+        }
+      }
+    },
+    "Random port on startup" : {
+      "comment" : "Settings toggle",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Port aléatoire au démarrage"
+          }
+        }
+      }
+    },
+    "Ratio" : {
+      "shouldTranslate" : false
+    },
+    "Reannounce to Trackers" : {
+      "comment" : "Torrent context menu item",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réannoncer aux trackers"
+          }
+        }
+      }
+    },
+    "Refresh" : {
+      "comment" : "Torrent menu command",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rafraîchir"
+          }
+        }
+      }
+    },
+    "Refresh Interval" : {
+      "comment" : "Settings section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualisation"
+          }
+        }
+      }
+    },
+    "Remaining" : {
+      "comment" : "Detail info row label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restant"
+          }
+        }
+      }
+    },
+    "Remove" : {
+      "comment" : "Torrent context menu / button: remove torrent",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer"
+          }
+        }
+      }
+    },
+    "Remove \"%@\"?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer \"%@\"?"
+          }
+        }
+      }
+    },
+    "Remove and Delete Data" : {
+      "comment" : "Delete confirmation dialog button: remove torrent and delete files",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer et effacer les données"
+          }
+        }
+      }
+    },
+    "Remove torrent" : {
+      "comment" : "Detail panel button tooltip",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer"
+          }
+        }
+      }
+    },
+    "Remove Torrent" : {
+      "comment" : "Delete confirmation dialog button: remove metadata only",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer le torrent"
+          }
+        }
+      }
+    },
+    "Required" : {
+      "comment" : "Encryption option",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Requis"
+          }
+        }
+      }
+    },
+    "Restart Now" : {
+      "comment" : "Alert button: relaunch app immediately",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redémarrer maintenant"
+          }
+        }
+      }
+    },
+    "Restart Required" : {
+      "comment" : "Alert title after changing language",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redémarrage requis"
+          }
+        }
+      }
+    },
+    "Retry" : {
+      "comment" : "A button that retries connecting to the server when an error occurs.",
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réessayer"
+          }
+        }
+      }
+    },
+    "Reveal in Finder" : {
+      "comment" : "Torrent context menu item",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Révéler dans le Finder"
+          }
+        }
+      }
+    },
+    "RPC Path" : {
+      "comment" : "Server edit field label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chemin RPC"
+          }
+        }
+      }
+    },
+    "RPC Version" : {
+      "comment" : "Settings row label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version RPC"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "comment" : "Sheet button: save changes to existing server",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer"
+          }
+        }
+      }
+    },
+    "Search" : {
+      "comment" : "Toolbar search field label"
+    },
+    "Search torrents" : {
+      "comment" : "Toolbar search field tooltip"
+    },
+    "Search…" : {
+      "comment" : "Torrent list search field placeholder",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rechercher…"
+          }
+        }
+      }
+    },
+    "Seed Queue" : {
+      "comment" : "Settings section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File de partage"
+          }
+        }
+      }
+    },
+    "Seeding" : {
+      "comment" : "Torrent status: actively seeding",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partage"
+          }
+        }
+      }
+    },
+    "Select a server in the sidebar\nor check your connection." : {
+      "comment" : "Empty state body when not connected to a server",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sélectionnez un serveur dans la barre latérale\nou vérifiez votre connexion."
+          }
+        }
+      }
+    },
+    "Select a torrent to view its details." : {
+      "comment" : "Detail panel empty state body",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sélectionnez un torrent pour voir ses détails."
+          }
+        }
+      }
+    },
+    "Sent" : {
+      "comment" : "Sidebar footer and detail info row: total data uploaded",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Envoyé"
+          }
+        }
+      }
+    },
+    "Server error: %@" : {
+      "comment" : "RPCError: server returned an error — keep %@",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur serveur : %@"
+          }
+        }
+      }
+    },
+    "Servers" : {
+      "comment" : "Sidebar section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serveurs"
+          }
+        }
+      }
+    },
+    "Session" : {
+      "comment" : "Sidebar footer: session stats section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session"
+          }
+        }
+      }
+    },
+    "Set as default" : {
+      "comment" : "Settings button: set Transmote as default handler",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Définir par défaut"
+          }
+        }
+      }
+    },
+    "Show Detail" : {
+      "comment" : "Toolbar button label: show inspector panel"
+    },
+    "Show detail panel" : {
+      "comment" : "Toolbar button tooltip when panel is hidden",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher le panneau de détail"
+          }
+        }
+      }
+    },
+    "Size" : {
+      "comment" : "Torrent list column header and detail info row label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taille"
+          }
+        }
+      }
+    },
+    "Skip" : {
+      "comment" : "File priority level: file is excluded from download",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ignorer"
+          }
+        }
+      }
+    },
+    "Start" : {
+      "comment" : "Torrent context menu / button: resume torrent",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrer"
+          }
+        }
+      }
+    },
+    "Start All" : {
+      "comment" : "Toolbar button: resume all torrents",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrer tout"
+          }
+        }
+      }
+    },
+    "Start all torrents" : {
+      "comment" : "Toolbar button tooltip",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrer tous les torrents"
+          }
+        }
+      }
+    },
+    "Start Selection" : {
+      "comment" : "Torrent menu command",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrer la sélection"
+          }
+        }
+      }
+    },
+    "Status" : {
+      "comment" : "Detail info row label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statut"
+          }
+        }
+      }
+    },
+    "Stop if idle since" : {
+      "comment" : "Settings toggle",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêter si inactif depuis"
+          }
+        }
+      }
+    },
+    "Stop when ratio reaches" : {
+      "comment" : "Settings toggle",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêter quand le ratio atteint"
+          }
+        }
+      }
+    },
+    "Stopped" : {
+      "comment" : "Torrent status: transfer has been stopped",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arrêté"
+          }
+        }
+      }
+    },
+    "Switch to compact view" : {
+      "comment" : "Toolbar toggle tooltip",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passer en vue compacte"
+          }
+        }
+      }
+    },
+    "Switch to detailed view" : {
+      "comment" : "Toolbar toggle tooltip",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passer en vue détaillée"
+          }
+        }
+      }
+    },
+    "System Default" : {
+      "comment" : "Language picker option: follow system locale",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par défaut (système)"
+          }
+        }
+      }
+    },
+    "Test Connection" : {
+      "comment" : "Server edit button: test connection",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tester la connexion"
+          }
+        }
+      }
+    },
+    "Testing…" : {
+      "comment" : "Server edit button: connection test in progress",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test…"
+          }
+        }
+      }
+    },
+    "Toggle alternative speed limit" : {
+      "comment" : "Toolbar button tooltip",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basculer la limite de vitesse alternative"
+          }
+        }
+      }
+    },
+    "Toggle detail panel" : {
+      "comment" : "Toolbar button tooltip: detail panel"
+    },
+    "Tolerated" : {
+      "comment" : "Encryption option",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toléré"
+          }
+        }
+      }
+    },
+    "Torrent" : {
+      "shouldTranslate" : false
+    },
+    "Transfer" : {
+      "comment" : "Detail info section header: transfer statistics",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transfert"
+          }
+        }
+      }
+    },
+    "Transmission Version" : {
+      "comment" : "Settings row label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version Transmission"
+          }
+        }
+      }
+    },
+    "Turtle mode" : {
+      "comment" : "Toolbar button label when turtle mode is inactive",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode tortue"
+          }
+        }
+      }
+    },
+    "Turtle Mode (alternative speed)" : {
+      "comment" : "Settings section header",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode tortue (vitesse alternative)"
+          }
+        }
+      }
+    },
+    "Turtle mode active" : {
+      "comment" : "Toolbar button label when turtle mode is active",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode tortue actif"
+          }
+        }
+      }
+    },
+    "Unknown client" : {
+      "comment" : "Peer row: unknown BitTorrent client name",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Client inconnu"
+          }
+        }
+      }
+    },
+    "Upload" : {
+      "comment" : "Torrent list column header: upload speed",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partage"
+          }
+        }
+      }
+    },
+    "Uploading to" : {
+      "comment" : "Detail info row label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En partage vers"
+          }
+        }
+      }
+    },
+    "UPnP / NAT-PMP" : {
+      "shouldTranslate" : false
+    },
+    "URL" : {
+      "shouldTranslate" : false
+    },
+    "Username" : {
+      "comment" : "Server edit field label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilisateur"
+          }
+        }
+      }
+    },
+    "Verify Local Data" : {
+      "comment" : "Torrent context menu item",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vérifier les données locales"
+          }
+        }
+      }
+    },
+    "Verifying" : {
+      "comment" : "Torrent status: hash verification in progress",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vérification"
+          }
+        }
+      }
+    },
+    "Waiting for Download" : {
+      "comment" : "Torrent status: queued for download",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En attente de téléchargement"
+          }
+        }
+      }
+    },
+    "Waiting for Verification" : {
+      "comment" : "Torrent status: queued for hash verification",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En attente de vérification"
+          }
+        }
+      }
+    },
+    "Waiting to Seed" : {
+      "comment" : "Torrent status: queued for seeding",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En attente de partage"
+          }
+        }
+      }
+    },
+    "Yes" : {
+      "comment" : "Boolean value",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oui"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.1"
+}

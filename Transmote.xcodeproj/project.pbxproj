@@ -1,0 +1,509 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8A1AF6BF2F7A760500595D7D /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 8A1AF6BE2F7A760500595D7D /* AppIcon.icon */; };
+		8AE1BE042F79DDF2000BDC2A /* TorrentCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AE1BE032F79DDF2000BDC2A /* TorrentCommands.swift */; };
+		8AF774C42F79DBBF00210BF6 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774BB2F79DBBF00210BF6 /* SidebarView.swift */; };
+		8AF774C52F79DBBF00210BF6 /* TorrentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774BD2F79DBBF00210BF6 /* TorrentDetailView.swift */; };
+		8AF774C72F79DBBF00210BF6 /* ServerEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774B92F79DBBF00210BF6 /* ServerEditView.swift */; };
+		8AF774C92F79DBBF00210BF6 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774A62F79DBBF00210BF6 /* Formatters.swift */; };
+		8AF774CA2F79DBBF00210BF6 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774A82F79DBBF00210BF6 /* Server.swift */; };
+		8AF774CB2F79DBBF00210BF6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774B62F79DBBF00210BF6 /* SettingsView.swift */; };
+		8AF774CC2F79DBBF00210BF6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774A32F79DBBF00210BF6 /* AppDelegate.swift */; };
+		8AF774CD2F79DBBF00210BF6 /* RPCMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774AC2F79DBBF00210BF6 /* RPCMethods.swift */; };
+		8AF774CE2F79DBBF00210BF6 /* TorrentListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774BF2F79DBBF00210BF6 /* TorrentListView.swift */; };
+		8AF774CF2F79DBBF00210BF6 /* Torrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774A92F79DBBF00210BF6 /* Torrent.swift */; };
+		8AF774D02F79DBBF00210BF6 /* TorrentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774B02F79DBBF00210BF6 /* TorrentStore.swift */; };
+		8AF774D12F79DBBF00210BF6 /* RPCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774AB2F79DBBF00210BF6 /* RPCClient.swift */; };
+		8AF774D32F79DBBF00210BF6 /* AddTorrentViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774B82F79DBBF00210BF6 /* AddTorrentViews.swift */; };
+		8AF774D42F79DBBF00210BF6 /* TransmoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774A42F79DBBF00210BF6 /* TransmoteApp.swift */; };
+		8AF774D62F79DBBF00210BF6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8AF774AF2F79DBBF00210BF6 /* README.md */; };
+		8AF774DA2F79DC2A00210BF6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774D82F79DC2A00210BF6 /* ContentView.swift */; };
+		8BF00001000000000000001A /* AppToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF00002000000000000001A /* AppToolbar.swift */; };
+		8AF774DC2F79DC2A00210BF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AF774D72F79DC2A00210BF6 /* Assets.xcassets */; };
+		8AF774E22F79DBBF00210BF6 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8AF774E12F79DBBF00210BF6 /* Localizable.xcstrings */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8A1AF6BE2F7A760500595D7D /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = SOURCE_ROOT; };
+		8AE1BE032F79DDF2000BDC2A /* TorrentCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentCommands.swift; sourceTree = "<group>"; };
+		8AE1BE052F79DFA3000BDC2A /* Transmote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Transmote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AF774A32F79DBBF00210BF6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8AF774A42F79DBBF00210BF6 /* TransmoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransmoteApp.swift; sourceTree = "<group>"; };
+		8AF774A62F79DBBF00210BF6 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		8AF774A82F79DBBF00210BF6 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		8AF774A92F79DBBF00210BF6 /* Torrent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Torrent.swift; sourceTree = "<group>"; };
+		8AF774AB2F79DBBF00210BF6 /* RPCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCClient.swift; sourceTree = "<group>"; };
+		8AF774AC2F79DBBF00210BF6 /* RPCMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCMethods.swift; sourceTree = "<group>"; };
+		8AF774AF2F79DBBF00210BF6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		8AF774B02F79DBBF00210BF6 /* TorrentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentStore.swift; sourceTree = "<group>"; };
+		8AF774B62F79DBBF00210BF6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		8AF774B82F79DBBF00210BF6 /* AddTorrentViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTorrentViews.swift; sourceTree = "<group>"; };
+		8AF774B92F79DBBF00210BF6 /* ServerEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerEditView.swift; sourceTree = "<group>"; };
+		8AF774BB2F79DBBF00210BF6 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		8AF774BD2F79DBBF00210BF6 /* TorrentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentDetailView.swift; sourceTree = "<group>"; };
+		8AF774BF2F79DBBF00210BF6 /* TorrentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentListView.swift; sourceTree = "<group>"; };
+		8AF774D72F79DC2A00210BF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8AF774D82F79DC2A00210BF6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		8BF00002000000000000001A /* AppToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppToolbar.swift; sourceTree = "<group>"; };
+		8AF774E12F79DBBF00210BF6 /* Localizable.xcstrings */ = {isa = PBXFileReference; path = Localizable.xcstrings; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8AF774922F79DB8900210BF6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8ADB75AC2F7B2D1000402AD8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8AE1BE052F79DFA3000BDC2A /* Transmote.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8AF7748C2F79DB8900210BF6 = {
+			isa = PBXGroup;
+			children = (
+				8A1AF6BE2F7A760500595D7D /* AppIcon.icon */,
+				8AF774A52F79DBBF00210BF6 /* App */,
+				8AF774A72F79DBBF00210BF6 /* Helpers */,
+				8AF774AA2F79DBBF00210BF6 /* Models */,
+				8AF774AD2F79DBBF00210BF6 /* Networking */,
+				8AF774AF2F79DBBF00210BF6 /* README.md */,
+				8AF774B12F79DBBF00210BF6 /* Store */,
+				8AF774C22F79DBBF00210BF6 /* Views */,
+				8AF774D72F79DC2A00210BF6 /* Assets.xcassets */,
+				8AF774E12F79DBBF00210BF6 /* Localizable.xcstrings */,
+				8ADB75AC2F7B2D1000402AD8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8AF774A52F79DBBF00210BF6 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				8AE1BE032F79DDF2000BDC2A /* TorrentCommands.swift */,
+				8AF774A32F79DBBF00210BF6 /* AppDelegate.swift */,
+				8AF774A42F79DBBF00210BF6 /* TransmoteApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		8AF774A72F79DBBF00210BF6 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8AF774A62F79DBBF00210BF6 /* Formatters.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		8AF774AA2F79DBBF00210BF6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8AF774A82F79DBBF00210BF6 /* Server.swift */,
+				8AF774A92F79DBBF00210BF6 /* Torrent.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8AF774AD2F79DBBF00210BF6 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				8AF774AB2F79DBBF00210BF6 /* RPCClient.swift */,
+				8AF774AC2F79DBBF00210BF6 /* RPCMethods.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		8AF774B12F79DBBF00210BF6 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				8AF774B02F79DBBF00210BF6 /* TorrentStore.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		8AF774B72F79DBBF00210BF6 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8AF774B62F79DBBF00210BF6 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		8AF774BA2F79DBBF00210BF6 /* Sheets */ = {
+			isa = PBXGroup;
+			children = (
+				8AF774B82F79DBBF00210BF6 /* AddTorrentViews.swift */,
+				8AF774B92F79DBBF00210BF6 /* ServerEditView.swift */,
+			);
+			path = Sheets;
+			sourceTree = "<group>";
+		};
+		8AF774BC2F79DBBF00210BF6 /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				8AF774BB2F79DBBF00210BF6 /* SidebarView.swift */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
+		8AF774BE2F79DBBF00210BF6 /* TorrentDetail */ = {
+			isa = PBXGroup;
+			children = (
+				8AF774BD2F79DBBF00210BF6 /* TorrentDetailView.swift */,
+			);
+			path = TorrentDetail;
+			sourceTree = "<group>";
+		};
+		8AF774C02F79DBBF00210BF6 /* TorrentList */ = {
+			isa = PBXGroup;
+			children = (
+				8AF774BF2F79DBBF00210BF6 /* TorrentListView.swift */,
+			);
+			path = TorrentList;
+			sourceTree = "<group>";
+		};
+		8AF774C22F79DBBF00210BF6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8AF774D82F79DC2A00210BF6 /* ContentView.swift */,
+				8BF00002000000000000001A /* AppToolbar.swift */,
+				8AF774B72F79DBBF00210BF6 /* Settings */,
+				8AF774BA2F79DBBF00210BF6 /* Sheets */,
+				8AF774BC2F79DBBF00210BF6 /* Sidebar */,
+				8AF774BE2F79DBBF00210BF6 /* TorrentDetail */,
+				8AF774C02F79DBBF00210BF6 /* TorrentList */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8AF774942F79DB8900210BF6 /* Transmote */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8AF774A02F79DB8A00210BF6 /* Build configuration list for PBXNativeTarget "Transmote" */;
+			buildPhases = (
+				8AF774912F79DB8900210BF6 /* Sources */,
+				8AF774922F79DB8900210BF6 /* Frameworks */,
+				8AF774932F79DB8900210BF6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Transmote;
+			packageProductDependencies = (
+			);
+			productName = Transmote;
+			productReference = 8AE1BE052F79DFA3000BDC2A /* Transmote.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8AF7748D2F79DB8900210BF6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2630;
+				LastUpgradeCheck = 2630;
+				TargetAttributes = {
+					8AF774942F79DB8900210BF6 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+				};
+			};
+			buildConfigurationList = 8AF774902F79DB8900210BF6 /* Build configuration list for PBXProject "Transmote" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				fr,
+			);
+			mainGroup = 8AF7748C2F79DB8900210BF6;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 8ADB75AC2F7B2D1000402AD8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8AF774942F79DB8900210BF6 /* Transmote */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8AF774932F79DB8900210BF6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AF774E22F79DBBF00210BF6 /* Localizable.xcstrings in Resources */,
+				8AF774DC2F79DC2A00210BF6 /* Assets.xcassets in Resources */,
+				8AF774D62F79DBBF00210BF6 /* README.md in Resources */,
+				8A1AF6BF2F7A760500595D7D /* AppIcon.icon in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8AF774912F79DB8900210BF6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AE1BE042F79DDF2000BDC2A /* TorrentCommands.swift in Sources */,
+				8AF774C42F79DBBF00210BF6 /* SidebarView.swift in Sources */,
+				8AF774C52F79DBBF00210BF6 /* TorrentDetailView.swift in Sources */,
+				8AF774C72F79DBBF00210BF6 /* ServerEditView.swift in Sources */,
+				8AF774C92F79DBBF00210BF6 /* Formatters.swift in Sources */,
+				8AF774CA2F79DBBF00210BF6 /* Server.swift in Sources */,
+				8AF774CB2F79DBBF00210BF6 /* SettingsView.swift in Sources */,
+				8AF774CC2F79DBBF00210BF6 /* AppDelegate.swift in Sources */,
+				8AF774CD2F79DBBF00210BF6 /* RPCMethods.swift in Sources */,
+				8AF774CE2F79DBBF00210BF6 /* TorrentListView.swift in Sources */,
+				8AF774CF2F79DBBF00210BF6 /* Torrent.swift in Sources */,
+				8AF774D02F79DBBF00210BF6 /* TorrentStore.swift in Sources */,
+				8AF774DA2F79DC2A00210BF6 /* ContentView.swift in Sources */,
+				8BF00001000000000000001A /* AppToolbar.swift in Sources */,
+				8AF774D12F79DBBF00210BF6 /* RPCClient.swift in Sources */,
+				8AF774D32F79DBBF00210BF6 /* AddTorrentViews.swift in Sources */,
+				8AF774D42F79DBBF00210BF6 /* TransmoteApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+
+/* Begin XCBuildConfiguration section */
+		8AF7749E2F79DB8A00210BF6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = H9DHW7DFWT;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.7;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8AF7749F2F79DB8A00210BF6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = H9DHW7DFWT;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.7;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		8AF774A12F79DB8A00210BF6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Transmote.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H9DHW7DFWT;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Transmote;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.krnd.Transmote;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		8AF774A22F79DB8A00210BF6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Transmote.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H9DHW7DFWT;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Transmote;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.krnd.Transmote;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8AF774902F79DB8900210BF6 /* Build configuration list for PBXProject "Transmote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AF7749E2F79DB8A00210BF6 /* Debug */,
+				8AF7749F2F79DB8A00210BF6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8AF774A02F79DB8A00210BF6 /* Build configuration list for PBXNativeTarget "Transmote" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AF774A12F79DB8A00210BF6 /* Debug */,
+				8AF774A22F79DB8A00210BF6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8AF7748D2F79DB8900210BF6 /* Project object */;
+}
