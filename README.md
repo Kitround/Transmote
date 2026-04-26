@@ -2,6 +2,8 @@
 
 A native macOS client for [Transmission](https://transmissionbt.com).
 
+<img width="1624" height="1014" alt="screenshot 2026-04-26 à 19 17 56" src="https://github.com/user-attachments/assets/cfad337c-db59-4f1d-bcae-d1c4ba7f751b" />
+
 ## Download
 
 Grab the latest `.zip` from the [Releases](https://github.com/Kitround/Transmote/releases) page.
