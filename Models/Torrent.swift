@@ -330,7 +330,16 @@ enum TorrentFilter: String, CaseIterable, Identifiable, Sendable {
 
     var id: String { rawValue }
 
-    var label: LocalizedStringKey { LocalizedStringKey(rawValue) }
+    var label: String {
+        switch self {
+        case .all:         return String(localized: "All")
+        case .downloading: return String(localized: "Downloading")
+        case .seeding:     return String(localized: "Seeding")
+        case .paused:      return String(localized: "Paused")
+        case .error:       return String(localized: "Error")
+        case .checking:    return String(localized: "Checking")
+        }
+    }
 
     var systemImage: String {
         switch self {

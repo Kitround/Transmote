@@ -2,9 +2,9 @@ import SwiftUI
 
 struct TorrentListView: View {
     @Environment(TorrentStore.self) private var store
+    var onOpenDetail: (() -> Void)? = nil
     @State private var sortOrder = [KeyPathComparator(\Torrent.addedDate, order: .reverse)]
     @AppStorage("compactMode") private var compactMode = false
-    @AppStorage("showDetail") private var showDetail = false
     @State private var columnCustomization = TorrentListView.loadColumnCustomization()
 
     var body: some View {
@@ -122,7 +122,7 @@ struct TorrentListView: View {
             torrentContextMenu(for: Array(ids))
         } primaryAction: { ids in
             guard !ids.isEmpty else { return }
-            showDetail.toggle()
+            onOpenDetail?()
         }
     }
 

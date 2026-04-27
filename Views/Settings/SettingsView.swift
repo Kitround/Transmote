@@ -165,7 +165,7 @@ struct GeneralSettingsTab: View {
         LSRegisterURL(Bundle.main.bundleURL as CFURL, true)
         let status = LSSetDefaultHandlerForURLScheme(scheme as CFString, bundleID)
         return status == noErr
-            ? String(localized: "✓ Transmote est maintenant l'app par défaut pour les liens magnet.")
+            ? String(localized: "✓ Transmote is now the default app for magnet links.")
             : manualInstructions(for: "magnet")
     }
 
@@ -177,15 +177,15 @@ struct GeneralSettingsTab: View {
         LSRegisterURL(Bundle.main.bundleURL as CFURL, true)
         let status = LSSetDefaultRoleHandlerForContentType(uti as CFString, .all, bundleID)
         return status == noErr
-            ? String(localized: "✓ Transmote est maintenant l'app par défaut pour les fichiers .torrent.")
+            ? String(localized: "✓ Transmote is now the default app for .torrent files.")
             : manualInstructions(for: ".torrent")
     }
 
     private func manualInstructions(for type: String) -> String {
         if type == "magnet" {
-            return String(localized: "Pour les liens magnet : ouvrez un lien magnet dans Safari, choisissez Transmote dans la liste.")
+            return String(localized: "For magnet links: open a magnet link in Safari, then choose Transmote from the list.")
         } else {
-            return String(localized: "Clic droit sur un fichier .torrent → Ouvrir avec → Toujours ouvrir avec → Transmote.")
+            return String(localized: "Right-click a .torrent file → Open With → Always Open With → Transmote.")
         }
     }
 }

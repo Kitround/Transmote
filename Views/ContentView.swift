@@ -19,7 +19,9 @@ struct ContentView: View {
             SidebarView()
                 .navigationSplitViewColumnWidth(min: 160, ideal: 200, max: 240)
         } detail: {
-            TorrentListView()
+            TorrentListView(onOpenDetail: {
+                DispatchQueue.main.async { withAnimation { showDetail = true } }
+            })
                 .navigationSplitViewColumnWidth(min: 400, ideal: 600)
                 .inspector(isPresented: $showDetail) {
                     TorrentDetailView()

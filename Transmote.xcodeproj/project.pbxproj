@@ -25,9 +25,9 @@
 		8AF774D42F79DBBF00210BF6 /* TransmoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774A42F79DBBF00210BF6 /* TransmoteApp.swift */; };
 		8AF774D62F79DBBF00210BF6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8AF774AF2F79DBBF00210BF6 /* README.md */; };
 		8AF774DA2F79DC2A00210BF6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF774D82F79DC2A00210BF6 /* ContentView.swift */; };
-		8BF00001000000000000001A /* AppToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF00002000000000000001A /* AppToolbar.swift */; };
 		8AF774DC2F79DC2A00210BF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AF774D72F79DC2A00210BF6 /* Assets.xcassets */; };
 		8AF774E22F79DBBF00210BF6 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8AF774E12F79DBBF00210BF6 /* Localizable.xcstrings */; };
+		8BF00001000000000000001A /* AppToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF00002000000000000001A /* AppToolbar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,8 +51,8 @@
 		8AF774BF2F79DBBF00210BF6 /* TorrentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentListView.swift; sourceTree = "<group>"; };
 		8AF774D72F79DC2A00210BF6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8AF774D82F79DC2A00210BF6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		8AF774E12F79DBBF00210BF6 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		8BF00002000000000000001A /* AppToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppToolbar.swift; sourceTree = "<group>"; };
-		8AF774E12F79DBBF00210BF6 /* Localizable.xcstrings */ = {isa = PBXFileReference; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,7 +288,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-
 /* Begin XCBuildConfiguration section */
 		8AF7749E2F79DB8A00210BF6 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -433,7 +432,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.krnd.Transmote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -469,7 +468,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.krnd.Transmote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;

@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-
+      "shouldTranslate" : false
     },
     "—" : {
       "shouldTranslate" : false
@@ -25,7 +25,7 @@
       "shouldTranslate" : false
     },
     "%lld" : {
-
+      "shouldTranslate" : false
     },
     "%lld leechers" : {
       "comment" : "Tracker row: number of leechers — keep %lld",
@@ -100,7 +100,8 @@
         }
       }
     },
-    "✓ Transmote est maintenant l'app par défaut pour les fichiers .torrent." : {
+    "✓ Transmote is now the default app for .torrent files." : {
+      "comment" : "Settings: default app success message for .torrent files",
       "extractionState" : "manual",
       "localizations" : {
         "fr" : {
@@ -111,7 +112,8 @@
         }
       }
     },
-    "✓ Transmote est maintenant l'app par défaut pour les liens magnet." : {
+    "✓ Transmote is now the default app for magnet links." : {
+      "comment" : "Settings: default app success message for magnet links",
       "extractionState" : "manual",
       "localizations" : {
         "fr" : {
@@ -239,12 +241,13 @@
       }
     },
     "All" : {
-      "extractionState" : "stale",
+      "comment" : "Sidebar filter: show all torrents",
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tout"
+            "value" : "Tous"
           }
         }
       }
@@ -360,7 +363,8 @@
         }
       }
     },
-    "Clic droit sur un fichier .torrent → Ouvrir avec → Toujours ouvrir avec → Transmote." : {
+    "Right-click a .torrent file → Open With → Always Open With → Transmote." : {
+      "comment" : "Settings: manual instructions when setting .torrent default fails",
       "extractionState" : "manual",
       "localizations" : {
         "fr" : {
@@ -927,7 +931,15 @@
       "shouldTranslate" : false
     },
     "Hide Detail" : {
-      "comment" : "Toolbar button label: hide inspector panel"
+      "comment" : "Toolbar button label: hide inspector panel",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cacher les détails"
+          }
+        }
+      }
     },
     "Hide detail panel" : {
       "comment" : "Toolbar button tooltip when panel is visible",
@@ -1442,7 +1454,8 @@
     "Port" : {
       "shouldTranslate" : false
     },
-    "Pour les liens magnet : ouvrez un lien magnet dans Safari, choisissez Transmote dans la liste." : {
+    "For magnet links: open a magnet link in Safari, then choose Transmote from the list." : {
+      "comment" : "Settings: manual instructions when setting magnet default fails",
       "extractionState" : "manual",
       "localizations" : {
         "fr" : {
@@ -1713,10 +1726,26 @@
       }
     },
     "Search" : {
-      "comment" : "Toolbar search field label"
+      "comment" : "Toolbar search field label",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rechercher"
+          }
+        }
+      }
     },
     "Search torrents" : {
-      "comment" : "Toolbar search field tooltip"
+      "comment" : "Toolbar search field tooltip",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rechercher un torrent"
+          }
+        }
+      }
     },
     "Search…" : {
       "comment" : "Torrent list search field placeholder",
@@ -1832,7 +1861,15 @@
       }
     },
     "Show Detail" : {
-      "comment" : "Toolbar button label: show inspector panel"
+      "comment" : "Toolbar button label: show inspector panel",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Montrer les détails"
+          }
+        }
+      }
     },
     "Show detail panel" : {
       "comment" : "Toolbar button tooltip when panel is hidden",
@@ -2025,7 +2062,15 @@
       }
     },
     "Toggle detail panel" : {
-      "comment" : "Toolbar button tooltip: detail panel"
+      "comment" : "Toolbar button tooltip: detail panel",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher le panneau"
+          }
+        }
+      }
     },
     "Tolerated" : {
       "comment" : "Encryption option",

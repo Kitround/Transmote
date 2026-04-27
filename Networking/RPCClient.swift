@@ -129,7 +129,7 @@ actor RPCClient {
         do {
             bodyData = try JSONEncoder().encode(RPCRequest(method: method, arguments: arguments))
         } catch {
-            throw RPCError.serverError("Encodage : \(error)")
+            throw RPCError.serverError("Encoding: \(error)")
         }
 
         var req = URLRequest(url: url)
@@ -161,7 +161,7 @@ actor RPCClient {
         }
 
         guard let http = resp as? HTTPURLResponse else {
-            throw RPCError.serverError("Réponse non HTTP")
+            throw RPCError.serverError("Non-HTTP response")
         }
 
         switch http.statusCode {
@@ -170,7 +170,7 @@ actor RPCClient {
         case 401, 403:
             throw RPCError.authenticationFailed
         case 409:
-            guard !isRetry else { throw RPCError.serverError("Session ID invalide après retry") }
+            guard !isRetry else { throw RPCError.serverError("Invalid session ID after retry") }
             if let id = http.allHeaderFields["X-Transmission-Session-Id"] as? String {
                 sessionID = id
             }

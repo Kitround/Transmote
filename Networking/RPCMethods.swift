@@ -158,7 +158,7 @@ extension RPCClient {
         guard r.isSuccess, let body = r.arguments else { throw RPCError.serverError(r.result) }
         if let t = body.torrentAdded     { return t }
         if let t = body.torrentDuplicate { return t }
-        throw RPCError.serverError("Aucun torrent retourné")
+        throw RPCError.serverError("No torrent returned")
     }
 
     // MARK: Torrent-set

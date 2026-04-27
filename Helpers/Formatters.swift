@@ -87,7 +87,7 @@ enum ProgressFormatter {
         let dl = ByteFormatter.size(downloaded)
         let tot = ByteFormatter.size(total)
         let pct = format(progress)
-        return "\(dl) sur \(tot) (\(pct))"
+        return "\(dl) of \(tot) (\(pct))"
     }
 }
 
