@@ -200,19 +200,31 @@ class TorrentStore {
     }
 
     private func fetchAll() async {
-        async let t: () = fetchTorrents()
+        async let t: () = refreshTorrents()
         async let s: () = fetchStats()
         _ = await (t, s)
     }
 
-    func fetchTorrents() async {
+    private func refreshTorrents() async {
         guard let client else { return }
+        let selectedID = selectedTorrentIDs.first
+        async let listTask = client.getTorrents()
+        async let detailTask = fetchDetailIfNeeded(id: selectedID, using: client)
         do {
-            let fetched = try await client.getTorrents()
+            var torrents = try await listTask
+            if let detail = await detailTask,
+               let idx = torrents.firstIndex(where: { $0.id == detail.id }) {
+                torrents[idx].files         = detail.files
+                torrents[idx].fileStats     = detail.fileStats
+                torrents[idx].peers         = detail.peers
+                torrents[idx].trackerStats  = detail.trackerStats
+                torrents[idx].wanted        = detail.wanted
+                torrents[idx].priorities    = detail.priorities
+            }
             await MainActor.run { [weak self] in
                 guard let self else { return }
-                self.detectCompletions(new: fetched)
-                self.torrents = fetched
+                self.detectCompletions(new: torrents)
+                self.torrents = torrents
             }
         } catch {
             if case .authenticationFailed = error as? RPCError {
@@ -222,6 +234,13 @@ class TorrentStore {
                 }
             }
         }
+    }
+
+    func refresh() async { await refreshTorrents() }
+
+    private func fetchDetailIfNeeded(id: Int?, using client: RPCClient) async -> Torrent? {
+        guard let id else { return nil }
+        return try? await client.getTorrentDetail(id: id)
     }
 
     func fetchStats() async {
@@ -254,19 +273,19 @@ class TorrentStore {
     func start(ids: [Int]) async {
         guard let client else { return }
         try? await client.startTorrents(ids: ids)
-        await fetchTorrents()
+        await refreshTorrents()
     }
 
     func stop(ids: [Int]) async {
         guard let client else { return }
         try? await client.stopTorrents(ids: ids)
-        await fetchTorrents()
+        await refreshTorrents()
     }
 
     func verify(ids: [Int]) async {
         guard let client else { return }
         try? await client.verifyTorrents(ids: ids)
-        await fetchTorrents()
+        await refreshTorrents()
     }
 
     func reannounce(ids: [Int]) async {
@@ -286,7 +305,7 @@ class TorrentStore {
     func addMagnet(_ magnetURL: String) async throws -> AddedTorrent {
         guard let client else { throw RPCError.notConnected }
         let result = try await client.addTorrentMagnet(magnetURL)
-        await fetchTorrents()
+        await refreshTorrents()
         return result
     }
 
@@ -295,20 +314,20 @@ class TorrentStore {
         let data = try Data(contentsOf: url)
         let base64 = data.base64EncodedString()
         let result = try await client.addTorrentFile(base64)
-        await fetchTorrents()
+        await refreshTorrents()
         return result
     }
 
     func startAll() async {
         guard let client else { return }
         try? await client.startAllTorrents()
-        await fetchTorrents()
+        await refreshTorrents()
     }
 
     func stopAll() async {
         guard let client else { return }
         try? await client.stopAllTorrents()
-        await fetchTorrents()
+        await refreshTorrents()
     }
 
     func toggleAltSpeed() async {
@@ -321,7 +340,7 @@ class TorrentStore {
     func setFilePriority(torrentID: Int, fileIndex: Int, priority: FilePriority) async {
         guard let client else { return }
         try? await client.setTorrentPriority(id: torrentID, fileIndices: [fileIndex], priority: priority)
-        await fetchTorrents()
+        await refreshTorrents()
     }
 
     func refreshSession() async {
@@ -380,6 +399,6 @@ class TorrentStore {
         for id in ids {
             try? await client.setTorrentLocation(id: id, location: path, move: true)
         }
-        await fetchTorrents()
+        await refreshTorrents()
     }
 }

@@ -32,7 +32,7 @@ struct TorrentCommands: Commands {
             Divider()
 
             Button("Refresh") {
-                Task { await store.fetchTorrents() }
+                Task { await store.refresh() }
             }
             .keyboardShortcut("r", modifiers: [.command, .shift])
         }

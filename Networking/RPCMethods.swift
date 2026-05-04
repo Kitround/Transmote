@@ -61,15 +61,20 @@ struct FreeSpaceArguments: Decodable, Sendable {
 }
 
 
-// MARK: - Fields constant
+// MARK: - Fields constants
 
-private nonisolated let kFields: [String] = [
+/// Light fields fetched for every torrent on each poll cycle.
+private nonisolated let kListFields: [String] = [
     "id", "name", "status", "totalSize", "downloadedEver", "uploadedEver",
     "rateDownload", "rateUpload", "eta", "percentDone", "uploadRatio",
     "peersConnected", "peersSendingToUs", "peersGettingFromUs",
     "addedDate", "doneDate", "downloadDir", "error", "errorString",
     "hashString", "comment", "isPrivate", "isFinished", "queuePosition",
-    "recheckProgress", "sizeWhenDone", "leftUntilDone", "activityDate",
+    "recheckProgress", "sizeWhenDone", "leftUntilDone", "activityDate"
+]
+
+/// Heavy fields fetched only for the selected torrent (detail panel).
+private nonisolated let kDetailFields: [String] = kListFields + [
     "trackerStats", "files", "fileStats", "peers", "wanted", "priorities"
 ]
 
@@ -80,16 +85,16 @@ extension RPCClient {
     // MARK: Torrent-get
 
     func getTorrents() async throws -> [Torrent] {
-        let args: [String: AnyCodable] = ["fields": AnyCodable(kFields)]
+        let args: [String: AnyCodable] = ["fields": AnyCodable(kListFields)]
         let r: RPCResponse<TorrentGetArguments> = try await request(
             method: "torrent-get", arguments: args, responseType: TorrentGetArguments.self)
         guard r.isSuccess, let body = r.arguments else { throw RPCError.serverError(r.result) }
         return body.torrents
     }
 
-    func getTorrent(id: Int) async throws -> Torrent? {
+    func getTorrentDetail(id: Int) async throws -> Torrent? {
         let args: [String: AnyCodable] = [
-            "fields": AnyCodable(kFields),
+            "fields": AnyCodable(kDetailFields),
             "ids":    AnyCodable([id])
         ]
         let r: RPCResponse<TorrentGetArguments> = try await request(
