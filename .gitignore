@@ -25,3 +25,5 @@ Icon?
 # Archives / exports
 *.xcarchive
 build/
+CLAUDE.md
+.claude/

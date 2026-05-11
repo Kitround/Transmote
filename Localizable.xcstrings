@@ -363,18 +363,6 @@
         }
       }
     },
-    "Right-click a .torrent file → Open With → Always Open With → Transmote." : {
-      "comment" : "Settings: manual instructions when setting .torrent default fails",
-      "extractionState" : "manual",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clic droit sur un fichier .torrent → Ouvrir avec → Toujours ouvrir avec → Transmote."
-          }
-        }
-      }
-    },
     "Click to copy" : {
       "comment" : "Tooltip on copyable hash field",
       "extractionState" : "manual",
@@ -846,6 +834,9 @@
         }
       }
     },
+    "Failed (code %d)." : {
+
+    },
     "File" : {
       "comment" : "Detail info section header: file information",
       "localizations" : {
@@ -898,6 +889,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dossiers"
+          }
+        }
+      }
+    },
+    "For magnet links: open a magnet link in Safari, then choose Transmote from the list." : {
+      "comment" : "Settings: manual instructions when setting magnet default fails",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour les liens magnet : ouvrez un lien magnet dans Safari, choisissez Transmote dans la liste."
           }
         }
       }
@@ -1454,18 +1457,6 @@
     "Port" : {
       "shouldTranslate" : false
     },
-    "For magnet links: open a magnet link in Safari, then choose Transmote from the list." : {
-      "comment" : "Settings: manual instructions when setting magnet default fails",
-      "extractionState" : "manual",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pour les liens magnet : ouvrez un lien magnet dans Safari, choisissez Transmote dans la liste."
-          }
-        }
-      }
-    },
     "Preferred" : {
       "comment" : "Encryption option",
       "localizations" : {
@@ -1688,6 +1679,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Révéler dans le Finder"
+          }
+        }
+      }
+    },
+    "Right-click a .torrent file → Open With → Always Open With → Transmote." : {
+      "comment" : "Settings: manual instructions when setting .torrent default fails",
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clic droit sur un fichier .torrent → Ouvrir avec → Toujours ouvrir avec → Transmote."
           }
         }
       }

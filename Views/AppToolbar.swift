@@ -107,7 +107,7 @@ final class AppToolbar: NSObject, NSToolbarDelegate {
     // MARK: - NSToolbarDelegate
 
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        [.startAll, .pauseAll, .flexibleSpace, .addFile, .addMagnet, .turtle, .detail, .compactMode, .search]
+        [.startAll, .pauseAll, .space, .addFile, .addMagnet, .flexibleSpace, .turtle, .space, .detail, .compactMode, .search]
     }
 
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
