@@ -6,7 +6,7 @@ struct ContentView: View {
     @Environment(TorrentStore.self) private var store
     @State private var appToolbar = AppToolbar()
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
-    @AppStorage("showDetail") private var showDetail: Bool = false
+    @State private var showDetail: Bool = false
     @AppStorage("compactMode") private var compactMode: Bool = false
     @State private var showAddMagnet = false
     @State private var showAddSheet = false
