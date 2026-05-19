@@ -110,10 +110,14 @@ actor RPCClient {
 
     init(config: ServerConfig) {
         self.serverConfig = config
-        let cfg = URLSessionConfiguration.default
+        let cfg = URLSessionConfiguration.ephemeral
         cfg.timeoutIntervalForRequest = 10
         cfg.timeoutIntervalForResource = 30
         self.urlSession = URLSession(configuration: cfg)
+    }
+
+    deinit {
+        urlSession.invalidateAndCancel()
     }
 
     // MARK: - Core request

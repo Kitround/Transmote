@@ -225,6 +225,8 @@ class TorrentStore {
                 guard let self else { return }
                 self.detectCompletions(new: torrents)
                 self.torrents = torrents
+                let activeIDs = Set(torrents.map(\.id))
+                self.previousStatuses = self.previousStatuses.filter { activeIDs.contains($0.key) }
             }
         } catch {
             if case .authenticationFailed = error as? RPCError {
