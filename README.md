@@ -1,6 +1,6 @@
 # Transmote
 
-A native macOS client for [Transmission](https://transmissionbt.com).
+A native macOS remote client for [Transmission](https://transmissionbt.com).
 
 <img width="1624" height="1014" alt="transmote" src="Ressources/screenshot-v2.png" />
 
