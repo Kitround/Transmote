@@ -241,8 +241,10 @@ struct Torrent: Identifiable, @unchecked Sendable {
 
     var addedDateFormatted: String {
         let date = Date(timeIntervalSince1970: TimeInterval(addedDate))
-        return RelativeDateTimeFormatter().localizedString(for: date, relativeTo: .now)
+        return Self.relativeFormatter.localizedString(for: date, relativeTo: .now)
     }
+
+    private static let relativeFormatter = RelativeDateTimeFormatter()
 
     var doneDateFormatted: String? {
         guard doneDate > 0 else { return nil }

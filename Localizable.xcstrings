@@ -2111,6 +2111,9 @@
         }
       }
     },
+    "Transmote" : {
+
+    },
     "Turtle mode" : {
       "comment" : "Toolbar button label when turtle mode is inactive",
       "localizations" : {

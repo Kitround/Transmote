@@ -6,7 +6,7 @@ struct TransmoteApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
-        WindowGroup {
+        Window("Transmote", id: "main") {
             ContentView()
                 .environment(store)
                 .frame(minWidth: 900, minHeight: 500)
