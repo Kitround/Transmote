@@ -119,6 +119,11 @@ actor RPCClient {
         let cfg = URLSessionConfiguration.ephemeral
         cfg.timeoutIntervalForRequest = 10
         cfg.timeoutIntervalForResource = 30
+        cfg.urlCache = nil
+        cfg.urlCredentialStorage = nil
+        cfg.httpCookieStorage = nil
+        cfg.httpShouldSetCookies = false
+        cfg.requestCachePolicy = .reloadIgnoringLocalCacheData
         self.urlSession = URLSession(configuration: cfg)
     }
 

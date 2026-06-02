@@ -9,6 +9,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         setupStatusBar()
         requestNotificationPermission()
+        observeWindowVisibility()
+    }
+
+    // MARK: - Window visibility tracking
+
+    private func observeWindowVisibility() {
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSApplication.didHideNotification,        object: nil)
+        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSApplication.didUnhideNotification,      object: nil)
+        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSWindow.didMiniaturizeNotification,      object: nil)
+        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSWindow.didDeminiaturizeNotification,    object: nil)
+        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSWindow.willCloseNotification,           object: nil)
+        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSWindow.didBecomeKeyNotification,        object: nil)
+        nc.addObserver(self, selector: #selector(appActiveChanged),        name: NSApplication.didBecomeActiveNotification, object: nil)
+        nc.addObserver(self, selector: #selector(appActiveChanged),        name: NSApplication.didResignActiveNotification, object: nil)
+    }
+
+    @objc private func windowVisibilityChanged() {
+        let visible = NSApp.windows.contains { w in
+            w.isVisible && !w.isMiniaturized && w.styleMask.contains(.titled)
+        }
+        store?.isWindowVisible = visible
+    }
+
+    @objc private func appActiveChanged() {
+        store?.isAppActive = NSApp.isActive
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -43,12 +69,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem?.menu = statusMenu
     }
 
+    private var lastStatusTitle: String = ""
+
     func updateStatusBarTitle(download: Int, upload: Int) {
+        let dl = ByteFormatter.transferRate(download)
+        let ul = ByteFormatter.transferRate(upload)
+        let title = " ↓\(dl) ↑\(ul)"
         DispatchQueue.main.async { [weak self] in
-            guard let button = self?.statusItem?.button else { return }
-            let dl = ByteFormatter.transferRate(download)
-            let ul = ByteFormatter.transferRate(upload)
-            button.title = " ↓\(dl) ↑\(ul)"
+            guard let self, let button = self.statusItem?.button else { return }
+            guard title != self.lastStatusTitle else { return }
+            self.lastStatusTitle = title
+            button.title = title
         }
     }
 
@@ -69,6 +100,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         content.body = name
         content.sound = .default
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
-        UNUserNotificationCenter.current().add(request)
+        let center = UNUserNotificationCenter.current()
+        center.add(request)
+        // Trim delivered notifications history to keep memory bounded.
+        center.getDeliveredNotifications { delivered in
+            guard delivered.count > 20 else { return }
+            let oldIDs = delivered
+                .sorted { $0.date < $1.date }
+                .prefix(delivered.count - 20)
+                .map(\.request.identifier)
+            center.removeDeliveredNotifications(withIdentifiers: oldIDs)
+        }
     }
 }

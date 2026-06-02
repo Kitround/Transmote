@@ -35,6 +35,15 @@ final class AppToolbar: NSObject, NSToolbarDelegate {
     private var showDetail  = false
     private var compactMode = false
 
+    // Cached NSImages — avoid rebuilding symbol images on every state sync.
+    private static let turtleOff: NSImage? = NSImage(systemSymbolName: "tortoise", accessibilityDescription: nil)
+    private static let turtleOn: NSImage? = {
+        guard let base = NSImage(systemSymbolName: "tortoise.fill", accessibilityDescription: nil) else { return nil }
+        return base.withSymbolConfiguration(.init(paletteColors: [.systemBlue]))
+    }()
+    private static let compactOn: NSImage? = NSImage(systemSymbolName: "list.bullet.indent", accessibilityDescription: nil)
+    private static let compactOff: NSImage? = NSImage(systemSymbolName: "list.dash", accessibilityDescription: nil)
+
     override init() {
         toolbar = NSToolbar(identifier: "com.transmote.main")
         super.init()
@@ -71,16 +80,11 @@ final class AppToolbar: NSObject, NSToolbarDelegate {
 
         case .turtle:
             item.isEnabled = isConnected
-            let symbol = isAltSpeed ? "tortoise.fill" : "tortoise"
             let label  = isAltSpeed
                 ? NSLocalizedString("Turtle mode active", comment: "Toolbar button label when turtle mode is active")
                 : NSLocalizedString("Turtle mode", comment: "Toolbar button label when turtle mode is inactive")
             item.label = label
-            if let base = NSImage(systemSymbolName: symbol, accessibilityDescription: label) {
-                item.image = isAltSpeed
-                    ? base.withSymbolConfiguration(.init(paletteColors: [.systemBlue]))
-                    : base
-            }
+            item.image = isAltSpeed ? Self.turtleOn : Self.turtleOff
 
         case .detail:
             item.label = showDetail
@@ -88,7 +92,6 @@ final class AppToolbar: NSObject, NSToolbarDelegate {
                 : NSLocalizedString("Show Detail", comment: "Toolbar button label: show inspector panel")
 
         case .compactMode:
-            let symbol = compactMode ? "list.bullet.indent" : "list.dash"
             let label = compactMode
                 ? NSLocalizedString("Detailed view", comment: "Toolbar toggle label: switch to detailed row view")
                 : NSLocalizedString("Compact view", comment: "Toolbar toggle label: switch to compact row view")
@@ -97,7 +100,7 @@ final class AppToolbar: NSObject, NSToolbarDelegate {
                 : NSLocalizedString("Switch to compact view", comment: "Toolbar toggle tooltip")
             item.label   = label
             item.toolTip = tooltip
-            item.image   = NSImage(systemSymbolName: symbol, accessibilityDescription: label)
+            item.image   = compactMode ? Self.compactOn : Self.compactOff
 
         default:
             break
@@ -209,16 +212,14 @@ struct ToolbarInstaller: NSViewRepresentable {
 
     func makeNSView(context: Context) -> NSView {
         let view = NSView()
-        DispatchQueue.main.async {
-            view.window?.toolbar = toolbar
+        DispatchQueue.main.async { [weak view] in
+            view?.window?.toolbar = toolbar
         }
         return view
     }
 
     func updateNSView(_ view: NSView, context: Context) {
-        DispatchQueue.main.async {
-            guard view.window?.toolbar !== toolbar else { return }
-            view.window?.toolbar = toolbar
-        }
+        guard view.window?.toolbar !== toolbar else { return }
+        view.window?.toolbar = toolbar
     }
 }

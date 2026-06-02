@@ -40,6 +40,8 @@ class TorrentStore {
     var servers: [ServerConfig] = []
     var activeServerID: UUID?
     var isAltSpeedEnabled: Bool = false
+    var isWindowVisible: Bool = true
+    var isAppActive: Bool = true
 
     var pollingInterval: TimeInterval {
         get { UserDefaults.standard.double(forKey: "pollingInterval").isZero ? 3 : UserDefaults.standard.double(forKey: "pollingInterval") }
@@ -188,8 +190,20 @@ class TorrentStore {
         pollingTask = Task { [weak self] in
             guard let self else { return }
             while !Task.isCancelled {
-                await self.fetchAll()
-                try? await Task.sleep(for: .seconds(self.pollingInterval))
+                let visible = self.isWindowVisible
+                let active  = self.isAppActive
+                if visible {
+                    await self.fetchAll()
+                } else {
+                    await self.fetchStats()
+                }
+                let interval: TimeInterval
+                switch (visible, active) {
+                case (true,  true):  interval = self.pollingInterval               // foreground
+                case (true,  false): interval = max(self.pollingInterval * 3, 10)  // visible but not focused
+                case (false, _):     interval = max(self.pollingInterval * 5, 15)  // hidden/minimized
+                }
+                try? await Task.sleep(for: .seconds(interval))
             }
         }
     }
