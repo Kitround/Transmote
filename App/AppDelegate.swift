@@ -1,5 +1,5 @@
 import AppKit
-import UserNotifications
+@preconcurrency import UserNotifications
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
@@ -105,16 +105,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         content.body = name
         content.sound = .default
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
-        let center = UNUserNotificationCenter.current()
-        center.add(request)
+        UNUserNotificationCenter.current().add(request)
         // Trim delivered notifications history to keep memory bounded.
-        center.getDeliveredNotifications { delivered in
+        UNUserNotificationCenter.current().getDeliveredNotifications { delivered in
             guard delivered.count > 20 else { return }
             let oldIDs = delivered
                 .sorted { $0.date < $1.date }
                 .prefix(delivered.count - 20)
                 .map(\.request.identifier)
-            center.removeDeliveredNotifications(withIdentifiers: oldIDs)
+            UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: oldIDs)
         }
     }
 }
