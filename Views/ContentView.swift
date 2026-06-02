@@ -4,7 +4,6 @@ import AppKit
 
 struct ContentView: View {
     @Environment(TorrentStore.self) private var store
-    @State private var appToolbar = AppToolbar()
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
     @State private var showDetail: Bool = false
     @AppStorage("compactMode") private var compactMode: Bool = false
@@ -28,16 +27,75 @@ struct ContentView: View {
                         .inspectorColumnWidth(min: 300, ideal: 360, max: 480)
                 }
         }
-        .background(ToolbarInstaller(toolbar: appToolbar.toolbar))
+        .searchable(text: $store.searchText, placement: .toolbar, prompt: Text("Search\u{2026}"))
+        .toolbar(id: "transmote.main") {
+            ToolbarItem(id: "startAll", placement: .primaryAction) {
+                Button {
+                    Task { await store.startAll() }
+                } label: {
+                    Label("Start All", systemImage: "play.fill")
+                }
+                .help("Start all torrents")
+                .disabled(!store.connectionState.isConnected)
+            }
+            ToolbarItem(id: "pauseAll", placement: .primaryAction) {
+                Button {
+                    Task { await store.stopAll() }
+                } label: {
+                    Label("Pause All", systemImage: "pause.fill")
+                }
+                .help("Pause all torrents")
+                .disabled(!store.connectionState.isConnected)
+            }
+            ToolbarItem(id: "addFile", placement: .primaryAction) {
+                Button {
+                    openFilePicker()
+                } label: {
+                    Label("Add File", systemImage: "plus.circle")
+                }
+                .help("Add a .torrent file")
+            }
+            ToolbarItem(id: "addMagnet", placement: .primaryAction) {
+                Button {
+                    showAddMagnet = true
+                } label: {
+                    Label("Add Magnet", systemImage: "link.badge.plus")
+                }
+                .help("Add a magnet link")
+            }
+            ToolbarItem(id: "turtle", placement: .primaryAction) {
+                Button {
+                    Task { await store.toggleAltSpeed() }
+                } label: {
+                    Label(store.isAltSpeedEnabled ? "Turtle mode active" : "Turtle mode",
+                          systemImage: store.isAltSpeedEnabled ? "tortoise.fill" : "tortoise")
+                }
+                .help("Toggle alternative speed limit")
+                .disabled(!store.connectionState.isConnected)
+                .foregroundStyle(store.isAltSpeedEnabled ? Color.accentColor : Color.primary)
+            }
+            ToolbarItem(id: "compactMode", placement: .primaryAction) {
+                Button {
+                    compactMode.toggle()
+                } label: {
+                    Label(compactMode ? "Detailed view" : "Compact view",
+                          systemImage: compactMode ? "list.bullet.indent" : "list.dash")
+                }
+                .help(compactMode ? "Switch to detailed view" : "Switch to compact view")
+            }
+            ToolbarItem(id: "detail", placement: .primaryAction) {
+                Button {
+                    withAnimation { showDetail.toggle() }
+                } label: {
+                    Label(showDetail ? "Hide Detail" : "Show Detail",
+                          systemImage: "sidebar.trailing")
+                }
+                .help("Toggle detail panel")
+            }
+        }
         .onAppear {
             Task { await store.connectToActiveServer() }
-            setupToolbar()
         }
-        .onChange(of: store.connectionState.isConnected) { _, _ in syncToolbar() }
-        .onChange(of: store.isAltSpeedEnabled)           { _, _ in syncToolbar() }
-        .onChange(of: showDetail)                        { _, _ in syncToolbar() }
-        .onChange(of: compactMode)                       { _, _ in syncToolbar() }
-        .onChange(of: store.searchText)                  { _, text in appToolbar.updateSearchText(text) }
         .onDrop(of: [.fileURL, .url], isTargeted: $dragOver) { providers in
             handleDrop(providers: providers)
         }
@@ -63,29 +121,6 @@ struct ContentView: View {
         .sheet(isPresented: $showAddSheet) {
             AddTorrentSheetView()
         }
-    }
-
-    // MARK: - Toolbar Setup
-
-    private func setupToolbar() {
-        appToolbar.onStartAll      = { Task { await store.startAll() } }
-        appToolbar.onPauseAll      = { Task { await store.stopAll() } }
-        appToolbar.onAddFile       = { openFilePicker() }
-        appToolbar.onAddMagnet     = { showAddMagnet = true }
-        appToolbar.onToggleTurtle  = { Task { await store.toggleAltSpeed() } }
-        appToolbar.onToggleDetail  = { withAnimation { showDetail.toggle() } }
-        appToolbar.onToggleCompact = { compactMode.toggle() }
-        appToolbar.onSearch        = { store.searchText = $0 }
-        syncToolbar()
-    }
-
-    private func syncToolbar() {
-        appToolbar.update(
-            connected:   store.connectionState.isConnected,
-            altSpeed:    store.isAltSpeedEnabled,
-            showDetail:  showDetail,
-            compactMode: compactMode
-        )
     }
 
     // MARK: - Drop / File
