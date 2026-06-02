@@ -192,11 +192,8 @@ class TorrentStore {
             while !Task.isCancelled {
                 let visible = self.isWindowVisible
                 let active  = self.isAppActive
-                if visible {
-                    await self.fetchAll()
-                } else {
-                    await self.fetchStats()
-                }
+                // Always full fetch so completion notifications still fire when hidden.
+                await self.fetchAll()
                 let interval: TimeInterval
                 switch (visible, active) {
                 case (true,  true):  interval = self.pollingInterval               // foreground
