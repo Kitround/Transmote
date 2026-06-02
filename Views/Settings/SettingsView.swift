@@ -1,6 +1,6 @@
 import SwiftUI
 import UniformTypeIdentifiers
-import CoreServices
+import AppKit
 
 struct SettingsView: View {
     @Environment(TorrentStore.self) private var store
@@ -65,7 +65,7 @@ struct GeneralSettingsTab: View {
                     Text("Magnet links")
                     Spacer()
                     Button("Set as default") {
-                        defaultAppMessage = setDefault(forScheme: "magnet")
+                        setDefaultScheme("magnet")
                     }
                     .buttonStyle(.bordered)
                 }
@@ -73,7 +73,7 @@ struct GeneralSettingsTab: View {
                     Text(".torrent files")
                     Spacer()
                     Button("Set as default") {
-                        defaultAppMessage = setDefault(forUTI: "org.bittorrent.torrent")
+                        setDefaultContentType("org.bittorrent.torrent")
                     }
                     .buttonStyle(.bordered)
                 }
@@ -157,31 +157,33 @@ struct GeneralSettingsTab: View {
         .padding()
     }
 
-    @discardableResult
-    private func setDefault(forScheme scheme: String) -> String {
-        guard let bundleID = Bundle.main.bundleIdentifier as CFString? else { return "" }
-        LSRegisterURL(Bundle.main.bundleURL as CFURL, true)
-        let status = LSSetDefaultHandlerForURLScheme(scheme as CFString, bundleID)
-        return status == noErr
-            ? String(localized: "✓ Transmote is now the default app for magnet links.")
-            : String(localized: "Failed (code \(status)).")
+    private func setDefaultScheme(_ scheme: String) {
+        let appURL = Bundle.main.bundleURL
+        NSWorkspace.shared.setDefaultApplication(at: appURL, toOpenURLsWithScheme: scheme) { error in
+            Task { @MainActor in
+                if let error {
+                    defaultAppMessage = String(localized: "Failed: \(error.localizedDescription)")
+                } else {
+                    defaultAppMessage = String(localized: "✓ Transmote is now the default app for magnet links.")
+                }
+            }
+        }
     }
 
-    @discardableResult
-    private func setDefault(forUTI uti: String) -> String {
-        guard let bundleID = Bundle.main.bundleIdentifier as CFString? else { return "" }
-        LSRegisterURL(Bundle.main.bundleURL as CFURL, true)
-        let status = LSSetDefaultRoleHandlerForContentType(uti as CFString, .all, bundleID)
-        return status == noErr
-            ? String(localized: "✓ Transmote is now the default app for .torrent files.")
-            : String(localized: "Failed (code \(status)).")
-    }
-
-    private func manualInstructions(for type: String) -> String {
-        if type == "magnet" {
-            return String(localized: "For magnet links: open a magnet link in Safari, then choose Transmote from the list.")
-        } else {
-            return String(localized: "Right-click a .torrent file → Open With → Always Open With → Transmote.")
+    private func setDefaultContentType(_ identifier: String) {
+        guard let type = UTType(identifier) else {
+            defaultAppMessage = String(localized: "Failed: unknown content type.")
+            return
+        }
+        let appURL = Bundle.main.bundleURL
+        NSWorkspace.shared.setDefaultApplication(at: appURL, toOpen: type) { error in
+            Task { @MainActor in
+                if let error {
+                    defaultAppMessage = String(localized: "Failed: \(error.localizedDescription)")
+                } else {
+                    defaultAppMessage = String(localized: "✓ Transmote is now the default app for .torrent files.")
+                }
+            }
         }
     }
 }

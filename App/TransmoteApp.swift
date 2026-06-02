@@ -11,8 +11,13 @@ struct TransmoteApp: App {
                 .environment(store)
                 .frame(minWidth: 900, minHeight: 500)
                 .onAppear {
-                    NSWindow.allowsAutomaticWindowTabbing = false
                     appDelegate.store = store
+                }
+                .onOpenURL { url in
+                    NSApp.activate(ignoringOtherApps: true)
+                    NSApp.windows.first { $0.styleMask.contains(.titled) }?
+                        .makeKeyAndOrderFront(nil)
+                    appDelegate.handleIncoming(url: url)
                 }
         }
         .windowStyle(.titleBar)

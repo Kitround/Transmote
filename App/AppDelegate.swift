@@ -1,27 +1,54 @@
 import AppKit
 import UserNotifications
 
-class AppDelegate: NSObject, NSApplicationDelegate {
+@MainActor
+final class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem?
     var statusMenu: NSMenu?
     weak var store: TorrentStore?
+    private var lastStatusTitle: String = ""
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        NSWindow.allowsAutomaticWindowTabbing = false
         setupStatusBar()
         requestNotificationPermission()
         observeWindowVisibility()
+    }
+
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        false
+    }
+
+    // MARK: - URL / File handling
+    //
+    // Kept as a fallback. The modern `.onOpenURL` modifier on the Window
+    // scene in TransmoteApp handles the same URLs without depending on
+    // this legacy NSApplicationDelegate hook.
+    func application(_ application: NSApplication, open urls: [URL]) {
+        showMainWindow()
+        for url in urls {
+            handleIncoming(url: url)
+        }
+    }
+
+    func handleIncoming(url: URL) {
+        if url.scheme == "magnet" {
+            Task { try? await store?.addMagnet(url.absoluteString) }
+        } else if url.pathExtension.lowercased() == "torrent" {
+            Task { try? await store?.addFile(at: url) }
+        }
     }
 
     // MARK: - Window visibility tracking
 
     private func observeWindowVisibility() {
         let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSApplication.didHideNotification,        object: nil)
-        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSApplication.didUnhideNotification,      object: nil)
-        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSWindow.didMiniaturizeNotification,      object: nil)
-        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSWindow.didDeminiaturizeNotification,    object: nil)
-        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSWindow.willCloseNotification,           object: nil)
-        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSWindow.didBecomeKeyNotification,        object: nil)
+        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSApplication.didHideNotification,         object: nil)
+        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSApplication.didUnhideNotification,       object: nil)
+        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSWindow.didMiniaturizeNotification,       object: nil)
+        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSWindow.didDeminiaturizeNotification,     object: nil)
+        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSWindow.willCloseNotification,            object: nil)
+        nc.addObserver(self, selector: #selector(windowVisibilityChanged), name: NSWindow.didBecomeKeyNotification,         object: nil)
         nc.addObserver(self, selector: #selector(appActiveChanged),        name: NSApplication.didBecomeActiveNotification, object: nil)
         nc.addObserver(self, selector: #selector(appActiveChanged),        name: NSApplication.didResignActiveNotification, object: nil)
     }
@@ -35,23 +62,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc private func appActiveChanged() {
         store?.isAppActive = NSApp.isActive
-    }
-
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        false
-    }
-
-    // MARK: - URL / File handling
-
-    func application(_ application: NSApplication, open urls: [URL]) {
-        showMainWindow()
-        for url in urls {
-            if url.scheme == "magnet" {
-                Task { try? await store?.addMagnet(url.absoluteString) }
-            } else if url.pathExtension.lowercased() == "torrent" {
-                Task { try? await store?.addFile(at: url) }
-            }
-        }
     }
 
     // MARK: - Status Bar
@@ -69,23 +79,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem?.menu = statusMenu
     }
 
-    private var lastStatusTitle: String = ""
-
     func updateStatusBarTitle(download: Int, upload: Int) {
         let dl = ByteFormatter.transferRate(download)
         let ul = ByteFormatter.transferRate(upload)
         let title = " ↓\(dl) ↑\(ul)"
-        DispatchQueue.main.async { [weak self] in
-            guard let self, let button = self.statusItem?.button else { return }
-            guard title != self.lastStatusTitle else { return }
-            self.lastStatusTitle = title
-            button.title = title
-        }
+        guard title != lastStatusTitle else { return }
+        lastStatusTitle = title
+        statusItem?.button?.title = title
     }
 
     @objc private func showMainWindow() {
         NSApp.activate(ignoringOtherApps: true)
-        NSApp.windows.first?.makeKeyAndOrderFront(nil)
+        NSApp.windows.first { $0.styleMask.contains(.titled) }?.makeKeyAndOrderFront(nil)
     }
 
     // MARK: - Notifications
