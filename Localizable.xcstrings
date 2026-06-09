@@ -532,6 +532,7 @@
     },
     "Detail Panel" : {
       "comment" : "Toolbar button label: inspector panel",
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -834,7 +835,10 @@
         }
       }
     },
-    "Failed (code %d)." : {
+    "Failed: %@" : {
+
+    },
+    "Failed: unknown content type." : {
 
     },
     "File" : {
@@ -1730,6 +1734,7 @@
     },
     "Search" : {
       "comment" : "Toolbar search field label",
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -1741,6 +1746,7 @@
     },
     "Search torrents" : {
       "comment" : "Toolbar search field tooltip",
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {

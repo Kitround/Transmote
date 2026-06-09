@@ -235,7 +235,7 @@ class TorrentStore {
             await MainActor.run { [weak self] in
                 guard let self else { return }
                 self.detectCompletions(new: torrents)
-                self.torrents = torrents
+                self.applyDiff(newTorrents: torrents)
                 let activeIDs = Set(torrents.map(\.id))
                 self.previousStatuses = self.previousStatuses.filter { activeIDs.contains($0.key) }
             }
@@ -250,6 +250,30 @@ class TorrentStore {
     }
 
     func refresh() async { await refreshTorrents() }
+
+    /// In-place merge: update existing rows, append new ones, drop removed ones.
+    /// Preserves Torrent identity across polls so SwiftUI Table only diffs
+    /// changed rows instead of rebuilding the whole snapshot. Heavy detail
+    /// fields (files/peers/trackerStats) are only kept on the currently
+    /// selected torrent to keep memory bounded.
+    private func applyDiff(newTorrents: [Torrent]) {
+        let selectedID = selectedTorrentIDs.first
+        let newByID = Dictionary(uniqueKeysWithValues: newTorrents.map { ($0.id, $0) })
+        let newOrder = newTorrents.map(\.id)
+
+        var result: [Torrent] = []
+        result.reserveCapacity(newTorrents.count)
+        for id in newOrder {
+            guard var t = newByID[id] else { continue }
+            if id != selectedID {
+                t.files = nil; t.fileStats = nil
+                t.peers = nil; t.trackerStats = nil
+                t.wanted = nil; t.priorities = nil
+            }
+            result.append(t)
+        }
+        torrents = result
+    }
 
     private func fetchDetailIfNeeded(id: Int?, using client: RPCClient) async -> Torrent? {
         guard let id else { return nil }
