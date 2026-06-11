@@ -87,6 +87,7 @@ struct GeneralSettingsTab: View {
             Section("Downloads") {
                 HStack {
                     TextField("Download folder", text: $downloadDir)
+                        .onSubmit { applyDownloadDir() }
                     Button("Choose…") {
                         let panel = NSOpenPanel()
                         panel.canChooseDirectories = true
@@ -94,6 +95,7 @@ struct GeneralSettingsTab: View {
                         panel.begin { resp in
                             guard resp == .OK, let url = panel.url else { return }
                             downloadDir = url.path
+                            applyDownloadDir()
                         }
                     }
                     .buttonStyle(.bordered)
@@ -148,13 +150,14 @@ struct GeneralSettingsTab: View {
         } message: {
             Text("Please restart Transmote to apply the language change.")
         }
-        .onChange(of: downloadDir) { _, new in
-            guard !new.isEmpty else { return }
-            Task {
-                try? await store.updateSession(settings: ["download-dir": AnyCodable(new)])
-            }
-        }
         .padding()
+    }
+
+    private func applyDownloadDir() {
+        guard !downloadDir.isEmpty else { return }
+        Task {
+            try? await store.updateSession(settings: ["download-dir": AnyCodable(downloadDir)])
+        }
     }
 
     private func setDefaultScheme(_ scheme: String) {

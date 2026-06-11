@@ -83,7 +83,7 @@ extension FilePriority: Codable {
 // MARK: - Torrent File
 
 struct TorrentFile: Identifiable, @unchecked Sendable {
-    var id: Int { name.hashValue ^ length.hashValue }
+    var id: String { name }
     let bytesCompleted: Int64
     let length: Int64
     let name: String

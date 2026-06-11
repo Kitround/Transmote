@@ -47,6 +47,13 @@ struct ServerEditView: View {
                         get: { config.password ?? "" },
                         set: { config.password = $0.isEmpty ? nil : $0 }
                     ))
+
+                    if showsPlaintextWarning {
+                        Label("Credentials are sent unencrypted over HTTP. Enable HTTPS for remote servers.",
+                              systemImage: "exclamationmark.shield")
+                            .font(.caption)
+                            .foregroundStyle(.orange)
+                    }
                 }
 
                 Section {
@@ -106,6 +113,12 @@ struct ServerEditView: View {
             .padding()
         }
         .frame(width: 440)
+    }
+
+    private var showsPlaintextWarning: Bool {
+        guard !config.useHTTPS, config.username?.isEmpty == false else { return false }
+        let host = config.host.lowercased()
+        return !["localhost", "127.0.0.1", "::1"].contains(host)
     }
 
     private func save() {

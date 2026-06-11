@@ -34,15 +34,22 @@ struct AddMagnetView: View {
                         .textFieldStyle(.roundedBorder)
                         .font(.body.monospaced())
                         .onAppear {
-                            if let clip = NSPasteboard.general.string(forType: .string),
-                               isMagnetOrTorrentURL(clip) {
-                                magnetURL = clip
+                            // Auto-add only unambiguous magnet links. Plain
+                            // http(s) URLs are prefilled but require explicit
+                            // confirmation — any random URL could be sitting
+                            // in the pasteboard.
+                            guard let clip = NSPasteboard.general.string(forType: .string) else { return }
+                            let trimmed = clip.trimmingCharacters(in: .whitespacesAndNewlines)
+                            if trimmed.hasPrefix("magnet:") {
+                                magnetURL = trimmed
                                 addMagnet()
+                            } else if isMagnetOrTorrentURL(trimmed) {
+                                magnetURL = trimmed
                             }
                         }
                         .onChange(of: magnetURL) { _, new in
                             let trimmed = new.trimmingCharacters(in: .whitespacesAndNewlines)
-                            if isMagnetOrTorrentURL(trimmed) && !isLoading {
+                            if trimmed.hasPrefix("magnet:") && !isLoading {
                                 addMagnet()
                             }
                         }

@@ -21,9 +21,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: - URL / File handling
     //
-    // Kept as a fallback. The modern `.onOpenURL` modifier on the Window
-    // scene in TransmoteApp handles the same URLs without depending on
-    // this legacy NSApplicationDelegate hook.
+    // Single ingress point for both magnet URL schemes and .torrent file
+    // opens. Do not add .onOpenURL on the scene — having both paths
+    // registered can double-add the same torrent.
     func application(_ application: NSApplication, open urls: [URL]) {
         showMainWindow()
         for url in urls {

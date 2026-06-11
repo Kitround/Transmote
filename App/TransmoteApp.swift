@@ -13,12 +13,6 @@ struct TransmoteApp: App {
                 .onAppear {
                     appDelegate.store = store
                 }
-                .onOpenURL { url in
-                    NSApp.activate(ignoringOtherApps: true)
-                    NSApp.windows.first { $0.styleMask.contains(.titled) }?
-                        .makeKeyAndOrderFront(nil)
-                    appDelegate.handleIncoming(url: url)
-                }
         }
         .windowStyle(.titleBar)
         .defaultSize(width: 1280, height: 800)

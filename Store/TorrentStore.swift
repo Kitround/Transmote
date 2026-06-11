@@ -181,6 +181,7 @@ class TorrentStore {
         sessionStats = nil
         connectionState = .disconnected
         previousStatuses = [:]
+        isAltSpeedEnabled = false
     }
 
     // MARK: - Polling
@@ -235,7 +236,7 @@ class TorrentStore {
             await MainActor.run { [weak self] in
                 guard let self else { return }
                 self.detectCompletions(new: torrents)
-                self.applyDiff(newTorrents: torrents)
+                self.applyDiff(newTorrents: torrents, selectedID: selectedID)
                 let activeIDs = Set(torrents.map(\.id))
                 self.previousStatuses = self.previousStatuses.filter { activeIDs.contains($0.key) }
             }
@@ -251,26 +252,16 @@ class TorrentStore {
 
     func refresh() async { await refreshTorrents() }
 
-    /// In-place merge: update existing rows, append new ones, drop removed ones.
-    /// Preserves Torrent identity across polls so SwiftUI Table only diffs
-    /// changed rows instead of rebuilding the whole snapshot. Heavy detail
-    /// fields (files/peers/trackerStats) are only kept on the currently
-    /// selected torrent to keep memory bounded.
-    private func applyDiff(newTorrents: [Torrent]) {
-        let selectedID = selectedTorrentIDs.first
-        let newByID = Dictionary(uniqueKeysWithValues: newTorrents.map { ($0.id, $0) })
-        let newOrder = newTorrents.map(\.id)
-
-        var result: [Torrent] = []
-        result.reserveCapacity(newTorrents.count)
-        for id in newOrder {
-            guard var t = newByID[id] else { continue }
-            if id != selectedID {
-                t.files = nil; t.fileStats = nil
-                t.peers = nil; t.trackerStats = nil
-                t.wanted = nil; t.priorities = nil
-            }
-            result.append(t)
+    /// Replace the torrent list with the fresh snapshot, stripping heavy
+    /// detail fields (files/peers/trackerStats/wanted/priorities) from every
+    /// row except the one whose detail was fetched this cycle. Keeps memory
+    /// bounded no matter how many torrents the user has selected over time.
+    private func applyDiff(newTorrents: [Torrent], selectedID: Int?) {
+        var result = newTorrents
+        for i in result.indices where result[i].id != selectedID {
+            result[i].files = nil; result[i].fileStats = nil
+            result[i].peers = nil; result[i].trackerStats = nil
+            result[i].wanted = nil; result[i].priorities = nil
         }
         torrents = result
     }
@@ -298,7 +289,8 @@ class TorrentStore {
     private func detectCompletions(new: [Torrent]) {
         for torrent in new {
             let prev = previousStatuses[torrent.id]
-            if let prev = prev, prev.isDownloading && torrent.status.isSeeding {
+            if let prev = prev, prev.isDownloading, torrent.status.isSeeding,
+               torrent.isFinished || torrent.percentDone >= 1 {
                 (NSApp.delegate as? AppDelegate)?.notifyTorrentComplete(name: torrent.name)
             }
             previousStatuses[torrent.id] = torrent.status
@@ -409,6 +401,7 @@ class TorrentStore {
 
     func removeServer(_ id: UUID) {
         servers.removeAll { $0.id == id }
+        KeychainStore.deletePassword(for: id)
         if activeServerID == id {
             activeServerID = servers.first?.id
             disconnect()
@@ -417,16 +410,33 @@ class TorrentStore {
     }
 
     private func saveServers() {
-        if let data = try? JSONEncoder().encode(servers) {
+        // Passwords live in the Keychain only; strip them before persisting.
+        for server in servers {
+            KeychainStore.setPassword(server.password, for: server.id)
+        }
+        var sanitized = servers
+        for i in sanitized.indices { sanitized[i].password = nil }
+        if let data = try? JSONEncoder().encode(sanitized) {
             UserDefaults.standard.set(data, forKey: "servers")
         }
     }
 
     private func loadServers() {
         guard let data = UserDefaults.standard.data(forKey: "servers"),
-              let loaded = try? JSONDecoder().decode([ServerConfig].self, from: data)
+              var loaded = try? JSONDecoder().decode([ServerConfig].self, from: data)
         else { return }
+        // Migrate legacy plaintext passwords from UserDefaults to the Keychain.
+        var needsMigration = false
+        for i in loaded.indices {
+            if let legacy = loaded[i].password, !legacy.isEmpty {
+                KeychainStore.setPassword(legacy, for: loaded[i].id)
+                needsMigration = true
+            } else {
+                loaded[i].password = KeychainStore.password(for: loaded[i].id)
+            }
+        }
         servers = loaded
+        if needsMigration { saveServers() }
     }
 
     // MARK: - Folder management

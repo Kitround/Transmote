@@ -27,6 +27,15 @@
     <key>LSApplicationCategoryType</key>
     <string>public.app-category.utilities</string>
 
+    <!-- The app talks to exactly one user-configured Transmission RPC URL.
+         Plain HTTP is common (NAS on LAN, seedbox). The UI warns when
+         credentials would travel unencrypted to a remote host. -->
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
+
     <!-- Magnet links -->
     <key>CFBundleURLTypes</key>
     <array>

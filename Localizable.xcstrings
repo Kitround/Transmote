@@ -485,6 +485,9 @@
         }
       }
     },
+    "Credentials are sent unencrypted over HTTP. Enable HTTPS for remote servers." : {
+
+    },
     "Dates" : {
       "comment" : "Detail info section header",
       "localizations" : {
