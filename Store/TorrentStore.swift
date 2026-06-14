@@ -12,19 +12,11 @@ enum ConnectionState: Equatable {
         if case .connected = self { return true }
         return false
     }
-
-    var displayString: String {
-        switch self {
-        case .disconnected:     return String(localized: "Disconnected")
-        case .connecting:       return String(localized: "Connecting…")
-        case .connected(let v): return "Transmission \(v)"
-        case .error(let msg):   return String(localized: "Error: \(msg)")
-        }
-    }
 }
 
 // MARK: - Store
 
+@MainActor
 @Observable
 class TorrentStore {
     // MARK: State
@@ -86,10 +78,6 @@ class TorrentStore {
         return result
     }
 
-    var selectedTorrents: [Torrent] {
-        torrents.filter { selectedTorrentIDs.contains($0.id) }
-    }
-
     var firstSelectedTorrent: Torrent? {
         guard let id = selectedTorrentIDs.first else { return nil }
         return torrents.first { $0.id == id }
@@ -121,22 +109,13 @@ class TorrentStore {
         servers.first { $0.id == activeServerID }
     }
 
-    // MARK: - Grouped torrents (vue compacte)
-
-    /// Torrents par dossier, triés par chemin.
-    func torrentsByFolder(from source: [Torrent]) -> [(path: String, torrents: [Torrent])] {
-        let dirs = Array(Set(source.map(\.downloadDir))).sorted()
-        return dirs.map { path in
-            (path: path, torrents: source.filter { $0.downloadDir == path })
-        }
-    }
-
     // MARK: - Connection
 
     func connect(to server: ServerConfig) async {
         stopPolling()
         connectionState = .connecting
-        client = RPCClient(config: server)
+        let rpc = RPCClient(config: server)
+        client = rpc
         activeServerID = server.id
 
         var lastError: Error?
@@ -145,13 +124,17 @@ class TorrentStore {
                 try? await Task.sleep(for: .seconds(Double(attempt)))
             }
             do {
-                let session = try await client!.getSession()
+                let session = try await rpc.getSession()
+                // Bail out if a newer connect()/disconnect() superseded us
+                // while awaiting, so we don't resurrect a stale connection.
+                guard client === rpc else { return }
                 self.session = session
                 isAltSpeedEnabled = session.altSpeedEnabled ?? false
                 connectionState = .connected(version: session.version ?? "?")
                 startPolling()
                 return
             } catch {
+                guard client === rpc else { return }
                 if case .authenticationFailed = error as? RPCError {
                     connectionState = .error(String(localized: "Authentication failed"))
                     client = nil
@@ -160,6 +143,7 @@ class TorrentStore {
                 lastError = error
             }
         }
+        guard client === rpc else { return }
         connectionState = .error(lastError?.localizedDescription ?? "Unknown error")
         client = nil
     }
@@ -233,19 +217,14 @@ class TorrentStore {
                 torrents[idx].wanted        = detail.wanted
                 torrents[idx].priorities    = detail.priorities
             }
-            await MainActor.run { [weak self] in
-                guard let self else { return }
-                self.detectCompletions(new: torrents)
-                self.applyDiff(newTorrents: torrents, selectedID: selectedID)
-                let activeIDs = Set(torrents.map(\.id))
-                self.previousStatuses = self.previousStatuses.filter { activeIDs.contains($0.key) }
-            }
+            detectCompletions(new: torrents)
+            applyDiff(newTorrents: torrents, selectedID: selectedID)
+            let activeIDs = Set(torrents.map(\.id))
+            previousStatuses = previousStatuses.filter { activeIDs.contains($0.key) }
         } catch {
             if case .authenticationFailed = error as? RPCError {
-                await MainActor.run {
-                    self.connectionState = .error(String(localized: "Authentication failed"))
-                    self.stopPolling()
-                }
+                connectionState = .error(String(localized: "Authentication failed"))
+                stopPolling()
             }
         }
     }
@@ -275,14 +254,11 @@ class TorrentStore {
         guard let client else { return }
         do {
             let stats = try await client.getSessionStats()
-            await MainActor.run { [weak self] in
-                guard let self else { return }
-                self.sessionStats = stats
-                (NSApp.delegate as? AppDelegate)?.updateStatusBarTitle(
-                    download: stats.downloadSpeed,
-                    upload: stats.uploadSpeed
-                )
-            }
+            sessionStats = stats
+            (NSApp.delegate as? AppDelegate)?.updateStatusBarTitle(
+                download: stats.downloadSpeed,
+                upload: stats.uploadSpeed
+            )
         } catch {}
     }
 
@@ -325,10 +301,8 @@ class TorrentStore {
     func remove(ids: [Int], deleteData: Bool) async {
         guard let client else { return }
         try? await client.removeTorrents(ids: ids, deleteData: deleteData)
-        await MainActor.run {
-            selectedTorrentIDs.subtract(ids)
-            torrents.removeAll { ids.contains($0.id) }
-        }
+        selectedTorrentIDs.subtract(ids)
+        torrents.removeAll { ids.contains($0.id) }
     }
 
     func addMagnet(_ magnetURL: String) async throws -> AddedTorrent {
@@ -375,7 +349,7 @@ class TorrentStore {
     func refreshSession() async {
         guard let client else { return }
         if let session = try? await client.getSession() {
-            await MainActor.run { self.session = session }
+            self.session = session
         }
     }
 

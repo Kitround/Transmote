@@ -30,15 +30,6 @@ enum ByteFormatter {
         return String(format: "%.2f Go/s", mbps / 1024)
     }
 
-    static func transferRateShort(_ bytesPerSecond: Int) -> String {
-        guard bytesPerSecond > 0 else { return "—" }
-        let kbps = Double(bytesPerSecond) / 1024
-        if kbps < 1024 {
-            return String(format: "%.0f K", kbps)
-        }
-        let mbps = kbps / 1024
-        return String(format: "%.1f M", mbps)
-    }
 }
 
 // MARK: - ETA Formatter
