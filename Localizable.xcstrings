@@ -486,7 +486,15 @@
       }
     },
     "Credentials are sent unencrypted over HTTP. Enable HTTPS for remote servers." : {
-
+      "comment" : "Server edit warning: plaintext credentials over HTTP",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les identifiants sont envoyés en clair via HTTP. Activez HTTPS pour les serveurs distants."
+          }
+        }
+      }
     },
     "Dates" : {
       "comment" : "Detail info section header",
@@ -839,10 +847,26 @@
       }
     },
     "Failed: %@" : {
-
+      "comment" : "Default-app assignment failure with system error message",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Échec : %@"
+          }
+        }
+      }
     },
     "Failed: unknown content type." : {
-
+      "comment" : "Default-app assignment failure: UTI not found",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Échec : type de contenu inconnu."
+          }
+        }
+      }
     },
     "File" : {
       "comment" : "Detail info section header: file information",

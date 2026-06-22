@@ -180,14 +180,21 @@ extension RPCClient {
     }
 
     func setTorrentPriority(id: Int, fileIndices: [Int], priority: FilePriority) async throws {
-        let key: String
+        var args: [String: AnyCodable] = ["ids": AnyCodable([id])]
         switch priority {
-        case .low:    key = "priority-low"
-        case .normal: key = "priority-normal"
-        case .high:   key = "priority-high"
-        case .skip:   key = "files-unwanted"
+        case .skip:
+            args["files-unwanted"] = AnyCodable(fileIndices)
+        case .low, .normal, .high:
+            // A file set to a real priority must also be marked wanted —
+            // it may have been skipped (unwanted) before. Send both keys
+            // in the same torrent-set so the file is re-enabled and
+            // prioritised at once.
+            args["files-wanted"] = AnyCodable(fileIndices)
+            let priorityKey = priority == .low ? "priority-low"
+                            : priority == .high ? "priority-high"
+                            : "priority-normal"
+            args[priorityKey] = AnyCodable(fileIndices)
         }
-        let args: [String: AnyCodable] = ["ids": AnyCodable([id]), key: AnyCodable(fileIndices)]
         let r: RPCResponse<EmptyArguments> = try await request(
             method: "torrent-set", arguments: args, responseType: EmptyArguments.self)
         guard r.isSuccess else { throw RPCError.serverError(r.result) }
