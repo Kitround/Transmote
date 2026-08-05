@@ -1,3 +1,5 @@
+<img src="Ressources/icon.png" width="128" alt="Transmote icon" />
+
 # Transmote
 
 A native macOS remote client for [Transmission](https://transmissionbt.com).
