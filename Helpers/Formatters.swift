@@ -62,7 +62,6 @@ enum ETAFormatter {
 enum RatioFormatter {
     static func format(_ ratio: Double) -> String {
         guard ratio >= 0 else { return "—" }
-        if ratio >= 100 { return "∞" }
         return String(format: "%.2f", ratio)
     }
 }
