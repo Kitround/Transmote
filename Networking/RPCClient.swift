@@ -1,9 +1,8 @@
-// swiftlint:disable all
 import Foundation
 
 // MARK: - Errors
 
-enum RPCError: LocalizedError {
+nonisolated enum RPCError: LocalizedError {
     case invalidURL
     case authenticationFailed
     case serverError(String)
@@ -25,12 +24,14 @@ enum RPCError: LocalizedError {
 
 // MARK: - AnyCodable
 
-struct AnyCodable: Codable, Sendable {
-    nonisolated(unsafe) let value: Any
+/// Type-erased RPC argument value. Encode-only: responses are decoded into
+/// concrete types, never through this.
+nonisolated struct AnyCodable: Encodable, @unchecked Sendable {
+    let value: Any
 
-    nonisolated init(_ value: Any) { self.value = value }
+    init(_ value: Any) { self.value = value }
 
-    nonisolated func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var c = encoder.singleValueContainer()
         switch value {
         case let v as Bool:         try c.encode(v)
@@ -39,66 +40,30 @@ struct AnyCodable: Codable, Sendable {
         case let v as String:       try c.encode(v)
         case let v as [Int]:        try c.encode(v)
         case let v as [String]:     try c.encode(v)
-        case let v as [AnyCodable]: try c.encode(v)
         default:                    try c.encodeNil()
         }
     }
-
-    nonisolated init(from decoder: Decoder) throws {
-        let c = try decoder.singleValueContainer()
-        if      let v = try? c.decode(Bool.self)   { value = v }
-        else if let v = try? c.decode(Int.self)    { value = v }
-        else if let v = try? c.decode(Double.self) { value = v }
-        else if let v = try? c.decode(String.self) { value = v }
-        else                                       { value = 0 }
-    }
 }
 
-// MARK: - EmptyArguments
+// MARK: - Empty arguments
 
-struct EmptyArguments: Codable, Sendable {
-    nonisolated init() {}
-    nonisolated init(from decoder: Decoder) throws {}
-    nonisolated func encode(to encoder: Encoder) throws {}
+/// Response body for calls that return nothing useful. Decodes anything.
+nonisolated struct EmptyArguments: Decodable, Sendable {
+    init(from decoder: Decoder) throws {}
 }
 
-// MARK: - RPCRequest
+// MARK: - Request / Response envelopes
 
-struct RPCRequest: Encodable, Sendable {
+nonisolated struct RPCRequest: Encodable, Sendable {
     let method: String
-    let arguments: [String: AnyCodable]?
-    let tag: Int?
-
-    nonisolated init(method: String, arguments: [String: AnyCodable]? = nil, tag: Int? = nil) {
-        self.method = method; self.arguments = arguments; self.tag = tag
-    }
-
-    nonisolated func encode(to encoder: Encoder) throws {
-        var c = encoder.container(keyedBy: CodingKeys.self)
-        try c.encode(method, forKey: .method)
-        try c.encodeIfPresent(arguments, forKey: .arguments)
-        try c.encodeIfPresent(tag, forKey: .tag)
-    }
-
-    enum CodingKeys: String, CodingKey { case method, arguments, tag }
+    var arguments: [String: AnyCodable]?
 }
 
-// MARK: - RPCResponse
-
-struct RPCResponse<T: Decodable>: Decodable, Sendable where T: Sendable {
+nonisolated struct RPCResponse<T: Decodable & Sendable>: Decodable, Sendable {
     let result: String
     let arguments: T?
-    let tag: Int?
-    nonisolated var isSuccess: Bool { result == "success" }
 
-    nonisolated init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        result    = try c.decode(String.self, forKey: .result)
-        arguments = try c.decodeIfPresent(T.self, forKey: .arguments)
-        tag       = try c.decodeIfPresent(Int.self, forKey: .tag)
-    }
-
-    enum CodingKeys: String, CodingKey { case result, arguments, tag }
+    var isSuccess: Bool { result == "success" }
 }
 
 // MARK: - RPCClient
@@ -186,7 +151,7 @@ actor RPCClient {
             throw RPCError.authenticationFailed
         case 409:
             guard !isRetry else { throw RPCError.serverError("Invalid session ID after retry") }
-            if let id = http.allHeaderFields["X-Transmission-Session-Id"] as? String {
+            if let id = http.value(forHTTPHeaderField: "X-Transmission-Session-Id") {
                 sessionID = id
             }
             var retry = req
@@ -207,7 +172,6 @@ actor RPCClient {
     }
 
     func testConnection() async throws {
-        let _: RPCResponse<SessionArguments> = try await request(
-            method: "session-get", responseType: SessionArguments.self)
+        _ = try await getSession()
     }
 }

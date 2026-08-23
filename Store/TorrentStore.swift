@@ -36,7 +36,10 @@ class TorrentStore {
     var isAppActive: Bool = true
 
     var pollingInterval: TimeInterval {
-        get { UserDefaults.standard.double(forKey: "pollingInterval").isZero ? 3 : UserDefaults.standard.double(forKey: "pollingInterval") }
+        get {
+            let stored = UserDefaults.standard.double(forKey: "pollingInterval")
+            return stored.isZero ? 3 : stored
+        }
         set { UserDefaults.standard.set(newValue, forKey: "pollingInterval") }
     }
 
@@ -93,13 +96,18 @@ class TorrentStore {
         return counts
     }
 
-    /// Dossiers uniques triés, déduits des torrents courants
-    var downloadDirs: [String] {
-        Array(Set(torrents.map(\.downloadDir))).sorted()
+    /// Dossiers uniques triés + nombre de torrents, en une seule passe.
+    var folderCounts: [(path: String, count: Int)] {
+        torrents
+            .reduce(into: [String: Int]()) { $0[$1.downloadDir, default: 0] += 1 }
+            .map { (path: $0.key, count: $0.value) }
+            .sorted { $0.path < $1.path }
     }
 
-    func folderCount(for path: String) -> Int {
-        torrents.filter { $0.downloadDir == path }.count
+    /// Le torrent a-t-il atteint le ratio de partage configuré côté serveur ?
+    func hasReachedSeedRatio(_ torrent: Torrent) -> Bool {
+        guard session?.seedRatioLimited == true, let limit = session?.seedRatioLimit else { return false }
+        return torrent.uploadRatio >= limit
     }
 
     var totalDownloadSpeed: Int { torrents.reduce(0) { $0 + $1.rateDownload } }
@@ -214,8 +222,6 @@ class TorrentStore {
                 torrents[idx].fileStats     = detail.fileStats
                 torrents[idx].peers         = detail.peers
                 torrents[idx].trackerStats  = detail.trackerStats
-                torrents[idx].wanted        = detail.wanted
-                torrents[idx].priorities    = detail.priorities
             }
             detectCompletions(new: torrents)
             applyDiff(newTorrents: torrents, selectedID: selectedID)
@@ -232,7 +238,7 @@ class TorrentStore {
     func refresh() async { await refreshTorrents() }
 
     /// Replace the torrent list with the fresh snapshot, stripping heavy
-    /// detail fields (files/peers/trackerStats/wanted/priorities) from every
+    /// detail fields (files/fileStats/peers/trackerStats) from every
     /// row except the one whose detail was fetched this cycle. Keeps memory
     /// bounded no matter how many torrents the user has selected over time.
     private func applyDiff(newTorrents: [Torrent], selectedID: Int?) {
@@ -240,7 +246,6 @@ class TorrentStore {
         for i in result.indices where result[i].id != selectedID {
             result[i].files = nil; result[i].fileStats = nil
             result[i].peers = nil; result[i].trackerStats = nil
-            result[i].wanted = nil; result[i].priorities = nil
         }
         torrents = result
     }
@@ -350,6 +355,7 @@ class TorrentStore {
         guard let client else { return }
         if let session = try? await client.getSession() {
             self.session = session
+            isAltSpeedEnabled = session.altSpeedEnabled ?? false
         }
     }
 
@@ -417,9 +423,7 @@ class TorrentStore {
 
     func moveTorrents(_ ids: [Int], toDirectory path: String) async {
         guard let client else { return }
-        for id in ids {
-            try? await client.setTorrentLocation(id: id, location: path, move: true)
-        }
+        try? await client.setTorrentLocation(ids: ids, location: path, move: true)
         await refreshTorrents()
     }
 }

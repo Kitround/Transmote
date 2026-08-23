@@ -32,10 +32,23 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func handleIncoming(url: URL) {
-        if url.scheme == "magnet" {
-            Task { try? await store?.addMagnet(url.absoluteString) }
-        } else if url.pathExtension.lowercased() == "torrent" {
-            Task { try? await store?.addFile(at: url) }
+        Task { await add(url) }
+    }
+
+    /// On a cold launch the URL arrives before the scene has injected the
+    /// store and before the first connection succeeds, so wait for both
+    /// instead of dropping the magnet on the floor.
+    private func add(_ url: URL) async {
+        for _ in 0..<20 {
+            if let store, store.connectionState.isConnected {
+                if url.scheme == "magnet" {
+                    _ = try? await store.addMagnet(url.absoluteString)
+                } else if url.pathExtension.lowercased() == "torrent" {
+                    _ = try? await store.addFile(at: url)
+                }
+                return
+            }
+            try? await Task.sleep(for: .milliseconds(500))
         }
     }
 

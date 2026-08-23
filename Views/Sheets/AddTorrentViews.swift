@@ -1,5 +1,5 @@
 import SwiftUI
-import UniformTypeIdentifiers
+import AppKit
 
 // MARK: - Add Magnet View
 
@@ -109,62 +109,6 @@ struct AddMagnetView: View {
                 await MainActor.run {
                     self.error = error.localizedDescription
                     isLoading = false
-                }
-            }
-        }
-    }
-}
-
-// MARK: - Add Torrent Sheet (file picker result)
-
-struct AddTorrentSheetView: View {
-    @Environment(TorrentStore.self) private var store
-    @Environment(\.dismiss) private var dismiss
-    @State private var isLoading = false
-    @State private var error: String?
-
-    var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "doc.badge.plus")
-                .font(.system(size: 48))
-                .foregroundStyle(.blue)
-            Text("Open a .torrent file from Finder\nor drop it directly into the window.")
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.secondary)
-
-            Button("Choose a file…") {
-                openFilePicker()
-            }
-            .buttonStyle(.borderedProminent)
-
-            if let error {
-                Text(error)
-                    .foregroundStyle(.red)
-                    .font(.callout)
-            }
-        }
-        .padding(40)
-        .frame(width: 380)
-    }
-
-    private func openFilePicker() {
-        let panel = NSOpenPanel()
-        panel.allowedContentTypes = [UTType(filenameExtension: "torrent")!]
-        panel.allowsMultipleSelection = true
-        panel.begin { response in
-            guard response == .OK else { return }
-            isLoading = true
-            Task {
-                do {
-                    for url in panel.urls {
-                        _ = try await store.addFile(at: url)
-                    }
-                    await MainActor.run { dismiss() }
-                } catch {
-                    await MainActor.run {
-                        self.error = error.localizedDescription
-                        isLoading = false
-                    }
                 }
             }
         }

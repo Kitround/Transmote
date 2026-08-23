@@ -7,6 +7,10 @@ struct SidebarView: View {
 
     var body: some View {
         @Bindable var store = store
+        // Computed once per render — reading them inside the ForEach bodies
+        // would rebuild the whole aggregate for every row.
+        let filterCounts = store.filterCounts
+        let folders = store.connectionState.isConnected ? store.folderCounts : []
 
         List(selection: $store.sidebarSelection) {
             // MARK: Filters
@@ -16,15 +20,7 @@ struct SidebarView: View {
                         HStack {
                             Text(filter.label)
                             Spacer()
-                            let count = store.filterCounts[filter] ?? 0
-                            if count > 0 {
-                                Text(verbatim: "\(count)")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                                    .padding(.horizontal, 6)
-                                    .padding(.vertical, 2)
-                                    .background(.quaternary, in: Capsule())
-                            }
+                            CountBadge(count: filterCounts[filter] ?? 0)
                         }
                     } icon: {
                         Image(systemName: filter.systemImage)
@@ -34,30 +30,22 @@ struct SidebarView: View {
             }
 
             // MARK: Folders
-            if store.connectionState.isConnected && !store.downloadDirs.isEmpty {
+            if !folders.isEmpty {
                 Section("Folders") {
-                    ForEach(store.downloadDirs, id: \.self) { path in
+                    ForEach(folders, id: \.path) { folder in
                         Label {
                             HStack {
-                                Text(URL(fileURLWithPath: path).lastPathComponent)
+                                Text(URL(fileURLWithPath: folder.path).lastPathComponent)
                                     .lineLimit(1)
                                 Spacer()
-                                let count = store.folderCount(for: path)
-                                if count > 0 {
-                                    Text(verbatim: "\(count)")
-                                        .font(.caption)
-                                        .foregroundStyle(.secondary)
-                                        .padding(.horizontal, 6)
-                                        .padding(.vertical, 2)
-                                        .background(.quaternary, in: Capsule())
-                                }
+                                CountBadge(count: folder.count)
                             }
                         } icon: {
                             Image(systemName: "folder.fill")
                                 .foregroundStyle(.secondary)
                         }
-                        .tag(SidebarItem.folder(path))
-                        .help(path)
+                        .tag(SidebarItem.folder(folder.path))
+                        .help(folder.path)
                     }
                 }
             }
@@ -127,6 +115,23 @@ struct SidebarView: View {
                 ConnectionStatusView()
             }
             .padding(8)
+        }
+    }
+}
+
+// MARK: - Count Badge
+
+struct CountBadge: View {
+    let count: Int
+
+    var body: some View {
+        if count > 0 {
+            Text(verbatim: "\(count)")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .padding(.horizontal, 6)
+                .padding(.vertical, 2)
+                .background(.quaternary, in: Capsule())
         }
     }
 }
@@ -222,21 +227,23 @@ struct SpeedStatusView: View {
 
     var body: some View {
         if store.connectionState.isConnected {
+            let down = store.totalDownloadSpeed
+            let up = store.totalUploadSpeed
             HStack(spacing: 0) {
                 HStack(spacing: 4) {
                     Image(systemName: "arrow.down")
                         .foregroundStyle(.blue)
-                    Text(ByteFormatter.transferRate(store.totalDownloadSpeed))
+                    Text(ByteFormatter.transferRate(down))
                         .monospacedDigit()
-                        .foregroundStyle(store.totalDownloadSpeed > 0 ? .primary : .secondary)
+                        .foregroundStyle(down > 0 ? .primary : .secondary)
                 }
                 Spacer()
                 HStack(spacing: 4) {
                     Image(systemName: "arrow.up")
                         .foregroundStyle(.green)
-                    Text(ByteFormatter.transferRate(store.totalUploadSpeed))
+                    Text(ByteFormatter.transferRate(up))
                         .monospacedDigit()
-                        .foregroundStyle(store.totalUploadSpeed > 0 ? .primary : .secondary)
+                        .foregroundStyle(up > 0 ? .primary : .secondary)
                 }
             }
             .font(.caption)
@@ -248,7 +255,7 @@ struct SpeedStatusView: View {
 // MARK: - Stat Row
 
 struct StatRow: View {
-    let label: String
+    let label: LocalizedStringKey
     let value: String
 
     var body: some View {

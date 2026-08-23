@@ -8,7 +8,6 @@ struct ContentView: View {
     @State private var showDetail: Bool = false
     @AppStorage("compactMode") private var compactMode: Bool = false
     @State private var showAddMagnet = false
-    @State private var showAddSheet = false
     @State private var dragOver = false
 
     var body: some View {
@@ -118,16 +117,13 @@ struct ContentView: View {
         .sheet(isPresented: $showAddMagnet) {
             AddMagnetView()
         }
-        .sheet(isPresented: $showAddSheet) {
-            AddTorrentSheetView()
-        }
     }
 
     // MARK: - Drop / File
 
     private func openFilePicker() {
         let panel = NSOpenPanel()
-        panel.allowedContentTypes = [UTType(filenameExtension: "torrent")!]
+        panel.allowedContentTypes = [UTType("org.bittorrent.torrent") ?? .data]
         panel.allowsMultipleSelection = true
         panel.canChooseDirectories = false
         panel.begin { response in
@@ -139,14 +135,17 @@ struct ContentView: View {
     }
 
     private func handleDrop(providers: [NSItemProvider]) -> Bool {
+        var handled = false
         for provider in providers {
             if provider.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier) {
+                handled = true
                 provider.loadItem(forTypeIdentifier: UTType.fileURL.identifier) { item, _ in
                     guard let data = item as? Data,
                           let url = URL(dataRepresentation: data, relativeTo: nil) else { return }
                     Task { try? await store.addFile(at: url) }
                 }
             } else if provider.hasItemConformingToTypeIdentifier(UTType.url.identifier) {
+                handled = true
                 provider.loadItem(forTypeIdentifier: UTType.url.identifier) { item, _ in
                     guard let data = item as? Data,
                           let url = URL(dataRepresentation: data, relativeTo: nil),
@@ -155,6 +154,6 @@ struct ContentView: View {
                 }
             }
         }
-        return true
+        return handled
     }
 }

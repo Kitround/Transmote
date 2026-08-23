@@ -78,6 +78,17 @@
         }
       }
     },
+    "↑ Limit" : {
+      "comment" : "Bandwidth settings: upload limit field",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "↑ Limite"
+          }
+        }
+      }
+    },
     "↑ Upload" : {
       "comment" : "Detail info row label: current upload speed",
       "localizations" : {
@@ -85,6 +96,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "↑ Partage"
+          }
+        }
+      }
+    },
+    "↓ Limit" : {
+      "comment" : "Bandwidth settings: download limit field",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "↓ Limite"
           }
         }
       }
@@ -341,17 +363,6 @@
         }
       }
     },
-    "Choose a file…" : {
-      "comment" : "Add torrent sheet button",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Choisir un fichier…"
-          }
-        }
-      }
-    },
     "Choose…" : {
       "comment" : "Button to open a folder picker panel",
       "localizations" : {
@@ -537,18 +548,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Supprimer"
-          }
-        }
-      }
-    },
-    "Detail Panel" : {
-      "comment" : "Toolbar button label: inspector panel",
-      "extractionState" : "stale",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Panneau de détail"
           }
         }
       }
@@ -924,18 +923,6 @@
         }
       }
     },
-    "For magnet links: open a magnet link in Safari, then choose Transmote from the list." : {
-      "comment" : "Settings: manual instructions when setting magnet default fails",
-      "extractionState" : "manual",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pour les liens magnet : ouvrez un lien magnet dans Safari, choisissez Transmote dans la liste."
-          }
-        }
-      }
-    },
     "Français" : {
       "shouldTranslate" : false
     },
@@ -971,18 +958,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cacher les détails"
-          }
-        }
-      }
-    },
-    "Hide detail panel" : {
-      "comment" : "Toolbar button tooltip when panel is visible",
-      "extractionState" : "manual",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Masquer le panneau de détail"
           }
         }
       }
@@ -1360,18 +1335,6 @@
         }
       }
     },
-    "Open a .torrent file from Finder\nor drop it directly into the window." : {
-      "comment" : "Add torrent sheet body text",
-      "extractionState" : "manual",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ouvrez un fichier .torrent depuis le Finder\nou déposez-le directement dans la fenêtre."
-          }
-        }
-      }
-    },
     "Open Transmote" : {
       "comment" : "Status bar menu item",
       "localizations" : {
@@ -1714,18 +1677,6 @@
         }
       }
     },
-    "Right-click a .torrent file → Open With → Always Open With → Transmote." : {
-      "comment" : "Settings: manual instructions when setting .torrent default fails",
-      "extractionState" : "manual",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Clic droit sur un fichier .torrent → Ouvrir avec → Toujours ouvrir avec → Transmote."
-          }
-        }
-      }
-    },
     "RPC Path" : {
       "comment" : "Server edit field label",
       "localizations" : {
@@ -1767,18 +1718,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rechercher"
-          }
-        }
-      }
-    },
-    "Search torrents" : {
-      "comment" : "Toolbar search field tooltip",
-      "extractionState" : "stale",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rechercher un torrent"
           }
         }
       }
@@ -1903,18 +1842,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Montrer les détails"
-          }
-        }
-      }
-    },
-    "Show detail panel" : {
-      "comment" : "Toolbar button tooltip when panel is hidden",
-      "extractionState" : "manual",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Afficher le panneau de détail"
           }
         }
       }

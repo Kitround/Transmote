@@ -141,7 +141,7 @@ struct GeneralSettingsTab: View {
             Button("Restart Now") {
                 let url = Bundle.main.bundleURL
                 let task = Process()
-                task.launchPath = "/usr/bin/open"
+                task.executableURL = URL(fileURLWithPath: "/usr/bin/open")
                 task.arguments = [url.path]
                 try? task.run()
                 NSApp.terminate(nil)
@@ -219,9 +219,6 @@ struct BandwidthSettingsTab: View {
 
             Section("Turtle Mode (alternative speed)") {
                 Toggle("Enable Turtle Mode", isOn: $altEnabled)
-                    .onChange(of: altEnabled) { _, new in
-                        Task { try? await store.updateSession(settings: ["alt-speed-enabled": AnyCodable(new)]) }
-                    }
                 SpeedField(label: "↓ Limit", valueMB: $altDlMB)
                 SpeedField(label: "↑ Limit", valueMB: $altUlMB)
             }
@@ -262,76 +259,40 @@ struct BandwidthSettingsTab: View {
     }
 }
 
-// MARK: - Speed Field
+// MARK: - Numeric Fields
 
+/// Value-bound TextFields commit on focus loss as well as on Return, and
+/// parse the locale's decimal separator — no manual text mirroring needed.
 struct SpeedField: View {
-    let label: String
+    let label: LocalizedStringKey
     @Binding var valueMB: Double
-    @State private var text: String = ""
 
     var body: some View {
         HStack {
             Text(label)
             Spacer()
-            TextField("", text: $text)
+            TextField("", value: $valueMB, format: .number.precision(.fractionLength(0...2)))
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 80)
                 .multilineTextAlignment(.trailing)
-                .onAppear { text = formatMB(valueMB) }
-                .onSubmit { commit() }
-                .onChange(of: valueMB) { _, new in text = formatMB(new) }
             Text("MB/s")
                 .foregroundStyle(.secondary)
         }
     }
-
-    private func formatMB(_ v: Double) -> String {
-        v.truncatingRemainder(dividingBy: 1) == 0
-            ? "\(Int(v))"
-            : String(format: "%.2f", v)
-    }
-
-    private func commit() {
-        let cleaned = text.replacingOccurrences(of: ",", with: ".")
-        if let v = Double(cleaned), v > 0 {
-            valueMB = v
-        } else {
-            text = formatMB(valueMB)
-        }
-    }
 }
 
-// MARK: - Ratio Field
-
 struct RatioField: View {
-    let label: String
+    let label: LocalizedStringKey
     @Binding var value: Double
-    @State private var text: String = ""
 
     var body: some View {
         HStack {
             Text(label)
             Spacer()
-            TextField("", text: $text)
+            TextField("", value: $value, format: .number.precision(.fractionLength(2)))
                 .textFieldStyle(.roundedBorder)
                 .frame(width: 80)
                 .multilineTextAlignment(.trailing)
-                .onAppear { text = format(value) }
-                .onSubmit { commit() }
-                .onChange(of: value) { _, new in text = format(new) }
-        }
-    }
-
-    private func format(_ v: Double) -> String {
-        String(format: "%.2f", v)
-    }
-
-    private func commit() {
-        let cleaned = text.replacingOccurrences(of: ",", with: ".")
-        if let v = Double(cleaned), v >= 0 {
-            value = v
-        } else {
-            text = format(value)
         }
     }
 }

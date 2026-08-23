@@ -130,14 +130,14 @@ struct TorrentListView: View {
 
     @ViewBuilder
     private func folderSubmenu(for ids: [Int]) -> some View {
-        let dirs = store.downloadDirs
-        if !dirs.isEmpty {
+        let folders = store.folderCounts
+        if !folders.isEmpty {
             Menu("Move to…") {
-                ForEach(dirs, id: \.self) { path in
+                ForEach(folders, id: \.path) { folder in
                     Button {
-                        Task { await store.moveTorrents(ids, toDirectory: path) }
+                        Task { await store.moveTorrents(ids, toDirectory: folder.path) }
                     } label: {
-                        Label(URL(fileURLWithPath: path).lastPathComponent, systemImage: "folder")
+                        Label(URL(fileURLWithPath: folder.path).lastPathComponent, systemImage: "folder")
                     }
                 }
             }
@@ -150,14 +150,10 @@ struct TorrentListView: View {
         let allStopped = torrents.allSatisfy { $0.status.isStopped }
         let allActive = torrents.allSatisfy { $0.status.isActive }
 
-        if allStopped {
+        if !allActive {
             Button("Start") { Task { await store.start(ids: ids) } }
         }
-        if allActive {
-            Button("Pause") { Task { await store.stop(ids: ids) } }
-        }
-        if !allStopped && !allActive {
-            Button("Start") { Task { await store.start(ids: ids) } }
+        if !allStopped {
             Button("Pause") { Task { await store.stop(ids: ids) } }
         }
 
@@ -278,10 +274,7 @@ struct TorrentListView: View {
     }
 
     private func ratioColor(for torrent: Torrent) -> Color {
-        guard store.session?.seedRatioLimited == true,
-              let limit = store.session?.seedRatioLimit,
-              torrent.uploadRatio >= limit else { return .secondary }
-        return .green
+        store.hasReachedSeedRatio(torrent) ? .green : .secondary
     }
 }
 
@@ -446,33 +439,5 @@ struct ProgressCell: View {
                     .foregroundStyle(.orange)
             }
         }
-    }
-}
-
-// MARK: - Folder Section Header
-
-struct FolderSectionHeader: View {
-    let path: String
-    let count: Int
-
-    var body: some View {
-        HStack(spacing: 6) {
-            Image(systemName: "folder.fill")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-            Text(URL(fileURLWithPath: path).lastPathComponent)
-                .font(.caption)
-                .fontWeight(.semibold)
-                .foregroundStyle(.primary)
-            Spacer()
-            Text(verbatim: "\(count)")
-                .font(.caption2)
-                .foregroundStyle(.secondary)
-                .padding(.horizontal, 5)
-                .padding(.vertical, 1)
-                .background(.quaternary, in: Capsule())
-        }
-        .padding(.vertical, 2)
-        .help(path)
     }
 }

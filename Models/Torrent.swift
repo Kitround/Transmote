@@ -3,7 +3,7 @@ import SwiftUI
 
 // MARK: - Torrent Status
 
-enum TorrentStatus: Int, Sendable, CustomStringConvertible {
+nonisolated enum TorrentStatus: Int, Sendable, CustomStringConvertible {
     case stopped = 0, checkWait, check, downloadWait, download, seedWait, seed
 
     var description: String {
@@ -25,37 +25,29 @@ enum TorrentStatus: Int, Sendable, CustomStringConvertible {
     var isActive:      Bool { isDownloading || isSeeding }
 }
 
-extension TorrentStatus: Codable {
-    nonisolated init(from decoder: any Decoder) throws {
-        let c = try decoder.singleValueContainer()
-        let raw = try c.decode(Int.self)
+// An unknown raw value from a newer Transmission must not fail the whole
+// torrent-get decode, hence the fallback instead of synthesised decoding.
+nonisolated extension TorrentStatus: Decodable {
+    init(from decoder: any Decoder) throws {
+        let raw = try decoder.singleValueContainer().decode(Int.self)
         self = TorrentStatus(rawValue: raw) ?? .stopped
-    }
-    nonisolated func encode(to encoder: any Encoder) throws {
-        var c = encoder.singleValueContainer()
-        try c.encode(rawValue)
     }
 }
 
 // MARK: - Torrent Error
 
-enum TorrentError: Int, Sendable { case none = 0, trackerWarning, trackerError, localError }
+nonisolated enum TorrentError: Int, Sendable { case none = 0, trackerWarning, trackerError, localError }
 
-extension TorrentError: Codable {
-    nonisolated init(from decoder: any Decoder) throws {
-        let c = try decoder.singleValueContainer()
-        let raw = try c.decode(Int.self)
+nonisolated extension TorrentError: Decodable {
+    init(from decoder: any Decoder) throws {
+        let raw = try decoder.singleValueContainer().decode(Int.self)
         self = TorrentError(rawValue: raw) ?? .none
-    }
-    nonisolated func encode(to encoder: any Encoder) throws {
-        var c = encoder.singleValueContainer()
-        try c.encode(rawValue)
     }
 }
 
 // MARK: - File Priority
 
-enum FilePriority: Int, Sendable {
+nonisolated enum FilePriority: Int, Sendable {
     case low = -1, normal = 0, high = 1, skip = -2
 
     var description: String {
@@ -68,61 +60,28 @@ enum FilePriority: Int, Sendable {
     }
 }
 
-extension FilePriority: Codable {
-    nonisolated init(from decoder: any Decoder) throws {
-        let c = try decoder.singleValueContainer()
-        let raw = try c.decode(Int.self)
-        self = FilePriority(rawValue: raw) ?? .normal
-    }
-    nonisolated func encode(to encoder: any Encoder) throws {
-        var c = encoder.singleValueContainer()
-        try c.encode(rawValue)
-    }
-}
-
 // MARK: - Torrent File
 
-struct TorrentFile: Identifiable, @unchecked Sendable {
+nonisolated struct TorrentFile: Identifiable, Decodable, Sendable {
     var id: String { name }
     let bytesCompleted: Int64
     let length: Int64
     let name: String
 
     var progress: Double { length > 0 ? Double(bytesCompleted) / Double(length) : 0 }
-    var isComplete: Bool { bytesCompleted >= length }
-}
-
-extension TorrentFile: Decodable {
-    nonisolated init(from decoder: any Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        bytesCompleted = try c.decode(Int64.self,  forKey: .bytesCompleted)
-        length         = try c.decode(Int64.self,  forKey: .length)
-        name           = try c.decode(String.self, forKey: .name)
-    }
-    enum CodingKeys: String, CodingKey { case bytesCompleted, length, name }
 }
 
 // MARK: - Torrent File Stat
 
-struct TorrentFileStat: @unchecked Sendable {
+nonisolated struct TorrentFileStat: Decodable, Sendable {
     let bytesCompleted: Int64
     let wanted: Bool
     let priority: Int
 }
 
-extension TorrentFileStat: Decodable {
-    nonisolated init(from decoder: any Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        bytesCompleted = try c.decode(Int64.self, forKey: .bytesCompleted)
-        wanted         = try c.decode(Bool.self,  forKey: .wanted)
-        priority       = try c.decode(Int.self,   forKey: .priority)
-    }
-    enum CodingKeys: String, CodingKey { case bytesCompleted, wanted, priority }
-}
-
 // MARK: - Peer
 
-struct Peer: Identifiable, @unchecked Sendable {
+nonisolated struct Peer: Identifiable, Sendable {
     var id: String { "\(address):\(port)" }
     let address: String
     let port: Int
@@ -130,71 +89,55 @@ struct Peer: Identifiable, @unchecked Sendable {
     let progress: Double
     let rateToClient: Int
     let rateToPeer: Int
-    let flagStr: String
-    let isEncrypted: Bool
-    let isUtp: Bool
 }
 
-extension Peer: Decodable {
-    nonisolated init(from decoder: any Decoder) throws {
+nonisolated extension Peer: Decodable {
+    init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
-        address     = try c.decode(String.self, forKey: .address)
-        port        = try c.decode(Int.self,    forKey: .port)
-        clientName  = try c.decodeIfPresent(String.self, forKey: .clientName) ?? ""
-        progress    = try c.decode(Double.self, forKey: .progress)
-        rateToClient = try c.decode(Int.self,   forKey: .rateToClient)
-        rateToPeer  = try c.decode(Int.self,    forKey: .rateToPeer)
-        flagStr     = try c.decodeIfPresent(String.self, forKey: .flagStr) ?? ""
-        isEncrypted = try c.decodeIfPresent(Bool.self,   forKey: .isEncrypted) ?? false
-        isUtp       = try c.decodeIfPresent(Bool.self,   forKey: .isUtp) ?? false
+        address      = try c.decode(String.self, forKey: .address)
+        port         = try c.decode(Int.self,    forKey: .port)
+        clientName   = try c.decodeIfPresent(String.self, forKey: .clientName) ?? ""
+        progress     = try c.decode(Double.self, forKey: .progress)
+        rateToClient = try c.decode(Int.self,    forKey: .rateToClient)
+        rateToPeer   = try c.decode(Int.self,    forKey: .rateToPeer)
     }
     enum CodingKeys: String, CodingKey {
-        case address, port, clientName, progress, rateToClient, rateToPeer, flagStr, isEncrypted, isUtp
+        case address, port, clientName, progress, rateToClient, rateToPeer
     }
 }
 
 // MARK: - Tracker Stat
 
-struct TrackerStat: Identifiable, @unchecked Sendable {
+nonisolated struct TrackerStat: Identifiable, Sendable {
     let id: Int
     let host: String
-    let tier: Int
-    let announce: String
     let lastAnnounceResult: String
     let lastAnnounceSucceeded: Bool
-    let lastAnnounceTime: Int
     let nextAnnounceTime: Int
     let seederCount: Int
     let leecherCount: Int
-    let downloadCount: Int
-    let isBackup: Bool
 }
 
-extension TrackerStat: Decodable {
-    nonisolated init(from decoder: any Decoder) throws {
+nonisolated extension TrackerStat: Decodable {
+    init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id                    = try c.decode(Int.self,    forKey: .id)
         host                  = try c.decode(String.self, forKey: .host)
-        tier                  = try c.decodeIfPresent(Int.self, forKey: .tier) ?? 0
-        announce              = try c.decodeIfPresent(String.self, forKey: .announce) ?? ""
         lastAnnounceResult    = try c.decodeIfPresent(String.self, forKey: .lastAnnounceResult) ?? ""
         lastAnnounceSucceeded = try c.decodeIfPresent(Bool.self,   forKey: .lastAnnounceSucceeded) ?? false
-        lastAnnounceTime      = try c.decodeIfPresent(Int.self,    forKey: .lastAnnounceTime) ?? 0
         nextAnnounceTime      = try c.decodeIfPresent(Int.self,    forKey: .nextAnnounceTime) ?? 0
         seederCount           = try c.decodeIfPresent(Int.self,    forKey: .seederCount) ?? -1
         leecherCount          = try c.decodeIfPresent(Int.self,    forKey: .leecherCount) ?? -1
-        downloadCount         = try c.decodeIfPresent(Int.self,    forKey: .downloadCount) ?? -1
-        isBackup              = try c.decodeIfPresent(Bool.self,   forKey: .isBackup) ?? false
     }
     enum CodingKeys: String, CodingKey {
-        case id, host, tier, announce, lastAnnounceResult, lastAnnounceSucceeded
-        case lastAnnounceTime, nextAnnounceTime, seederCount, leecherCount, downloadCount, isBackup
+        case id, host, lastAnnounceResult, lastAnnounceSucceeded
+        case nextAnnounceTime, seederCount, leecherCount
     }
 }
 
 // MARK: - Torrent
 
-struct Torrent: Identifiable, @unchecked Sendable {
+nonisolated struct Torrent: Identifiable, Sendable {
     let id: Int
     var name: String
     var status: TorrentStatus
@@ -218,21 +161,17 @@ struct Torrent: Identifiable, @unchecked Sendable {
     var comment: String?
     var isPrivate: Bool
     var isFinished: Bool
-    var queuePosition: Int
     var recheckProgress: Double
     var sizeWhenDone: Int64
     var leftUntilDone: Int64
-    var activityDate: Int
     var files: [TorrentFile]?
     var fileStats: [TorrentFileStat]?
     var peers: [Peer]?
     var trackerStats: [TrackerStat]?
-    var wanted: [Int]?
-    var priorities: [Int]?
 
     var progress: Double { percentDone }
     var hasError: Bool { error != .none && !errorString.isEmpty }
-    var downloadedSize: Int64 { Int64(Double(sizeWhenDone) * percentDone) }
+    var downloadedSize: Int64 { max(0, sizeWhenDone - leftUntilDone) }
 
     var etaDuration: String {
         guard eta >= 0 else { return "—" }
@@ -240,28 +179,24 @@ struct Torrent: Identifiable, @unchecked Sendable {
     }
 
     var addedDateFormatted: String {
-        let date = Date(timeIntervalSince1970: TimeInterval(addedDate))
-        return Self.relativeFormatter.localizedString(for: date, relativeTo: .now)
+        Date(timeIntervalSince1970: TimeInterval(addedDate))
+            .formatted(.relative(presentation: .numeric))
     }
-
-    private static let relativeFormatter = RelativeDateTimeFormatter()
 
     var doneDateFormatted: String? {
         guard doneDate > 0 else { return nil }
-        let date = Date(timeIntervalSince1970: TimeInterval(doneDate))
-        return DateFormatter.localizedString(from: date, dateStyle: .medium, timeStyle: .short)
+        return Date(timeIntervalSince1970: TimeInterval(doneDate))
+            .formatted(date: .abbreviated, time: .shortened)
     }
 
     var filesWithStats: [(file: TorrentFile, stat: TorrentFileStat, index: Int)]? {
-        guard let files, let stats = fileStats else { return nil }
-        return zip(zip(files, stats), files.indices).map { (pair, index) in
-            (file: pair.0, stat: pair.1, index: index)
-        }
+        guard let files, let fileStats else { return nil }
+        return zip(files, fileStats).enumerated().map { (file: $1.0, stat: $1.1, index: $0) }
     }
 }
 
-extension Torrent: Decodable {
-    nonisolated init(from decoder: any Decoder) throws {
+nonisolated extension Torrent: Decodable {
+    init(from decoder: any Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id               = try c.decode(Int.self,           forKey: .id)
         name             = try c.decode(String.self,        forKey: .name)
@@ -286,26 +221,22 @@ extension Torrent: Decodable {
         comment          = try c.decodeIfPresent(String.self, forKey: .comment)
         isPrivate        = try c.decodeIfPresent(Bool.self,   forKey: .isPrivate)        ?? false
         isFinished       = try c.decodeIfPresent(Bool.self,   forKey: .isFinished)       ?? false
-        queuePosition    = try c.decodeIfPresent(Int.self,    forKey: .queuePosition)    ?? 0
         recheckProgress  = try c.decodeIfPresent(Double.self, forKey: .recheckProgress)  ?? 0
         sizeWhenDone     = try c.decodeIfPresent(Int64.self,  forKey: .sizeWhenDone)     ?? 0
         leftUntilDone    = try c.decodeIfPresent(Int64.self,  forKey: .leftUntilDone)    ?? 0
-        activityDate     = try c.decodeIfPresent(Int.self,    forKey: .activityDate)     ?? 0
         files            = try c.decodeIfPresent([TorrentFile].self,     forKey: .files)
         fileStats        = try c.decodeIfPresent([TorrentFileStat].self, forKey: .fileStats)
         peers            = try c.decodeIfPresent([Peer].self,            forKey: .peers)
         trackerStats     = try c.decodeIfPresent([TrackerStat].self,     forKey: .trackerStats)
-        wanted           = try c.decodeIfPresent([Int].self,             forKey: .wanted)
-        priorities       = try c.decodeIfPresent([Int].self,             forKey: .priorities)
     }
     enum CodingKeys: String, CodingKey {
         case id, name, status, totalSize, downloadedEver, uploadedEver
         case rateDownload, rateUpload, eta, percentDone, uploadRatio
         case peersConnected, peersSendingToUs, peersGettingFromUs
         case addedDate, doneDate, downloadDir, error, errorString, hashString
-        case comment, isPrivate, isFinished, queuePosition, recheckProgress
-        case sizeWhenDone, leftUntilDone, activityDate
-        case files, fileStats, peers, trackerStats, wanted, priorities
+        case comment, isPrivate, isFinished, recheckProgress
+        case sizeWhenDone, leftUntilDone
+        case files, fileStats, peers, trackerStats
     }
 }
 
@@ -326,7 +257,7 @@ extension Torrent {
 
 // MARK: - Filter
 
-enum TorrentFilter: String, CaseIterable, Identifiable, Sendable {
+nonisolated enum TorrentFilter: String, CaseIterable, Identifiable, Sendable {
     case all = "All", downloading = "Downloading", seeding = "Seeding"
     case paused = "Paused", error = "Error", checking = "Checking"
 
@@ -368,14 +299,14 @@ enum TorrentFilter: String, CaseIterable, Identifiable, Sendable {
 
 // MARK: - Sidebar Selection
 
-enum SidebarItem: Hashable, Sendable {
+nonisolated enum SidebarItem: Hashable, Sendable {
     case filter(TorrentFilter)
     case folder(String)  // downloadDir path
 }
 
 // MARK: - Sort
 
-enum TorrentSortOrder: String, CaseIterable, Sendable {
+nonisolated enum TorrentSortOrder: String, CaseIterable, Sendable {
     case name, addedDate, size, progress, downloadSpeed, uploadSpeed, ratio, eta
 
     func compare(_ a: Torrent, _ b: Torrent) -> Bool {

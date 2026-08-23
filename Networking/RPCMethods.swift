@@ -2,26 +2,13 @@ import Foundation
 
 // MARK: - Response types
 
-struct TorrentGetArguments: Decodable, Sendable {
+nonisolated struct TorrentGetArguments: Decodable, Sendable {
     let torrents: [Torrent]
-
-    nonisolated init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        torrents = try c.decode([Torrent].self, forKey: .torrents)
-    }
-
-    enum CodingKeys: String, CodingKey { case torrents }
 }
 
-struct TorrentAddArguments: Decodable, Sendable {
+nonisolated struct TorrentAddArguments: Decodable, Sendable {
     let torrentAdded: AddedTorrent?
     let torrentDuplicate: AddedTorrent?
-
-    nonisolated init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        torrentAdded      = try c.decodeIfPresent(AddedTorrent.self, forKey: .torrentAdded)
-        torrentDuplicate  = try c.decodeIfPresent(AddedTorrent.self, forKey: .torrentDuplicate)
-    }
 
     enum CodingKeys: String, CodingKey {
         case torrentAdded = "torrent-added"
@@ -29,37 +16,11 @@ struct TorrentAddArguments: Decodable, Sendable {
     }
 }
 
-struct AddedTorrent: Decodable, Sendable {
+nonisolated struct AddedTorrent: Decodable, Sendable {
     let id: Int
     let name: String
     let hashString: String
-
-    nonisolated init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        id         = try c.decode(Int.self,    forKey: .id)
-        name       = try c.decode(String.self, forKey: .name)
-        hashString = try c.decode(String.self, forKey: .hashString)
-    }
-
-    enum CodingKeys: String, CodingKey { case id, name, hashString }
 }
-
-struct FreeSpaceArguments: Decodable, Sendable {
-    let path: String
-    let sizeBytes: Int64
-
-    nonisolated init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        path      = try c.decode(String.self, forKey: .path)
-        sizeBytes = try c.decode(Int64.self,  forKey: .sizeBytes)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case path
-        case sizeBytes = "size-bytes"
-    }
-}
-
 
 // MARK: - Fields constants
 
@@ -69,13 +30,13 @@ private nonisolated let kListFields: [String] = [
     "rateDownload", "rateUpload", "eta", "percentDone", "uploadRatio",
     "peersConnected", "peersSendingToUs", "peersGettingFromUs",
     "addedDate", "doneDate", "downloadDir", "error", "errorString",
-    "hashString", "comment", "isPrivate", "isFinished", "queuePosition",
-    "recheckProgress", "sizeWhenDone", "leftUntilDone", "activityDate"
+    "hashString", "comment", "isPrivate", "isFinished",
+    "recheckProgress", "sizeWhenDone", "leftUntilDone"
 ]
 
 /// Heavy fields fetched only for the selected torrent (detail panel).
 private nonisolated let kDetailFields: [String] = kListFields + [
-    "trackerStats", "files", "fileStats", "peers", "wanted", "priorities"
+    "trackerStats", "files", "fileStats", "peers"
 ]
 
 // MARK: - RPCClient methods
@@ -105,29 +66,20 @@ extension RPCClient {
     // MARK: Actions
 
     func startTorrents(ids: [Int]) async throws      { try await action("torrent-start",      ids: ids) }
-    func startTorrentsNow(ids: [Int]) async throws   { try await action("torrent-start-now",  ids: ids) }
     func stopTorrents(ids: [Int]) async throws       { try await action("torrent-stop",       ids: ids) }
     func verifyTorrents(ids: [Int]) async throws     { try await action("torrent-verify",     ids: ids) }
     func reannounceTorrents(ids: [Int]) async throws { try await action("torrent-reannounce", ids: ids) }
 
-    private func action(_ method: String, ids: [Int]) async throws {
-        let args: [String: AnyCodable] = ["ids": AnyCodable(ids)]
+    /// Omitting "ids" makes Transmission apply the action to every torrent.
+    private func action(_ method: String, ids: [Int]?) async throws {
+        let args = ids.map { ["ids": AnyCodable($0)] }
         let r: RPCResponse<EmptyArguments> = try await request(
             method: method, arguments: args, responseType: EmptyArguments.self)
         guard r.isSuccess else { throw RPCError.serverError(r.result) }
     }
 
-    func startAllTorrents() async throws {
-        let r: RPCResponse<EmptyArguments> = try await request(
-            method: "torrent-start", responseType: EmptyArguments.self)
-        guard r.isSuccess else { throw RPCError.serverError(r.result) }
-    }
-
-    func stopAllTorrents() async throws {
-        let r: RPCResponse<EmptyArguments> = try await request(
-            method: "torrent-stop", responseType: EmptyArguments.self)
-        guard r.isSuccess else { throw RPCError.serverError(r.result) }
-    }
+    func startAllTorrents() async throws { try await action("torrent-start", ids: nil) }
+    func stopAllTorrents() async throws  { try await action("torrent-stop",  ids: nil) }
 
     // MARK: Remove
 
@@ -147,14 +99,8 @@ extension RPCClient {
         try await addTorrent(arguments: ["filename": AnyCodable(url)])
     }
 
-    func addTorrentFile(_ base64: String, downloadDir: String? = nil) async throws -> AddedTorrent {
-        var args: [String: AnyCodable] = ["metainfo": AnyCodable(base64)]
-        if let dir = downloadDir { args["download-dir"] = AnyCodable(dir) }
-        return try await addTorrent(arguments: args)
-    }
-
-    func addTorrentURL(_ urlString: String) async throws -> AddedTorrent {
-        try await addTorrent(arguments: ["filename": AnyCodable(urlString)])
+    func addTorrentFile(_ base64: String) async throws -> AddedTorrent {
+        try await addTorrent(arguments: ["metainfo": AnyCodable(base64)])
     }
 
     private func addTorrent(arguments: [String: AnyCodable]) async throws -> AddedTorrent {
@@ -168,9 +114,9 @@ extension RPCClient {
 
     // MARK: Torrent-set
 
-    func setTorrentLocation(id: Int, location: String, move: Bool) async throws {
+    func setTorrentLocation(ids: [Int], location: String, move: Bool) async throws {
         let args: [String: AnyCodable] = [
-            "ids":      AnyCodable([id]),
+            "ids":      AnyCodable(ids),
             "location": AnyCodable(location),
             "move":     AnyCodable(move)
         ]
@@ -194,21 +140,6 @@ extension RPCClient {
                             : priority == .high ? "priority-high"
                             : "priority-normal"
             args[priorityKey] = AnyCodable(fileIndices)
-        }
-        let r: RPCResponse<EmptyArguments> = try await request(
-            method: "torrent-set", arguments: args, responseType: EmptyArguments.self)
-        guard r.isSuccess else { throw RPCError.serverError(r.result) }
-    }
-
-    func setSpeedLimit(id: Int, downloadLimit: Int?, uploadLimit: Int?) async throws {
-        var args: [String: AnyCodable] = ["ids": AnyCodable([id])]
-        if let dl = downloadLimit {
-            args["downloadLimit"]   = AnyCodable(dl)
-            args["downloadLimited"] = AnyCodable(true)
-        }
-        if let ul = uploadLimit {
-            args["uploadLimit"]   = AnyCodable(ul)
-            args["uploadLimited"] = AnyCodable(true)
         }
         let r: RPCResponse<EmptyArguments> = try await request(
             method: "torrent-set", arguments: args, responseType: EmptyArguments.self)
@@ -240,26 +171,4 @@ extension RPCClient {
     func setAlternativeSpeedEnabled(_ enabled: Bool) async throws {
         try await setSession(["alt-speed-enabled": AnyCodable(enabled)])
     }
-
-    func setGlobalDownloadLimit(_ kbps: Int, enabled: Bool) async throws {
-        try await setSession([
-            "speed-limit-down":         AnyCodable(kbps),
-            "speed-limit-down-enabled": AnyCodable(enabled)
-        ])
-    }
-
-    func setGlobalUploadLimit(_ kbps: Int, enabled: Bool) async throws {
-        try await setSession([
-            "speed-limit-up":         AnyCodable(kbps),
-            "speed-limit-up-enabled": AnyCodable(enabled)
-        ])
-    }
-
-    func freeSpace(path: String) async throws -> Int64 {
-        let r: RPCResponse<FreeSpaceArguments> = try await request(
-            method: "free-space", arguments: ["path": AnyCodable(path)],
-            responseType: FreeSpaceArguments.self)
-        return r.arguments?.sizeBytes ?? 0
-    }
-
 }

@@ -204,10 +204,7 @@ struct DetailInfoView: View {
     }
 
     private var ratioColor: Color? {
-        guard store.session?.seedRatioLimited == true,
-              let limit = store.session?.seedRatioLimit,
-              torrent.uploadRatio >= limit else { return nil }
-        return .green
+        store.hasReachedSeedRatio(torrent) ? .green : nil
     }
 }
 
@@ -283,11 +280,10 @@ struct InfoRow: View {
 
 struct DetailFilesView: View {
     let torrent: Torrent
-    @Environment(TorrentStore.self) private var store
 
     var body: some View {
         if let files = torrent.filesWithStats, !files.isEmpty {
-            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: []) {
+            LazyVStack(alignment: .leading, spacing: 0) {
                 ForEach(files, id: \.index) { item in
                     FileRowView(
                         file: item.file,
@@ -312,7 +308,6 @@ struct FileRowView: View {
     let index: Int
     let torrentID: Int
     @Environment(TorrentStore.self) private var store
-    @State private var showPriorityMenu = false
 
     var priority: FilePriority {
         guard stat.wanted else { return .skip }
@@ -366,7 +361,11 @@ struct FileRowView: View {
                         Button {
                             Task { await store.setFilePriority(torrentID: torrentID, fileIndex: index, priority: p) }
                         } label: {
-                            Label(p.description, systemImage: priority == p ? "checkmark" : "")
+                            if priority == p {
+                                Label(p.description, systemImage: "checkmark")
+                            } else {
+                                Text(p.description)
+                            }
                         }
                     }
                 } label: {
@@ -451,7 +450,7 @@ struct PeerRowView: View {
             }
             .monospacedDigit()
 
-            Text(String(format: "%.0f%%", peer.progress * 100))
+            Text(ProgressFormatter.format(peer.progress, fractionDigits: 0))
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .frame(width: 35, alignment: .trailing)
