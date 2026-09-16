@@ -426,18 +426,43 @@ struct StatusBadge: View {
 
 struct ProgressCell: View {
     let torrent: Torrent
+    @Environment(\.backgroundProminence) private var prominence
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 2) {
-            Text(ProgressFormatter.format(torrent.progress))
-                .font(.callout)
-                .monospacedDigit()
-                .foregroundStyle(torrent.progress >= 1 ? .secondary : .primary)
+            bar
             if torrent.status == .check {
                 Text("check. \(ProgressFormatter.format(torrent.recheckProgress))")
                     .font(.caption2)
                     .foregroundStyle(.orange)
             }
         }
+    }
+
+    // Solid fill; the label turns white where the fill covers it.
+    // On a selected row the fill goes white and the label takes the accent color.
+    private var bar: some View {
+        let selected = prominence == .increased
+        let label = Text(ProgressFormatter.format(torrent.progress))
+            .font(.callout)
+            .monospacedDigit()
+
+        return ZStack {
+            RoundedRectangle(cornerRadius: 5)
+                .fill(selected ? AnyShapeStyle(.white.opacity(0.2)) : AnyShapeStyle(.quaternary))
+            label
+            ZStack {
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(selected ? Color.white : Color.accentColor)
+                label.foregroundStyle(selected ? Color.accentColor : .white)
+            }
+            .mask(alignment: .leading) {
+                GeometryReader { geo in
+                    Rectangle().frame(width: geo.size.width * torrent.progress)
+                }
+            }
+            .accessibilityHidden(true)
+        }
+        .frame(height: 18)
     }
 }
