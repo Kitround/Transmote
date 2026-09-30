@@ -104,9 +104,14 @@ class TorrentStore {
             .sorted { $0.path < $1.path }
     }
 
+    /// Ratio de partage configuré côté serveur, nil si illimité.
+    var seedRatioLimit: Double? {
+        session?.seedRatioLimited == true ? session?.seedRatioLimit : nil
+    }
+
     /// Le torrent a-t-il atteint le ratio de partage configuré côté serveur ?
     func hasReachedSeedRatio(_ torrent: Torrent) -> Bool {
-        guard session?.seedRatioLimited == true, let limit = session?.seedRatioLimit else { return false }
+        guard let limit = seedRatioLimit else { return false }
         return torrent.uploadRatio >= limit
     }
 

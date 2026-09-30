@@ -25,7 +25,11 @@ struct TorrentListView: View {
 
     // MARK: - Table
 
+    @ViewBuilder
     private var torrentTable: some View {
+        // Read here, never inside a cell closure: an @Observable read in a Table
+        // cell leaks one SwiftUI access list per row per poll (~800 MB/2 days).
+        let ratioLimit = store.seedRatioLimit
         Table(
             store.filteredTorrents,
             selection: Binding(
@@ -89,7 +93,7 @@ struct TorrentListView: View {
             TableColumn("Ratio", value: \.uploadRatio) { torrent in
                 Text(RatioFormatter.format(torrent.uploadRatio))
                     .font(.callout)
-                    .foregroundStyle(ratioColor(for: torrent))
+                    .foregroundStyle(ratioColor(for: torrent, limit: ratioLimit))
                     .monospacedDigit()
             }
             .width(55)
@@ -273,8 +277,9 @@ struct TorrentListView: View {
         store.sortAscending = ascending
     }
 
-    private func ratioColor(for torrent: Torrent) -> Color {
-        store.hasReachedSeedRatio(torrent) ? .green : .secondary
+    private func ratioColor(for torrent: Torrent, limit: Double?) -> Color {
+        if let limit, torrent.uploadRatio >= limit { return .green }
+        return .secondary
     }
 }
 
