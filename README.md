@@ -9,7 +9,7 @@ A native macOS remote client for [Transmission](https://transmissionbt.com).
 
 ## Download
 
-Grab the latest `.zip` from the [Releases](https://github.com/Kitround/Transmote/releases) page.
+Latest version: **[v1.7.8](https://github.com/Kitround/Transmote/releases/latest)** — [download `Transmote.zip`](https://github.com/Kitround/Transmote/releases/latest/download/Transmote.zip).
 
 **Requires macOS 14.6 (Sonoma) or later.**
 
@@ -22,6 +22,7 @@ Grab the latest `.zip` from the [Releases](https://github.com/Kitround/Transmote
 - Drag & drop support
 - Detail panel with files, peers and trackers
 - Menu bar with live speeds
+- Connection loss detection with automatic reconnect
 - Turtle mode, bandwidth & queue settings
 - Download completion notifications
 - Customizable toolbar
