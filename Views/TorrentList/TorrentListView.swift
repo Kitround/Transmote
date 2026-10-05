@@ -350,20 +350,6 @@ struct TorrentNameCell: View {
                 }
             }
 
-            // Progress bar
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 2)
-                        .fill(.quaternary)
-                        .frame(height: 3)
-
-                    RoundedRectangle(cornerRadius: 2)
-                        .fill(progressBarColor)
-                        .frame(width: geo.size.width * torrent.progress, height: 3)
-                }
-            }
-            .frame(height: 3)
-
             HStack(spacing: 6) {
                 StatusBadge(torrent: torrent)
                 Text("·")
@@ -388,16 +374,6 @@ struct TorrentNameCell: View {
             }
         }
         .padding(.vertical, 4)
-    }
-
-    private var progressBarColor: Color {
-        if torrent.hasError { return .red }
-        switch torrent.status {
-        case .download, .downloadWait: return .blue
-        case .seed, .seedWait: return .secondary
-        case .stopped: return .gray
-        case .check, .checkWait: return .orange
-        }
     }
 }
 

@@ -15,6 +15,8 @@ struct ContentView: View {
 
         NavigationSplitView(columnVisibility: $columnVisibility) {
             SidebarView()
+                // The system sidebar toggle has the same laggy hover; ours lives with the other buttons.
+                .toolbar(removing: .sidebarToggle)
                 .navigationSplitViewColumnWidth(min: 160, ideal: 200, max: 240)
         } detail: {
             TorrentListView(onOpenDetail: {
@@ -34,7 +36,7 @@ struct ContentView: View {
                 } label: {
                     Label("Start All", systemImage: "play.fill")
                 }
-                .help("Start all torrents")
+                .buttonStyle(ToolbarHoverButtonStyle())
                 .disabled(!store.connectionState.isConnected)
             }
             ToolbarItem(id: "pauseAll", placement: .primaryAction) {
@@ -43,7 +45,7 @@ struct ContentView: View {
                 } label: {
                     Label("Pause All", systemImage: "pause.fill")
                 }
-                .help("Pause all torrents")
+                .buttonStyle(ToolbarHoverButtonStyle())
                 .disabled(!store.connectionState.isConnected)
             }
             ToolbarItem(id: "addFile", placement: .primaryAction) {
@@ -52,7 +54,7 @@ struct ContentView: View {
                 } label: {
                     Label("Add File", systemImage: "plus.circle")
                 }
-                .help("Add a .torrent file")
+                .buttonStyle(ToolbarHoverButtonStyle())
             }
             ToolbarItem(id: "addMagnet", placement: .primaryAction) {
                 Button {
@@ -60,18 +62,22 @@ struct ContentView: View {
                 } label: {
                     Label("Add Magnet", systemImage: "link.badge.plus")
                 }
-                .help("Add a magnet link")
+                .buttonStyle(ToolbarHoverButtonStyle())
             }
             ToolbarItem(id: "turtle", placement: .primaryAction) {
                 Button {
                     Task { await store.toggleAltSpeed() }
                 } label: {
-                    Label(store.isAltSpeedEnabled ? "Turtle mode active" : "Turtle mode",
-                          systemImage: store.isAltSpeedEnabled ? "tortoise.fill" : "tortoise")
+                    // Only tint when active; the button style supplies the gray otherwise.
+                    if store.isAltSpeedEnabled {
+                        Label("Turtle mode active", systemImage: "tortoise.fill")
+                            .foregroundStyle(Color.accentColor)
+                    } else {
+                        Label("Turtle mode", systemImage: "tortoise")
+                    }
                 }
-                .help("Toggle alternative speed limit")
+                .buttonStyle(ToolbarHoverButtonStyle())
                 .disabled(!store.connectionState.isConnected)
-                .foregroundStyle(store.isAltSpeedEnabled ? Color.accentColor : Color.primary)
             }
             ToolbarItem(id: "compactMode", placement: .primaryAction) {
                 Button {
@@ -80,7 +86,17 @@ struct ContentView: View {
                     Label(compactMode ? "Detailed view" : "Compact view",
                           systemImage: compactMode ? "list.bullet.indent" : "list.dash")
                 }
-                .help(compactMode ? "Switch to detailed view" : "Switch to compact view")
+                .buttonStyle(ToolbarHoverButtonStyle())
+            }
+            ToolbarItem(id: "sidebar", placement: .primaryAction) {
+                Button {
+                    withAnimation {
+                        columnVisibility = columnVisibility == .detailOnly ? .all : .detailOnly
+                    }
+                } label: {
+                    Label("Toggle Sidebar", systemImage: "sidebar.leading")
+                }
+                .buttonStyle(ToolbarHoverButtonStyle())
             }
             ToolbarItem(id: "detail", placement: .primaryAction) {
                 Button {
@@ -89,7 +105,7 @@ struct ContentView: View {
                     Label(showDetail ? "Hide Detail" : "Show Detail",
                           systemImage: "sidebar.trailing")
                 }
-                .help("Toggle detail panel")
+                .buttonStyle(ToolbarHoverButtonStyle())
             }
         }
         .onAppear {
@@ -155,5 +171,35 @@ struct ContentView: View {
             }
         }
         return handled
+    }
+}
+
+// MARK: - Toolbar button style
+
+/// The system toolbar bezel fades in late on hover; draw our own, instantly.
+struct ToolbarHoverButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HoverBody(configuration: configuration)
+    }
+
+    private struct HoverBody: View {
+        let configuration: Configuration
+        @State private var hovering = false
+        @Environment(\.isEnabled) private var isEnabled
+
+        var body: some View {
+            configuration.label
+                .imageScale(.large)  // match native toolbar symbol size
+                .foregroundStyle(.secondary)
+                .padding(.horizontal, 6)
+                .frame(minWidth: 28, minHeight: 24)
+                .background(
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill(.primary.opacity(configuration.isPressed ? 0.15 : (hovering && isEnabled ? 0.08 : 0)))
+                )
+                .contentShape(Rectangle())
+                .opacity(isEnabled ? 1 : 0.4)
+                .onHover { hovering = $0 }
+        }
     }
 }

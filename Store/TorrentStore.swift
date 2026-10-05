@@ -232,10 +232,20 @@ class TorrentStore {
             applyDiff(newTorrents: torrents, selectedID: selectedID)
             let activeIDs = Set(torrents.map(\.id))
             previousStatuses = previousStatuses.filter { activeIDs.contains($0.key) }
+            // Server came back after a dropped connection: polling never stopped.
+            if case .error = connectionState {
+                connectionState = .connected(version: session?.version ?? "?")
+            }
         } catch {
+            // Ignore failures from a superseded client or a cancelled poll.
+            guard self.client === client, !Task.isCancelled else { return }
             if case .authenticationFailed = error as? RPCError {
                 connectionState = .error(String(localized: "Authentication failed"))
                 stopPolling()
+            } else {
+                // Keep polling so we reconnect on our own once the server is back.
+                connectionState = .error(error.localizedDescription)
+                (NSApp.delegate as? AppDelegate)?.updateStatusBarTitle(download: 0, upload: 0)
             }
         }
     }

@@ -2024,6 +2024,17 @@
         }
       }
     },
+    "Toggle Sidebar" : {
+      "comment" : "Toolbar button: show/hide sidebar",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher/masquer la barre latérale"
+          }
+        }
+      }
+    },
     "Toggle detail panel" : {
       "comment" : "Toolbar button tooltip: detail panel",
       "localizations" : {
