@@ -145,10 +145,12 @@ struct GeneralSettingsTab: View {
         }
         .alert("Restart Required", isPresented: $showRestartAlert) {
             Button("Restart Now") {
-                let url = Bundle.main.bundleURL
+                // `open` while we're still running just reactivates this instance,
+                // so wait for this process to exit before reopening the app.
+                let pid = ProcessInfo.processInfo.processIdentifier
                 let task = Process()
-                task.executableURL = URL(fileURLWithPath: "/usr/bin/open")
-                task.arguments = [url.path]
+                task.executableURL = URL(fileURLWithPath: "/bin/sh")
+                task.arguments = ["-c", "while kill -0 \(pid) 2>/dev/null; do sleep 0.1; done; /usr/bin/open \"$0\"", Bundle.main.bundlePath]
                 try? task.run()
                 NSApp.terminate(nil)
             }
