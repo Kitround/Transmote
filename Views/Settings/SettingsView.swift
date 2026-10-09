@@ -35,6 +35,9 @@ struct GeneralSettingsTab: View {
         if let first = langs?.first {
             if first.hasPrefix("fr") { return "fr" }
             if first.hasPrefix("en") { return "en" }
+            if first.hasPrefix("de") { return "de" }
+            if first.hasPrefix("es") { return "es" }
+            if first.hasPrefix("zh-Hans") { return "zh-Hans" }
         }
         return "system"
     }()
@@ -48,6 +51,9 @@ struct GeneralSettingsTab: View {
                     Text("System Default").tag("system")
                     Text("English").tag("en")
                     Text("Français").tag("fr")
+                    Text("Deutsch").tag("de")
+                    Text("Español").tag("es")
+                    Text("简体中文").tag("zh-Hans")
                 }
                 .onChange(of: selectedLanguage) { _, newValue in
                     if newValue == "system" {

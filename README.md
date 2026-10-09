@@ -26,7 +26,7 @@ Latest version: **[v1.7.9](https://github.com/Kitround/Transmote/releases/latest
 - Turtle mode, bandwidth & queue settings
 - Download completion notifications
 - Customizable toolbar
-- French localization
+- Available in English, French, German, Spanish and Simplified Chinese
 
 ## Transmission Setup
 
