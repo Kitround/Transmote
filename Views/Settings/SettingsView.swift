@@ -43,6 +43,10 @@ struct GeneralSettingsTab: View {
     }()
     @State private var showRestartAlert = false
     @State private var defaultAppMessage: String? = nil
+    @AppStorage("checkForUpdates") private var checkForUpdates = true
+    @State private var checkingForUpdates = false
+    @State private var availableVersion: String? = nil
+    @State private var updateMessage: String? = nil
 
     var body: some View {
         Form {
@@ -63,6 +67,34 @@ struct GeneralSettingsTab: View {
                     }
                     UserDefaults.standard.synchronize()
                     showRestartAlert = true
+                }
+            }
+
+            Section("Updates") {
+                Toggle("Check for updates at launch", isOn: $checkForUpdates)
+                HStack {
+                    Text("Version \(UpdateChecker.currentVersion)")
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button("Check for Updates") {
+                        Task { await checkUpdates() }
+                    }
+                    .buttonStyle(.bordered)
+                    .disabled(checkingForUpdates)
+                }
+                if let version = availableVersion {
+                    HStack {
+                        Text("Version \(version) is available.")
+                        Spacer()
+                        Button("Download Update") {
+                            NSWorkspace.shared.open(UpdateChecker.downloadURL(for: version))
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                } else if let msg = updateMessage {
+                    Text(msg)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
             }
 
@@ -159,6 +191,18 @@ struct GeneralSettingsTab: View {
             Text("Please restart Transmote to apply the language change.")
         }
         .padding()
+    }
+
+    private func checkUpdates() async {
+        checkingForUpdates = true
+        defer { checkingForUpdates = false }
+        do {
+            availableVersion = try await UpdateChecker.newerVersion()
+            updateMessage = availableVersion == nil ? String(localized: "Transmote is up to date.") : nil
+        } catch {
+            availableVersion = nil
+            updateMessage = String(localized: "Update check failed.")
+        }
     }
 
     private func applyDownloadDir() {

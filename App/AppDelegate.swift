@@ -13,6 +13,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         setupStatusBar()
         requestNotificationPermission()
         observeWindowVisibility()
+        if UserDefaults.standard.object(forKey: "checkForUpdates") as? Bool ?? true {
+            Task { await checkForUpdatesAtLaunch() }
+        }
+    }
+
+    private func checkForUpdatesAtLaunch() async {
+        guard let version = try? await UpdateChecker.newerVersion() else { return }
+        let alert = NSAlert()
+        alert.messageText = String(localized: "Update Available")
+        alert.informativeText = String(localized: "Version \(version) is available.")
+        alert.addButton(withTitle: String(localized: "Download Update"))
+        alert.addButton(withTitle: String(localized: "Later"))
+        if alert.runModal() == .alertFirstButtonReturn {
+            NSWorkspace.shared.open(UpdateChecker.downloadURL(for: version))
+        }
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -128,5 +143,34 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 .map(\.request.identifier)
             UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: oldIDs)
         }
+    }
+}
+
+// MARK: - Update check
+
+/// Compares this build with the latest GitHub release. Installing is left to the user.
+nonisolated enum UpdateChecker {
+    static let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0"
+
+    private struct Release: Decodable { let tagName: String }
+
+    /// The latest release's version if it is newer than this build, else nil.
+    static func newerVersion() async throws -> String? {
+        let url = URL(string: "https://api.github.com/repos/Kitround/Transmote/releases/latest")!
+        let (data, response) = try await URLSession.shared.data(from: url)
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw URLError(.badServerResponse) }
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let tag = try decoder.decode(Release.self, from: data).tagName
+        let latest = tag.hasPrefix("v") ? String(tag.dropFirst()) : tag
+        return isNewer(latest, than: currentVersion) ? latest : nil
+    }
+
+    static func isNewer(_ a: String, than b: String) -> Bool {
+        a.compare(b, options: .numeric) == .orderedDescending
+    }
+
+    static func downloadURL(for version: String) -> URL {
+        URL(string: "https://github.com/Kitround/Transmote/releases/download/v\(version)/Transmote.zip")!
     }
 }
