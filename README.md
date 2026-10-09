@@ -26,7 +26,18 @@ Latest version: **[v1.8.0](https://github.com/Kitround/Transmote/releases/latest
 - Turtle mode, bandwidth & queue settings
 - Download completion notifications
 - Customizable toolbar
-- Available in English, French, German, Spanish and Simplified Chinese
+
+## Languages
+
+Transmote is available in:
+
+- English
+- French
+- German
+- Spanish
+- Simplified Chinese
+
+It follows your macOS language by default. To pick another one, go to **Settings → General → Language** and restart the app.
 
 ## Transmission Setup
 
