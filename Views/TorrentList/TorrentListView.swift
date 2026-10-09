@@ -434,7 +434,7 @@ struct ProgressCell: View {
             label
             ZStack {
                 RoundedRectangle(cornerRadius: 5)
-                    .fill(selected ? Color.white : Color.accentColor.opacity(torrent.progress >= 1 ? 0.4 : 1))
+                    .fill(selected ? Color.white : torrent.progress >= 1 ? Color(red: 0.55, green: 0.8, blue: 0.55) : Color.accentColor)
                 label.foregroundStyle(selected ? Color.accentColor : .white)
             }
             .mask(alignment: .leading) {

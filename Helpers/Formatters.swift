@@ -46,6 +46,10 @@ nonisolated enum RatioFormatter {
 
 nonisolated enum ProgressFormatter {
     static func format(_ progress: Double, fractionDigits: Int = 1) -> String {
-        progress.formatted(.percent.precision(.fractionLength(fractionDigits)))
+        let style = FloatingPointFormatStyle<Double>.Percent.percent.precision(.fractionLength(fractionDigits))
+        let text = progress.formatted(style)
+        // Rounding up to "100%" would make an unfinished torrent look done.
+        guard progress < 1, text == 1.0.formatted(style) else { return text }
+        return min(progress, 0.9999).formatted(.percent.precision(.fractionLength(2)))
     }
 }
