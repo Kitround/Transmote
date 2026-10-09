@@ -43,7 +43,7 @@ struct GeneralSettingsTab: View {
     }()
     @State private var showRestartAlert = false
     @State private var defaultAppMessage: String? = nil
-    @AppStorage("checkForUpdates") private var checkForUpdates = true
+    @AppStorage(UpdateChecker.intervalKey) private var updateCheckInterval = UpdateChecker.defaultInterval
     @State private var checkingForUpdates = false
     @State private var availableVersion: String? = nil
     @State private var updateMessage: String? = nil
@@ -71,7 +71,12 @@ struct GeneralSettingsTab: View {
             }
 
             Section("Updates") {
-                Toggle("Check for updates at launch", isOn: $checkForUpdates)
+                Picker("Automatic check", selection: $updateCheckInterval) {
+                    Text("Never").tag(0.0)
+                    Text("Daily").tag(86400.0)
+                    Text("Weekly").tag(604800.0)
+                    Text("Monthly").tag(2592000.0)
+                }
                 HStack {
                     Text("Version \(UpdateChecker.currentVersion)")
                         .foregroundStyle(.secondary)

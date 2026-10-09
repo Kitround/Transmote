@@ -13,12 +13,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         setupStatusBar()
         requestNotificationPermission()
         observeWindowVisibility()
-        if UserDefaults.standard.object(forKey: "checkForUpdates") as? Bool ?? true {
-            Task { await checkForUpdatesAtLaunch() }
+        scheduleUpdateChecks()
+    }
+
+    // MARK: - Update check
+
+    /// The app often runs for weeks from the menu bar, so checking only at
+    /// launch is not enough: look every hour whether a check is due.
+    private func scheduleUpdateChecks() {
+        Task {
+            while !Task.isCancelled {
+                if UpdateChecker.isCheckDue {
+                    await checkForUpdatesInBackground()
+                }
+                try? await Task.sleep(for: .seconds(3600))
+            }
         }
     }
 
-    private func checkForUpdatesAtLaunch() async {
+    private func checkForUpdatesInBackground() async {
         guard let version = try? await UpdateChecker.newerVersion() else { return }
         let alert = NSAlert()
         alert.messageText = String(localized: "Update Available")
@@ -152,6 +165,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 nonisolated enum UpdateChecker {
     static let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0"
 
+    /// Seconds between automatic checks, 0 = never. Same key and default as the Settings picker.
+    static let intervalKey = "updateCheckInterval"
+    static let defaultInterval: TimeInterval = 86400
+    private static let lastCheckKey = "lastUpdateCheck"
+
+    static var isCheckDue: Bool {
+        let interval = UserDefaults.standard.object(forKey: intervalKey) as? Double ?? defaultInterval
+        let last = UserDefaults.standard.double(forKey: lastCheckKey)
+        return interval > 0 && Date().timeIntervalSince1970 - last >= interval
+    }
+
     private struct Release: Decodable { let tagName: String }
 
     /// The latest release's version if it is newer than this build, else nil.
@@ -162,6 +186,7 @@ nonisolated enum UpdateChecker {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         let tag = try decoder.decode(Release.self, from: data).tagName
+        UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: lastCheckKey)
         let latest = tag.hasPrefix("v") ? String(tag.dropFirst()) : tag
         return isNewer(latest, than: currentVersion) ? latest : nil
     }
