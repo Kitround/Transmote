@@ -110,7 +110,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupStatusBar() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         guard let button = statusItem?.button else { return }
-        button.image = NSImage(systemSymbolName: "arrow.up.arrow.down.circle", accessibilityDescription: "Transmote")
+        button.image = NSImage(named: "MenuBarIcon")
+        button.image?.accessibilityDescription = "Transmote"
         button.image?.isTemplate = true
 
         statusMenu = NSMenu()
