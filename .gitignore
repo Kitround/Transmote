@@ -27,3 +27,6 @@ Icon?
 build/
 CLAUDE.md
 .claude/
+
+# Local Release copy
+/Transmote.app/
