@@ -68,7 +68,7 @@ struct TorrentListView: View {
                 if torrent.rateDownload > 0 {
                     Text(ByteFormatter.transferRate(torrent.rateDownload))
                         .font(.callout)
-                        .foregroundStyle(.blue)
+                        .cellTint(.blue)
                         .monospacedDigit()
                 } else {
                     Text("—").font(.callout).foregroundStyle(.tertiary)
@@ -81,7 +81,7 @@ struct TorrentListView: View {
                 if torrent.rateUpload > 0 {
                     Text(ByteFormatter.transferRate(torrent.rateUpload))
                         .font(.callout)
-                        .foregroundStyle(.green)
+                        .cellTint(.green)
                         .monospacedDigit()
                 } else {
                     Text("—").font(.callout).foregroundStyle(.tertiary)
@@ -93,7 +93,7 @@ struct TorrentListView: View {
             TableColumn("Ratio", value: \.uploadRatio) { torrent in
                 Text(RatioFormatter.format(torrent.uploadRatio))
                     .font(.callout)
-                    .foregroundStyle(ratioColor(for: torrent, limit: ratioLimit))
+                    .cellTint(ratioColor(for: torrent, limit: ratioLimit))
                     .monospacedDigit()
             }
             .width(55)
@@ -283,6 +283,22 @@ struct TorrentListView: View {
     }
 }
 
+// MARK: - Cell Tint
+
+// Explicit colors don't adapt to a selected row (unlike .secondary); go white there.
+struct CellTint<S: ShapeStyle>: ViewModifier {
+    let style: S
+    @Environment(\.backgroundProminence) private var prominence
+
+    func body(content: Content) -> some View {
+        content.foregroundStyle(prominence == .increased ? AnyShapeStyle(.white) : AnyShapeStyle(style))
+    }
+}
+
+extension View {
+    func cellTint<S: ShapeStyle>(_ style: S) -> some View { modifier(CellTint(style: style)) }
+}
+
 // MARK: - Compact Name Cell
 
 struct CompactNameCell: View {
@@ -291,7 +307,7 @@ struct CompactNameCell: View {
     var body: some View {
         HStack(spacing: 6) {
             Circle()
-                .fill(torrent.statusColor)
+                .cellTint(torrent.statusColor)
                 .frame(width: 6, height: 6)
 
             Text(torrent.name)
@@ -300,7 +316,7 @@ struct CompactNameCell: View {
 
             if torrent.hasError {
                 Image(systemName: "exclamationmark.triangle.fill")
-                    .foregroundStyle(.red)
+                    .cellTint(.red)
                     .font(.caption2)
             }
             if torrent.isPrivate {
@@ -322,15 +338,15 @@ struct TorrentNameCell: View {
             HStack(spacing: 6) {
                 // Status indicator dot
                 Circle()
-                    .fill(torrent.statusColor)
                     .frame(width: 7, height: 7)
                     .overlay {
                         if torrent.status == .check || torrent.status == .checkWait {
-                            Circle().stroke(torrent.statusColor, lineWidth: 1.5)
+                            Circle().stroke(lineWidth: 1.5)
                                 .scaleEffect(1.5)
                                 .opacity(0.4)
                         }
                     }
+                    .cellTint(torrent.statusColor)
 
                 Text(torrent.name)
                     .font(.callout)
@@ -339,7 +355,7 @@ struct TorrentNameCell: View {
 
                 if torrent.hasError {
                     Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundStyle(.red)
+                        .cellTint(.red)
                         .font(.caption)
                 }
 
@@ -368,7 +384,7 @@ struct TorrentNameCell: View {
                     Text("·").foregroundStyle(.tertiary).font(.caption2)
                     Text(torrent.errorString)
                         .font(.caption2)
-                        .foregroundStyle(.red)
+                        .cellTint(.red)
                         .lineLimit(1)
                 }
             }
@@ -390,7 +406,7 @@ struct StatusBadge: View {
                 .font(.caption2)
                 .fontWeight(.medium)
         }
-        .foregroundStyle(torrent.status.isStopped && !torrent.hasError ? AnyShapeStyle(.secondary) : AnyShapeStyle(torrent.statusColor))
+        .cellTint(torrent.status.isStopped && !torrent.hasError ? AnyShapeStyle(.secondary) : AnyShapeStyle(torrent.statusColor))
     }
 
     private var iconName: String {
@@ -415,7 +431,7 @@ struct ProgressCell: View {
             if torrent.status == .check {
                 Text("check. \(ProgressFormatter.format(torrent.recheckProgress))")
                     .font(.caption2)
-                    .foregroundStyle(.orange)
+                    .cellTint(.orange)
             }
         }
     }
