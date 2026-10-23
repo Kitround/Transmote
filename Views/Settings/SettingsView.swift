@@ -1,5 +1,4 @@
 import SwiftUI
-import UniformTypeIdentifiers
 import AppKit
 
 struct SettingsView: View {
@@ -43,6 +42,9 @@ struct GeneralSettingsTab: View {
     }()
     @State private var showRestartAlert = false
     @State private var defaultAppMessage: String? = nil
+    /// What macOS currently opens each kind with; nil when it is Transmote.
+    @State private var otherDefaultApp: [DefaultHandler: String] = [:]
+    @State private var defaultsChecked = false
     @AppStorage(UpdateChecker.intervalKey) private var updateCheckInterval = UpdateChecker.defaultInterval
     @State private var checkingForUpdates = false
     @State private var availableVersion: String? = nil
@@ -104,22 +106,10 @@ struct GeneralSettingsTab: View {
             }
 
             Section("Default App") {
-                HStack {
-                    Text("Magnet links")
-                    Spacer()
-                    Button("Set as default") {
-                        setDefaultScheme("magnet")
-                    }
-                    .buttonStyle(.bordered)
-                }
-                HStack {
-                    Text(".torrent files")
-                    Spacer()
-                    Button("Set as default") {
-                        setDefaultContentType("org.bittorrent.torrent")
-                    }
-                    .buttonStyle(.bordered)
-                }
+                defaultAppRow("Magnet links", .magnet,
+                              success: String(localized: "✓ Transmote is now the default app for magnet links."))
+                defaultAppRow(".torrent files", .torrent,
+                              success: String(localized: "✓ Transmote is now the default app for .torrent files."))
                 if let msg = defaultAppMessage {
                     Text(msg)
                         .font(.caption)
@@ -179,6 +169,11 @@ struct GeneralSettingsTab: View {
         .formStyle(.grouped)
         .onAppear {
             downloadDir = store.session?.downloadDir ?? ""
+            refreshDefaultApps()
+        }
+        // The user may have changed the default in Finder or another client meanwhile.
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+            refreshDefaultApps()
         }
         .alert("Restart Required", isPresented: $showRestartAlert) {
             Button("Restart Now") {
@@ -217,32 +212,46 @@ struct GeneralSettingsTab: View {
         }
     }
 
-    private func setDefaultScheme(_ scheme: String) {
-        let appURL = Bundle.main.bundleURL
-        NSWorkspace.shared.setDefaultApplication(at: appURL, toOpenURLsWithScheme: scheme) { error in
-            Task { @MainActor in
-                if let error {
-                    defaultAppMessage = String(localized: "Failed: \(error.localizedDescription)")
+    private func defaultAppRow(_ title: LocalizedStringKey, _ handler: DefaultHandler, success: String) -> some View {
+        HStack {
+            Text(title)
+            Spacer()
+            if defaultsChecked {
+                if let other = otherDefaultApp[handler] {
+                    Text("Currently: \(other)")
+                        .foregroundStyle(.secondary)
+                    Button("Set as default") {
+                        setDefault(handler, success: success)
+                    }
+                    .buttonStyle(.bordered)
                 } else {
-                    defaultAppMessage = String(localized: "✓ Transmote is now the default app for magnet links.")
+                    Label("Transmote is the default", systemImage: "checkmark.circle.fill")
+                        .foregroundStyle(.green)
                 }
             }
         }
     }
 
-    private func setDefaultContentType(_ identifier: String) {
-        guard let type = UTType(identifier) else {
-            defaultAppMessage = String(localized: "Failed: unknown content type.")
-            return
+    private func refreshDefaultApps() {
+        otherDefaultApp = [:]
+        for handler in DefaultHandler.allCases where !handler.isOurs {
+            otherDefaultApp[handler] = handler.currentApp.map { FileManager.default.displayName(atPath: $0.path) } ?? "—"
         }
-        let appURL = Bundle.main.bundleURL
-        NSWorkspace.shared.setDefaultApplication(at: appURL, toOpen: type) { error in
-            Task { @MainActor in
-                if let error {
-                    defaultAppMessage = String(localized: "Failed: \(error.localizedDescription)")
-                } else {
-                    defaultAppMessage = String(localized: "✓ Transmote is now the default app for .torrent files.")
-                }
+        defaultsChecked = true
+    }
+
+    private func setDefault(_ handler: DefaultHandler, success: String) {
+        Task {
+            defer { refreshDefaultApps() }
+            do {
+                try await handler.claim()
+                // Launch Services can accept the preference and still resolve
+                // another app, so report what it actually picks.
+                defaultAppMessage = handler.isOurs
+                    ? success
+                    : String(localized: "Failed: macOS still opens them with \(handler.currentApp?.path ?? "—").")
+            } catch {
+                defaultAppMessage = String(localized: "Failed: \(error.localizedDescription)")
             }
         }
     }

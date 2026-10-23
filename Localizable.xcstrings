@@ -1306,6 +1306,35 @@
         }
       }
     },
+    "Currently: %@" : {
+      "comment" : "Settings default-app row: app macOS currently opens these with (app name)",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuell: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualmente: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actuellement : %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前：%@"
+          }
+        }
+      }
+    },
     "Dates" : {
       "comment" : "Detail info section header",
       "localizations" : {
@@ -2213,31 +2242,31 @@
         }
       }
     },
-    "Failed: unknown content type." : {
-      "comment" : "Default-app assignment failure: UTI not found",
+    "Failed: macOS still opens them with %@." : {
+      "comment" : "Default-app assignment accepted but Launch Services still resolves another app (path)",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fehlgeschlagen: unbekannter Inhaltstyp."
+            "value" : "Fehlgeschlagen: macOS öffnet sie weiterhin mit %@."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Error: tipo de contenido desconocido."
+            "value" : "Error: macOS sigue abriéndolos con %@."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Échec : type de contenu inconnu."
+            "value" : "Échec : macOS les ouvre toujours avec %@."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "失败：未知的内容类型。"
+            "value" : "失败：macOS 仍使用 %@ 打开。"
           }
         }
       }
@@ -5969,6 +5998,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "下载更新"
+          }
+        }
+      }
+    },
+    "Transmote is the default" : {
+      "comment" : "Settings default-app row: Transmote currently opens these",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transmote ist Standard"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transmote es la predeterminada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transmote est l'app par défaut"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transmote 是默认应用"
           }
         }
       }

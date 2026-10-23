@@ -1,4 +1,5 @@
 import AppKit
+import UniformTypeIdentifiers
 @preconcurrency import UserNotifications
 
 @MainActor
@@ -14,6 +15,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         requestNotificationPermission()
         observeWindowVisibility()
         scheduleUpdateChecks()
+        DefaultHandler.reassertClaimed()
     }
 
     // MARK: - Update check
@@ -198,5 +200,48 @@ nonisolated enum UpdateChecker {
 
     static func downloadURL(for version: String) -> URL {
         URL(string: "https://github.com/Kitround/Transmote/releases/download/v\(version)/Transmote.zip")!
+    }
+}
+
+// MARK: - Default handler
+
+/// Magnet links and .torrent files. Once the user picks Transmote in
+/// Settings, every launch re-claims the role if macOS lost it (another
+/// client took over, an update, a stale record of an older build).
+enum DefaultHandler: String, CaseIterable {
+    case magnet, torrent
+
+    private var claimedKey: String { "claimsDefault.\(rawValue)" }
+    private static let torrentType = UTType(exportedAs: "org.bittorrent.torrent")
+
+    /// The app macOS currently opens these with.
+    var currentApp: URL? {
+        switch self {
+        case .magnet:  NSWorkspace.shared.urlForApplication(toOpen: URL(string: "magnet:")!)
+        case .torrent: NSWorkspace.shared.urlForApplication(toOpen: Self.torrentType)
+        }
+    }
+
+    var isOurs: Bool {
+        currentApp?.standardizedFileURL == Bundle.main.bundleURL.standardizedFileURL
+    }
+
+    func claim() async throws {
+        UserDefaults.standard.set(true, forKey: claimedKey)
+        let appURL = Bundle.main.bundleURL
+        // The preference is stored by bundle ID. A stale record of another
+        // Transmote copy (older version, deleted folder) can win that lookup
+        // and make macOS fall back to another client, so refresh ours first.
+        LSRegisterURL(appURL as CFURL, true)
+        switch self {
+        case .magnet:  try await NSWorkspace.shared.setDefaultApplication(at: appURL, toOpenURLsWithScheme: "magnet")
+        case .torrent: try await NSWorkspace.shared.setDefaultApplication(at: appURL, toOpen: Self.torrentType)
+        }
+    }
+
+    static func reassertClaimed() {
+        for handler in allCases where UserDefaults.standard.bool(forKey: handler.claimedKey) && !handler.isOurs {
+            Task { try? await handler.claim() }
+        }
     }
 }
