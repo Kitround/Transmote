@@ -227,6 +227,10 @@ struct GeneralSettingsTab: View {
                 } else {
                     Label("Transmote is the default", systemImage: "checkmark.circle.fill")
                         .foregroundStyle(.green)
+                    Button("Stop using as default") {
+                        stopDefault(handler)
+                    }
+                    .buttonStyle(.bordered)
                 }
             }
         }
@@ -250,6 +254,20 @@ struct GeneralSettingsTab: View {
                 defaultAppMessage = handler.isOurs
                     ? success
                     : String(localized: "Failed: macOS still opens them with \(handler.currentApp?.path ?? "—").")
+            } catch {
+                defaultAppMessage = String(localized: "Failed: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    private func stopDefault(_ handler: DefaultHandler) {
+        Task {
+            defer { refreshDefaultApps() }
+            do {
+                try await handler.release()
+                defaultAppMessage = handler.isOurs
+                    ? String(localized: "No other installed app can open them, so Transmote stays the default.")
+                    : nil
             } catch {
                 defaultAppMessage = String(localized: "Failed: \(error.localizedDescription)")
             }

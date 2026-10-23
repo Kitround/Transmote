@@ -3273,6 +3273,35 @@
         }
       }
     },
+    "No other installed app can open them, so Transmote stays the default." : {
+      "comment" : "Settings default-app: stop button pressed but no other app handles magnet links or .torrent files",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine andere installierte App kann sie öffnen, daher bleibt Transmote Standard."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ninguna otra app instalada puede abrirlos, así que Transmote sigue siendo la predeterminada."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune autre app installée ne peut les ouvrir, Transmote reste donc l'app par défaut."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有其他已安装的应用可以打开它们，因此 Transmote 仍为默认应用。"
+          }
+        }
+      }
+    },
     "No peers connected" : {
       "comment" : "Peers tab empty state",
       "localizations" : {
@@ -5059,6 +5088,35 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "空闲超过此时间则停止"
+          }
+        }
+      }
+    },
+    "Stop using as default" : {
+      "comment" : "Settings default-app button: stop Transmote opening magnet links or .torrent files",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht mehr als Standard"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dejar de usar como predeterminada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ne plus utiliser par défaut"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不再设为默认"
           }
         }
       }

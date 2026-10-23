@@ -205,9 +205,9 @@ nonisolated enum UpdateChecker {
 
 // MARK: - Default handler
 
-/// Magnet links and .torrent files. Once the user picks Transmote in
-/// Settings, every launch re-claims the role if macOS lost it (another
-/// client took over, an update, a stale record of an older build).
+/// Magnet links and .torrent files. While the user keeps Transmote as the
+/// default in Settings, every launch re-claims the role if macOS lost it
+/// (another client took over, an update, a stale record of an older build).
 enum DefaultHandler: String, CaseIterable {
     case magnet, torrent
 
@@ -233,6 +233,25 @@ enum DefaultHandler: String, CaseIterable {
         // Transmote copy (older version, deleted folder) can win that lookup
         // and make macOS fall back to another client, so refresh ours first.
         LSRegisterURL(appURL as CFURL, true)
+        try await setDefault(appURL)
+    }
+
+    /// Stops re-claiming the role and, if Transmote has it, hands it to the
+    /// next app macOS ranks for it (e.g. Transmission). With no other app
+    /// installed, Transmote stays the handler.
+    func release() async throws {
+        UserDefaults.standard.set(false, forKey: claimedKey)
+        guard isOurs else { return }
+        let candidates = switch self {
+        case .magnet:  NSWorkspace.shared.urlsForApplications(toOpen: URL(string: "magnet:")!)
+        case .torrent: NSWorkspace.shared.urlsForApplications(toOpen: Self.torrentType)
+        }
+        let ourID = Bundle.main.bundleIdentifier?.lowercased()
+        guard let other = candidates.first(where: { Bundle(url: $0)?.bundleIdentifier?.lowercased() != ourID }) else { return }
+        try await setDefault(other)
+    }
+
+    private func setDefault(_ appURL: URL) async throws {
         switch self {
         case .magnet:  try await NSWorkspace.shared.setDefaultApplication(at: appURL, toOpenURLsWithScheme: "magnet")
         case .torrent: try await NSWorkspace.shared.setDefaultApplication(at: appURL, toOpen: Self.torrentType)
