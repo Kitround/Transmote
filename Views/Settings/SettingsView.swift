@@ -214,7 +214,7 @@ struct GeneralSettingsTab: View {
 
     private func defaultAppRow(_ title: LocalizedStringKey, _ handler: DefaultHandler, success: String) -> some View {
         HStack {
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                 if defaultsChecked {
                     Group {
@@ -222,8 +222,12 @@ struct GeneralSettingsTab: View {
                             Text("Currently: \(other)")
                                 .foregroundStyle(.secondary)
                         } else {
-                            Label("Transmote is the default", systemImage: "checkmark.circle.fill")
-                                .foregroundStyle(.green)
+                            // Label's icon gap is too wide for a caption.
+                            HStack(spacing: 3) {
+                                Image(systemName: "checkmark.circle.fill")
+                                Text("Transmote is the default")
+                            }
+                            .foregroundStyle(.green)
                         }
                     }
                     .font(.caption)
