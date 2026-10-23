@@ -49,6 +49,7 @@ struct GeneralSettingsTab: View {
     @State private var checkingForUpdates = false
     @State private var availableVersion: String? = nil
     @State private var updateMessage: String? = nil
+    @State private var isUpToDate = false
 
     var body: some View {
         Form {
@@ -98,6 +99,13 @@ struct GeneralSettingsTab: View {
                         }
                         .buttonStyle(.borderedProminent)
                     }
+                } else if isUpToDate {
+                    HStack(spacing: 3) {
+                        Image(systemName: "checkmark.circle.fill")
+                        Text("Transmote is up to date.")
+                    }
+                    .font(.caption)
+                    .foregroundStyle(.green)
                 } else if let msg = updateMessage {
                     Text(msg)
                         .font(.caption)
@@ -200,9 +208,11 @@ struct GeneralSettingsTab: View {
         defer { checkingForUpdates = false }
         do {
             availableVersion = try await UpdateChecker.newerVersion()
-            updateMessage = availableVersion == nil ? String(localized: "Transmote is up to date.") : nil
+            isUpToDate = availableVersion == nil
+            updateMessage = nil
         } catch {
             availableVersion = nil
+            isUpToDate = false
             updateMessage = String(localized: "Update check failed.")
         }
     }
