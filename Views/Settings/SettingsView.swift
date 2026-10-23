@@ -375,6 +375,7 @@ struct SpeedField: View {
             Spacer()
             TextField("", value: $valueMB, format: .number.precision(.fractionLength(0...2)))
                 .textFieldStyle(.roundedBorder)
+                .labelsHidden()
                 .frame(width: 80)
                 .multilineTextAlignment(.trailing)
             Text("MB/s")
@@ -393,6 +394,7 @@ struct RatioField: View {
             Spacer()
             TextField("", value: $value, format: .number.precision(.fractionLength(2)))
                 .textFieldStyle(.roundedBorder)
+                .labelsHidden()
                 .frame(width: 80)
                 .multilineTextAlignment(.trailing)
         }
@@ -418,6 +420,7 @@ struct PeersSettingsTab: View {
                     Spacer()
                     TextField("", value: $globalLimit, format: .number.grouping(.never))
                         .textFieldStyle(.roundedBorder)
+                        .labelsHidden()
                         .frame(width: 80)
                         .multilineTextAlignment(.trailing)
                 }
@@ -427,6 +430,7 @@ struct PeersSettingsTab: View {
                     Spacer()
                     TextField("", value: $perTorrentLimit, format: .number.grouping(.never))
                         .textFieldStyle(.roundedBorder)
+                        .labelsHidden()
                         .frame(width: 80)
                         .multilineTextAlignment(.trailing)
                 }
@@ -438,6 +442,7 @@ struct PeersSettingsTab: View {
                     Spacer()
                     TextField("", value: $peerPort, format: .number.grouping(.never))
                         .textFieldStyle(.roundedBorder)
+                        .labelsHidden()
                         .frame(width: 80)
                         .multilineTextAlignment(.trailing)
                 }
