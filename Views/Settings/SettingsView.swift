@@ -214,24 +214,36 @@ struct GeneralSettingsTab: View {
 
     private func defaultAppRow(_ title: LocalizedStringKey, _ handler: DefaultHandler, success: String) -> some View {
         HStack {
-            Text(title)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                if defaultsChecked {
+                    Group {
+                        if let other = otherDefaultApp[handler] {
+                            Text("Currently: \(other)")
+                                .foregroundStyle(.secondary)
+                        } else {
+                            Label("Transmote is the default", systemImage: "checkmark.circle.fill")
+                                .foregroundStyle(.green)
+                        }
+                    }
+                    .font(.caption)
+                }
+            }
             Spacer()
             if defaultsChecked {
-                if let other = otherDefaultApp[handler] {
-                    Text("Currently: \(other)")
-                        .foregroundStyle(.secondary)
-                    Button("Set as default") {
-                        setDefault(handler, success: success)
+                Group {
+                    if otherDefaultApp[handler] != nil {
+                        Button("Set as default") {
+                            setDefault(handler, success: success)
+                        }
+                    } else {
+                        Button("Stop using as default") {
+                            stopDefault(handler)
+                        }
                     }
-                    .buttonStyle(.bordered)
-                } else {
-                    Label("Transmote is the default", systemImage: "checkmark.circle.fill")
-                        .foregroundStyle(.green)
-                    Button("Stop using as default") {
-                        stopDefault(handler)
-                    }
-                    .buttonStyle(.bordered)
                 }
+                .buttonStyle(.bordered)
+                .fixedSize()
             }
         }
     }
