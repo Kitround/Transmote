@@ -119,7 +119,9 @@ struct GeneralSettingsTab: View {
 
             Section("Downloads") {
                 HStack {
-                    TextField("Download folder", text: $downloadDir)
+                    // The section header already names it; a label here squeezes the path.
+                    TextField("Download folder", text: $downloadDir, prompt: Text("Download folder"))
+                        .labelsHidden()
                         .onSubmit { applyDownloadDir() }
                     Button("Choose…") {
                         let panel = NSOpenPanel()
