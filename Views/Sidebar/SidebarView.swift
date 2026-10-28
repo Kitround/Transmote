@@ -10,7 +10,11 @@ struct SidebarView: View {
         // Computed once per render — reading them inside the ForEach bodies
         // would rebuild the whole aggregate for every row.
         let filterCounts = store.filterCounts
-        let folders = store.connectionState.isConnected ? store.folderCounts : []
+        // Not gated on isConnected: a transient poll error (e.g. on wake from
+        // sleep) would remove then re-insert whole sections, and the sidebar's
+        // NSOutlineView crashes on the freed section item. torrents and
+        // sessionStats survive errors; disconnect() clears them.
+        let folders = store.folderCounts
 
         List(selection: $store.sidebarSelection) {
             // MARK: Filters
@@ -92,7 +96,7 @@ struct SidebarView: View {
             }
 
             // MARK: Stats
-            if store.connectionState.isConnected, let stats = store.sessionStats {
+            if let stats = store.sessionStats {
                 Section("Session") {
                     VStack(alignment: .leading, spacing: 4) {
                         StatRow(label: "Downloaded", value: ByteFormatter.size(stats.currentStats.downloadedBytes))
