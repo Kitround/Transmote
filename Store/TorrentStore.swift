@@ -47,6 +47,9 @@ class TorrentStore {
     private var client: RPCClient?
     private var pollingTask: Task<Void, Never>?
     private var previousStatuses: [Int: TorrentStatus] = [:]
+    /// Removed locally; hidden from snapshots until the server stops listing them,
+    /// so a poll already in flight when the remove was sent can't bring rows back.
+    private var removedIDs: Set<Int> = []
 
     // MARK: Init
     init() {
@@ -178,6 +181,7 @@ class TorrentStore {
         sessionStats = nil
         connectionState = .disconnected
         previousStatuses = [:]
+        removedIDs = []
         isAltSpeedEnabled = false
     }
 
@@ -221,6 +225,8 @@ class TorrentStore {
         async let detailTask = fetchDetailIfNeeded(id: selectedID, using: client)
         do {
             var torrents = try await listTask
+            removedIDs.formIntersection(torrents.map(\.id))
+            torrents.removeAll { removedIDs.contains($0.id) }
             if let detail = await detailTask,
                let idx = torrents.firstIndex(where: { $0.id == detail.id }) {
                 torrents[idx].files         = detail.files
@@ -320,9 +326,16 @@ class TorrentStore {
 
     func remove(ids: [Int], deleteData: Bool) async {
         guard let client else { return }
-        try? await client.removeTorrents(ids: ids, deleteData: deleteData)
+        removedIDs.formUnion(ids)
         selectedTorrentIDs.subtract(ids)
         torrents.removeAll { ids.contains($0.id) }
+        do {
+            try await client.removeTorrents(ids: ids, deleteData: deleteData)
+        } catch {
+            // Server kept them: let the next snapshot show them again.
+            removedIDs.subtract(ids)
+            await refreshTorrents()
+        }
     }
 
     func addMagnet(_ magnetURL: String) async throws -> AddedTorrent {
