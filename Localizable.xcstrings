@@ -120,6 +120,36 @@
         }
       }
     },
+    "Select a connection in the sidebar\nor check your network." : {
+      "comment" : "Empty state body when not connected to a server",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle eine Verbindung in der Seitenleiste\noder prüfe dein Netzwerk."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecciona una conexión en la barra lateral\no comprueba tu red."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sélectionnez une connexion dans la barre latérale\nou vérifiez votre réseau."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请在边栏中选择连接\n或检查网络。"
+          }
+        }
+      }
+    },
     "—" : {
       "shouldTranslate" : false
     },
@@ -4650,36 +4680,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "做种中"
-          }
-        }
-      }
-    },
-    "Select a server in the sidebar\nor check your connection." : {
-      "comment" : "Empty state body when not connected to a server",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wähle einen Server in der Seitenleiste\noder prüfe deine Verbindung."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Selecciona un servidor en la barra lateral\no comprueba tu conexión."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sélectionnez un serveur dans la barre latérale\nou vérifiez votre connexion."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "请在边栏中选择服务器\n或检查网络连接。"
           }
         }
       }

@@ -209,7 +209,7 @@ struct TorrentListView: View {
         ContentUnavailableView {
             Label("Not Connected", systemImage: "wifi.slash")
         } description: {
-            Text("Select a server in the sidebar\nor check your connection.")
+            Text("Select a connection in the sidebar\nor check your network.")
         } actions: {
             Button("Connect") {
                 Task { await store.connectToActiveServer() }
