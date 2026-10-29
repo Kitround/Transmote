@@ -2,7 +2,6 @@ import SwiftUI
 
 struct SidebarView: View {
     @Environment(TorrentStore.self) private var store
-    @State private var showServerSheet = false
     @State private var editingServer: ServerConfig?
 
     var body: some View {
@@ -77,22 +76,6 @@ struct SidebarView: View {
                             }
                         }
                 }
-
-                Button {
-                    showServerSheet = true
-                } label: {
-                    HStack(spacing: 8) {
-                        Image(systemName: "plus")
-                            .font(.caption)
-                            .frame(width: 7, height: 7)
-                        Text("Add a server")
-                            .font(.caption)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .buttonStyle(.borderless)
-                .foregroundStyle(.secondary)
-                .listRowBackground(Color.clear)
             }
 
             // MARK: Stats
@@ -107,9 +90,6 @@ struct SidebarView: View {
             }
         }
         .listStyle(.sidebar)
-        .sheet(isPresented: $showServerSheet) {
-            ServerEditView(server: .localhost, isNew: true)
-        }
         .sheet(item: $editingServer) { server in
             ServerEditView(server: server, isNew: false)
         }

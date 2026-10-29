@@ -9,6 +9,9 @@ struct SettingsView: View {
             GeneralSettingsTab()
                 .tabItem { Label("General", systemImage: "gearshape") }
 
+            ServersSettingsTab()
+                .tabItem { Label("Servers", systemImage: "server.rack") }
+
             BandwidthSettingsTab()
                 .tabItem { Label("Bandwidth", systemImage: "speedometer") }
 
@@ -300,6 +303,49 @@ struct GeneralSettingsTab: View {
                 defaultAppMessage = String(localized: "Failed: \(error.localizedDescription)")
             }
         }
+    }
+}
+
+// MARK: - Servers Tab
+
+struct ServersSettingsTab: View {
+    @Environment(TorrentStore.self) private var store
+    @State private var showNewServer = false
+    @State private var editingServer: ServerConfig?
+
+    var body: some View {
+        Form {
+            Section("Servers") {
+                ForEach(store.servers) { server in
+                    HStack {
+                        ServerRowView(server: server, isActive: server.id == store.activeServerID)
+                        Spacer()
+                        Button("Edit…") { editingServer = server }
+                            .buttonStyle(.bordered)
+                        Button(role: .destructive) {
+                            store.removeServer(server.id)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                                .labelStyle(.iconOnly)
+                        }
+                        .buttonStyle(.borderless)
+                    }
+                }
+            }
+
+            Section {
+                Button("Add a server") { showNewServer = true }
+                    .buttonStyle(.borderedProminent)
+            }
+        }
+        .formStyle(.grouped)
+        .sheet(isPresented: $showNewServer) {
+            ServerEditView(server: .localhost, isNew: true)
+        }
+        .sheet(item: $editingServer) { server in
+            ServerEditView(server: server, isNew: false)
+        }
+        .padding()
     }
 }
 
