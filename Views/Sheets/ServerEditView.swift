@@ -22,7 +22,7 @@ struct ServerEditView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Text(isNew ? "New Server" : "Edit Server")
+            Text(isNew ? "New Connection" : "Edit Connection")
                 .font(.headline)
                 .padding()
 

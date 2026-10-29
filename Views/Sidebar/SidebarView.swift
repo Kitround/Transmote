@@ -54,7 +54,7 @@ struct SidebarView: View {
             }
 
             // MARK: Servers
-            Section("Servers") {
+            Section("Connections") {
                 ForEach(store.servers) { server in
                     ServerRowView(server: server, isActive: server.id == store.activeServerID)
                         .contentShape(Rectangle())

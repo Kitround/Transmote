@@ -10,7 +10,7 @@ struct SettingsView: View {
                 .tabItem { Label("General", systemImage: "gearshape") }
 
             ServersSettingsTab()
-                .tabItem { Label("Servers", systemImage: "server.rack") }
+                .tabItem { Label("Connections", systemImage: "server.rack") }
 
             BandwidthSettingsTab()
                 .tabItem { Label("Bandwidth", systemImage: "speedometer") }
@@ -315,7 +315,7 @@ struct ServersSettingsTab: View {
 
     var body: some View {
         Form {
-            Section("Servers") {
+            Section("Connections") {
                 ForEach(store.servers) { server in
                     HStack {
                         ServerRowView(server: server, isActive: server.id == store.activeServerID)
@@ -334,7 +334,7 @@ struct ServersSettingsTab: View {
             }
 
             Section {
-                Button("Add a server") { showNewServer = true }
+                Button("Add a connection") { showNewServer = true }
                     .buttonStyle(.borderedProminent)
             }
         }
