@@ -425,22 +425,16 @@ struct ProgressCell: View {
     let torrent: Torrent
     @Environment(\.backgroundProminence) private var prominence
 
-    var body: some View {
-        VStack(alignment: .trailing, spacing: 2) {
-            bar
-            if torrent.status == .check {
-                Text("check. \(ProgressFormatter.format(torrent.recheckProgress))")
-                    .font(.caption2)
-                    .cellTint(.orange)
-            }
-        }
-    }
-
     // Solid fill; the label turns white where the fill covers it.
     // On a selected row the fill goes white and the label takes the accent color.
-    private var bar: some View {
+    // While verifying, the bar shows the recheck progress in orange.
+    var body: some View {
         let selected = prominence == .increased
-        let label = Text(ProgressFormatter.format(torrent.progress))
+        let checking = torrent.status == .check
+        let progress = checking ? torrent.recheckProgress : torrent.progress
+        let label = (checking
+            ? Text("check. \(ProgressFormatter.format(progress))")
+            : Text(ProgressFormatter.format(progress)))
             .font(.callout)
             .monospacedDigit()
 
@@ -450,12 +444,12 @@ struct ProgressCell: View {
             label
             ZStack {
                 RoundedRectangle(cornerRadius: 5)
-                    .fill(selected ? Color.white : torrent.progress >= 1 ? Color(red: 0.55, green: 0.8, blue: 0.55) : Color.accentColor)
+                    .fill(selected ? Color.white : checking ? Color.orange : progress >= 1 ? Color(red: 0.55, green: 0.8, blue: 0.55) : Color.accentColor)
                 label.foregroundStyle(selected ? Color.accentColor : .white)
             }
             .mask(alignment: .leading) {
                 GeometryReader { geo in
-                    Rectangle().frame(width: geo.size.width * torrent.progress)
+                    Rectangle().frame(width: geo.size.width * progress)
                 }
             }
             .accessibilityHidden(true)
