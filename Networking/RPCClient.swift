@@ -82,8 +82,10 @@ actor RPCClient {
     init(config: ServerConfig) {
         self.serverConfig = config
         let cfg = URLSessionConfiguration.ephemeral
-        cfg.timeoutIntervalForRequest = 10
-        cfg.timeoutIntervalForResource = 30
+        // A busy daemon (disk-bound, many torrents) can take well over 10 s
+        // to answer torrent-get; a short timeout reads as a lost connection.
+        cfg.timeoutIntervalForRequest = 30
+        cfg.timeoutIntervalForResource = 60
         cfg.urlCache = nil
         cfg.urlCredentialStorage = nil
         cfg.httpCookieStorage = nil

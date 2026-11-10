@@ -252,6 +252,10 @@ class TorrentStore {
                 // Keep polling so we reconnect on our own once the server is back.
                 connectionState = .error(error.localizedDescription)
                 (NSApp.delegate as? AppDelegate)?.updateStatusBarTitle(download: 0, upload: 0)
+                // Next poll starts from a fresh client (new URLSession and
+                // session ID), like the Retry button, instead of reusing a
+                // session whose connection may be wedged.
+                if let server = activeServer { self.client = RPCClient(config: server) }
             }
         }
     }
